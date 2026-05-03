@@ -31,7 +31,7 @@
   --radius-sm: 6px;
 
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --shadow-premium: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 * {
@@ -106,7 +106,7 @@ body {
   color: var(--accent-teal);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* ── Hero Section ──────────────────────────── */
@@ -130,7 +130,7 @@ body {
   margin: 0 auto 20px;
   color: var(--accent-teal);
   position: relative;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .hero-icon-pulse::before {
@@ -331,7 +331,7 @@ body {
   font-size: 15px;
   font-weight: 900;
   border-radius: var(--radius-xl);
-  box-shadow: 0 8px 16px -6px rgba(20, 184, 166, 0.4);
+  box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.2);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border: none;
@@ -345,7 +345,7 @@ body {
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px -6px rgba(20, 184, 166, 0.5);
+  box-shadow: 0 10px 15px -3px rgba(20, 184, 166, 0.3);
   filter: brightness(1.1);
 }
 

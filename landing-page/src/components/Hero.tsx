@@ -56,7 +56,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="max-w-5xl mx-auto mb-12 relative"
         >
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl shadow-black/30">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg shadow-black/20">
             <div className="flex items-center gap-2 px-4 py-3 bg-[#0c1526] border-b border-slate-800">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -101,7 +101,7 @@ export default function Hero() {
                   </div>
                 </div>
 
-                <button className="w-full py-2 bg-linear-to-r from-teal-500 to-blue-600 rounded text-[11px] font-bold flex items-center justify-center gap-2 shadow-md shadow-teal-500/10">
+                <button className="w-full py-2 bg-linear-to-r from-teal-500 to-blue-600 rounded text-[11px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-teal-500/5">
                   <Zap size={12} /> Start Scraping
                 </button>
 
@@ -141,7 +141,7 @@ export default function Hero() {
         >
           <button 
             onClick={() => document.getElementById('download-modal')?.dispatchEvent(new CustomEvent('open'))}
-            className="px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 transition-all flex items-center gap-2"
+            className="px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-lg hover:shadow-teal-500/10 hover:scale-105 transition-all flex items-center gap-2"
           >
             <Download size={20} /> Add to Chrome. It is Free.
           </button>

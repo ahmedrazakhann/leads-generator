@@ -71,7 +71,7 @@ export default function DownloadModal() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-2xl bg-slate-900/80 border border-slate-800/50 rounded-[40px] shadow-2xl shadow-black/40 overflow-hidden backdrop-blur-2xl"
+              className="relative w-full max-w-2xl bg-slate-900/80 border border-slate-800/50 rounded-[40px] shadow-xl shadow-black/20 overflow-hidden backdrop-blur-2xl"
             >
               {/* Background Glows */}
               <div className="absolute -top-24 -left-24 w-64 h-64 bg-teal-500/10 rounded-full blur-[80px]" />
@@ -135,7 +135,7 @@ export default function DownloadModal() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleDownload}
-                    className="w-full py-6 bg-gradient-to-r from-teal-500 to-blue-600 rounded-[24px] font-black text-white text-xl shadow-xl shadow-teal-500/20 hover:shadow-2xl hover:shadow-teal-500/30 transition-all flex items-center justify-center gap-3"
+                    className="w-full py-6 bg-gradient-to-r from-teal-500 to-blue-600 rounded-[24px] font-black text-white text-xl shadow-lg shadow-teal-500/10 hover:shadow-xl hover:shadow-teal-500/20 transition-all flex items-center justify-center gap-3"
                   >
                     <Download size={24} />
                     Download Extension Now

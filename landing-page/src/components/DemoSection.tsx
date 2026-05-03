@@ -71,7 +71,7 @@ export default function DemoSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start max-w-7xl mx-auto">
           {/* Map Side */}
-          <div className="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-xl shadow-black/40 relative group">
+          <div className="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-lg shadow-black/20 relative group">
             <div className="flex items-center justify-between p-4 bg-[#0f1e36] border-b border-slate-800">
               <div className="flex items-center gap-3 bg-slate-950/50 border border-slate-800 rounded-lg px-3 py-2 flex-1 max-w-md text-xs text-slate-500">
                 <MapPin size={14} className="text-teal-500" />
@@ -116,14 +116,14 @@ export default function DemoSection() {
                   initial={{ top: '0%' }}
                   animate={{ top: '100%' }}
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-teal-500 to-transparent shadow-md shadow-teal-500/50 z-10"
+                  className="absolute left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-teal-500 to-transparent shadow-sm shadow-teal-500/30 z-10"
                 />
               )}
             </div>
           </div>
 
           {/* Extension Side */}
-          <div className="lg:sticky lg:top-24 bg-slate-950 rounded-3xl border border-slate-800 p-6 flex flex-col gap-6 shadow-xl shadow-black/40">
+          <div className="lg:sticky lg:top-24 bg-slate-950 rounded-3xl border border-slate-800 p-6 flex flex-col gap-6 shadow-lg shadow-black/20">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2 text-sm font-bold text-white">
                 <MapPin size={18} className="text-teal-500" />

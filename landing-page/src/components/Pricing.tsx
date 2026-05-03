@@ -56,12 +56,12 @@ export default function Pricing() {
               className={cn(
                 "relative p-8 md:p-10 rounded-[40px] border flex flex-col transition-all duration-500",
                 plan.popular 
-                  ? "bg-slate-900 border-teal-500/50 shadow-2xl shadow-teal-500/10 scale-105 z-10 py-12" 
+                  ? "bg-slate-900 border-teal-500/50 shadow-xl shadow-teal-500/5 scale-105 z-10 py-12" 
                   : "bg-slate-950/50 border-slate-800 hover:border-slate-700"
               )}
             >
               {plan.popular && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-linear-to-r from-teal-500 to-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-linear-to-r from-teal-500 to-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md shadow-teal-500/10">
                   Most Popular
                 </div>
               )}
