@@ -25,7 +25,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-medium mb-8"
         >
-          <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse shadow-[0_0_8px_rgba(20,184,166,1)]" />
+          <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse shadow-sm shadow-teal-500/50" />
           Free Chrome Extension. Works in 60 seconds.
         </motion.div>
 
@@ -56,7 +56,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="max-w-5xl mx-auto mb-12 relative"
         >
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl shadow-black/30">
             <div className="flex items-center gap-2 px-4 py-3 bg-[#0c1526] border-b border-slate-800">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -76,9 +76,9 @@ export default function Hero() {
                   className="w-full h-full object-cover opacity-80 contrast-110 brightness-90"
                 />
                 {/* Floating Pins */}
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[35%] left-[25%] text-teal-400 drop-shadow-lg"><MapPin size={28} fill="currentColor" /></motion.div>
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} className="absolute top-[52%] left-[52%] text-blue-400 drop-shadow-lg"><MapPin size={28} fill="currentColor" /></motion.div>
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="absolute top-[30%] left-[70%] text-purple-400 drop-shadow-lg"><MapPin size={28} fill="currentColor" /></motion.div>
+                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[35%] left-[25%] text-teal-400 drop-shadow-md"><MapPin size={28} fill="currentColor" /></motion.div>
+                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} className="absolute top-[52%] left-[52%] text-blue-400 drop-shadow-md"><MapPin size={28} fill="currentColor" /></motion.div>
+                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="absolute top-[30%] left-[70%] text-purple-400 drop-shadow-md"><MapPin size={28} fill="currentColor" /></motion.div>
               </div>
 
               <div className="bg-slate-950 border-l border-slate-800 p-4 flex flex-col gap-3 overflow-hidden">
@@ -101,7 +101,7 @@ export default function Hero() {
                   </div>
                 </div>
 
-                <button className="w-full py-2 bg-linear-to-r from-teal-500 to-blue-600 rounded text-[11px] font-bold flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20">
+                <button className="w-full py-2 bg-linear-to-r from-teal-500 to-blue-600 rounded text-[11px] font-bold flex items-center justify-center gap-2 shadow-md shadow-teal-500/10">
                   <Zap size={12} /> Start Scraping
                 </button>
 
@@ -139,7 +139,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-wrap justify-center gap-4 mb-16"
         >
-          <button className="px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-[0_0_30px_rgba(20,184,166,0.45)] hover:scale-105 transition-all flex items-center gap-2">
+          <button className="px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 transition-all flex items-center gap-2">
             <Download size={20} /> Add to Chrome. It is Free.
           </button>
           <a href="#how-it-works" className="px-8 py-4 text-lg font-bold text-slate-300 border border-slate-700 rounded-full hover:bg-slate-800 transition-all flex items-center gap-2">

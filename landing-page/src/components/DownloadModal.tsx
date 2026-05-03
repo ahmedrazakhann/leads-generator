@@ -1,14 +1,34 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Download, X, Globe, ShieldCheck, FileSpreadsheet, LayoutGrid } from 'lucide-react';
+import { Download, X, Globe, ShieldCheck, FileSpreadsheet, LayoutGrid, CheckCircle2, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const INSTALL_STEPS = [
-  { text: 'Open chrome://extensions/ in your browser', icon: <Globe size={20}/> },
-  { text: 'Turn on Developer Mode at the top right', icon: <ShieldCheck size={20}/> },
-  { text: 'Click on Load unpacked', icon: <FileSpreadsheet size={20}/> },
-  { text: 'Select the extension folder', icon: <LayoutGrid size={20}/> },
+  { 
+    title: 'Access Extensions',
+    text: 'Open chrome://extensions/ in your browser', 
+    icon: <Globe size={22}/>,
+    color: 'from-blue-500 to-cyan-500'
+  },
+  { 
+    title: 'Developer Mode',
+    text: 'Turn on Developer Mode at the top right', 
+    icon: <ShieldCheck size={22}/>,
+    color: 'from-purple-500 to-pink-500'
+  },
+  { 
+    title: 'Load Unpacked',
+    text: 'Click on "Load unpacked" button', 
+    icon: <FileSpreadsheet size={22}/>,
+    color: 'from-orange-500 to-amber-500'
+  },
+  { 
+    title: 'Select Folder',
+    text: 'Select the extracted extension folder', 
+    icon: <LayoutGrid size={22}/>,
+    color: 'from-emerald-500 to-teal-500'
+  },
 ];
 
 export default function DownloadModal() {
@@ -24,57 +44,94 @@ export default function DownloadModal() {
     <div id="download-modal">
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 overflow-y-auto">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="absolute inset-0 bg-slate-950/90"
+              className="fixed inset-0 bg-slate-950/40 backdrop-blur-md"
             />
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.98, y: 10 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.98, y: 10 }}
-              className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-[32px] p-8 md:p-12 shadow-2xl overflow-hidden"
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-2xl bg-slate-900/80 border border-slate-800/50 rounded-[40px] shadow-2xl shadow-black/40 overflow-hidden backdrop-blur-2xl"
             >
-              <div className="absolute top-0 right-0 p-6">
+              {/* Background Glows */}
+              <div className="absolute -top-24 -left-24 w-64 h-64 bg-teal-500/10 rounded-full blur-[80px]" />
+              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px]" />
+
+              <div className="relative p-8 md:p-12">
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="w-10 h-10 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center text-slate-500 hover:text-white transition-colors"
+                  className="absolute top-8 right-8 w-12 h-12 rounded-2xl bg-slate-950/50 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 transition-all group"
                 >
-                  <X size={20} />
+                  <X size={24} className="group-hover:rotate-90 transition-transform duration-300" />
                 </button>
-              </div>
 
-              <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-500 mb-8">
-                  <Download size={40} />
+                <div className="flex flex-col items-center">
+                  <motion.div 
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-black uppercase tracking-widest mb-8"
+                  >
+                    <Lock size={12} />
+                    Verified Secure Installation
+                  </motion.div>
+
+                  <div className="text-center mb-12">
+                    <h3 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
+                      Install <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">SaaSquatch</span>
+                    </h3>
+                    <p className="text-slate-400 text-lg max-w-md mx-auto leading-relaxed">
+                      Follow these simple steps to power up your lead generation game.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-12">
+                    {INSTALL_STEPS.map((step, idx) => (
+                      <motion.div 
+                        key={idx}
+                        initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + idx * 0.1 }}
+                        className="group relative p-6 bg-slate-950/50 border border-slate-800 hover:border-slate-600 rounded-[32px] transition-all duration-300"
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${step.color} p-[1px]`}>
+                            <div className="w-full h-full rounded-[15px] bg-slate-950 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                              {step.icon}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-white font-bold mb-1">{step.title}</h4>
+                            <p className="text-slate-500 text-sm leading-snug group-hover:text-slate-400 transition-colors">{step.text}</p>
+                          </div>
+                        </div>
+                        <div className="absolute top-4 right-4 text-slate-800 font-black text-2xl group-hover:text-slate-700 transition-colors">
+                          0{idx + 1}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <motion.button 
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setIsOpen(false)}
+                    className="w-full py-6 bg-gradient-to-r from-teal-500 to-blue-600 rounded-[24px] font-black text-white text-xl shadow-xl shadow-teal-500/20 hover:shadow-2xl hover:shadow-teal-500/30 transition-all flex items-center justify-center gap-3"
+                  >
+                    <CheckCircle2 size={24} />
+                    I've Completed the Steps
+                  </motion.button>
+                  
+                  <p className="mt-6 text-slate-500 text-sm font-medium">
+                    Need help? <a href="#contact" className="text-teal-500 hover:underline">Contact Support</a>
+                  </p>
                 </div>
-                
-                <h3 className="text-3xl font-black mb-4">Install SaaSquatch</h3>
-                <p className="text-slate-400 mb-10 leading-relaxed">
-                  Follow these 4 quick steps to start using the extension.
-                </p>
-
-                <div className="w-full space-y-4 mb-10">
-                  {INSTALL_STEPS.map((step, idx) => (
-                    <div key={idx} className="flex items-center gap-4 p-4 bg-slate-950 border border-slate-800 rounded-xl text-left group hover:border-teal-500 transition-colors">
-                      <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-teal-500 group-hover:bg-teal-500 group-hover:text-white transition-all">
-                        {step.icon}
-                      </div>
-                      <span className="text-sm font-bold text-slate-300">{step.text}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <button 
-                  onClick={() => setIsOpen(false)}
-                  className="w-full py-5 bg-teal-600 rounded-xl font-black text-white text-lg hover:bg-teal-500 transition-all"
-                >
-                  I Understand
-                </button>
               </div>
             </motion.div>
           </div>

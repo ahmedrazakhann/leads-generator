@@ -31,7 +31,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <a href="#hero" className="flex items-center group">
-          <img src="/images/logo_horizontal.png" alt="SaaSquatch Pro" className="h-9 w-auto" />
+          <img src="/images/logo_horizontal.png" alt="SaaSquatch Pro" className="h-12 w-auto" />
         </a>
 
         {/* Desktop Links */}
@@ -51,7 +51,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <button 
             onClick={() => document.getElementById('download-modal')?.dispatchEvent(new CustomEvent('open'))}
-            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-[0_0_20px_rgba(20,184,166,0.4)] transition-all"
+            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-lg hover:shadow-teal-500/20 transition-all"
           >
             Get Extension Free
           </button>
