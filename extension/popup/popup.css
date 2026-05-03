@@ -89,16 +89,6 @@ body {
   display: block;
 }
 
-font-weight: 800;
-letter-spacing: -0.5px;
-color: var(--text-main);
-}
-
-.logo-text .accent {
-  color: var(--accent-teal);
-  font-weight: 900;
-}
-
 .lead-badge {
   background: rgba(20, 184, 166, 0.1);
   border: 1px solid rgba(20, 184, 166, 0.2);
