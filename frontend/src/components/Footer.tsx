@@ -3,7 +3,13 @@
 import React from 'react';
 import { MapPin, ExternalLink, Mail, Link, Share2 } from 'lucide-react';
 
-const LINKS = {
+interface FooterLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+const LINKS: Record<string, FooterLink[]> = {
   Product: [
     { label: 'Features', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
