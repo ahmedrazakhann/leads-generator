@@ -30,14 +30,14 @@ export default function DownloadModal() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+              className="absolute inset-0 bg-slate-950/90"
             />
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.98, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-[40px] p-8 md:p-12 shadow-2xl overflow-hidden"
+              exit={{ opacity: 0, scale: 0.98, y: 10 }}
+              className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-[32px] p-8 md:p-12 shadow-2xl overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-6">
                 <button 
@@ -49,7 +49,7 @@ export default function DownloadModal() {
               </div>
 
               <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-3xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500 mb-8">
+                <div className="w-20 h-20 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-500 mb-8">
                   <Download size={40} />
                 </div>
                 
@@ -60,8 +60,8 @@ export default function DownloadModal() {
 
                 <div className="w-full space-y-4 mb-10">
                   {INSTALL_STEPS.map((step, idx) => (
-                    <div key={idx} className="flex items-center gap-4 p-4 bg-slate-950 border border-slate-800 rounded-2xl text-left group hover:border-teal-500/30 transition-colors">
-                      <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-teal-500 group-hover:bg-teal-500 group-hover:text-white transition-all">
+                    <div key={idx} className="flex items-center gap-4 p-4 bg-slate-950 border border-slate-800 rounded-xl text-left group hover:border-teal-500 transition-colors">
+                      <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-teal-500 group-hover:bg-teal-500 group-hover:text-white transition-all">
                         {step.icon}
                       </div>
                       <span className="text-sm font-bold text-slate-300">{step.text}</span>
@@ -71,7 +71,7 @@ export default function DownloadModal() {
 
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="w-full py-5 bg-linear-to-r from-teal-500 to-blue-600 rounded-2xl font-black text-white text-lg shadow-xl shadow-teal-500/20"
+                  className="w-full py-5 bg-teal-600 rounded-xl font-black text-white text-lg hover:bg-teal-500 transition-all"
                 >
                   I Understand
                 </button>

@@ -15,11 +15,11 @@ export default function Testimonials() {
     <section className="py-24 bg-slate-950">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-bold uppercase tracking-widest mb-4">
+          <div className="inline-block px-4 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-bold uppercase tracking-widest mb-4">
             Testimonials
           </div>
           <h2 className="text-4xl md:text-6xl font-black mb-6">
-            Trusted by <span className="text-gradient">People Like You</span>
+            Trusted by <span className="text-amber-500">People Like You</span>
           </h2>
         </div>
 
@@ -31,7 +31,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="glass-card p-10 rounded-[40px] flex flex-col group"
+              className="bg-slate-900 border border-slate-800 p-10 rounded-[32px] flex flex-col group"
             >
               <div className="flex gap-1 mb-6 text-amber-500">
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}

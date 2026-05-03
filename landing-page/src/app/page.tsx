@@ -24,9 +24,9 @@ function Integrations() {
         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-8">
           Use your leads with your favorite tools
         </p>
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-40 grayscale">
           {INTEGRATIONS.map(item => (
-            <span key={item} className="text-sm md:text-lg font-bold text-slate-400 hover:text-white transition-colors cursor-default">
+            <span key={item} className="text-sm md:text-lg font-bold text-slate-400 cursor-default">
               {item}
             </span>
           ))}

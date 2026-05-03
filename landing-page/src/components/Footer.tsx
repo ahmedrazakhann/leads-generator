@@ -30,7 +30,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-6">
               <MapPin className="text-teal-500" size={24} strokeWidth={2.5} />
               <span className="text-2xl font-black">
-                Map<span className="text-gradient">Leads</span> Pro
+                Map<span className="text-teal-500">Leads</span> Pro
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs mb-8">

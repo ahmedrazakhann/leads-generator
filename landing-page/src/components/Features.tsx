@@ -55,7 +55,7 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.map((feature, idx) => (
             <motion.div
               key={feature.title}
@@ -63,13 +63,13 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`group glass-card p-8 rounded-3xl flex flex-col ${feature.wide ? 'md:col-span-2 md:flex-row md:items-center gap-8' : ''}`}
+              className={`group glass-card p-8 rounded-3xl flex flex-col ${feature.wide ? 'md:col-span-2 lg:flex-row lg:items-center gap-8' : ''}`}
             >
               <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:scale-110 group-hover:bg-teal-500 group-hover:text-white transition-all duration-300">
                 {feature.icon}
               </div>
               
-              <div className="mt-6 md:mt-0 flex-1">
+              <div className="mt-6 lg:mt-0 flex-1">
                 <h3 className="text-xl font-bold mb-3 group-hover:text-teal-400 transition-colors">
                   {feature.title}
                 </h3>
