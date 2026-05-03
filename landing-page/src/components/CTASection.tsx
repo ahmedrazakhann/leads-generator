@@ -28,7 +28,7 @@ export default function CTASection() {
             Ready to Grow <br /><span className="text-gradient">Your Business?</span>
           </h2>
           <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12">
-            Join over 2,000 people who use MapLeads Pro to find new customers every day. No credit card required.
+            Join over 2,000 people who use SaaSquatch Pro to find new customers every day. No credit card required.
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 mb-10">

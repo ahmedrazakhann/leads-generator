@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 const FAQS = [
-  { q: 'Is MapLeads Pro really free?', a: 'Yes. You can use the core tool for free forever. You can scrape up to 100 leads at a time and export them to a CSV file without paying anything.' },
+  { q: 'Is SaaSquatch Pro really free?', a: 'Yes. You can use the core tool for free forever. You can scrape up to 100 leads at a time and export them to a CSV file without paying anything.' },
   { q: 'Does it work in every country?', a: 'Yes. It works on any Google Maps search anywhere in the world. Just search for what you need and start the tool.' },
   { q: 'Do I need to make an account?', a: 'No. You just install the extension and start using it. We do not ask for your email or any other personal info.' },
   { q: 'How fast is it?', a: 'It is very fast. It can find basic info like names and ratings in seconds. If you need phone numbers and websites, it takes a little longer because it has to look at each listing carefully.' },
