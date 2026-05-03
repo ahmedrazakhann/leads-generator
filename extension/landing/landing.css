@@ -18,10 +18,10 @@
   --bg-sub: #0f172a;
   --bg-elev: #1e293b;
 
-  --teal: #14b8a6;
-  --blue: #3b82f6;
-  --grad: linear-gradient(135deg, #14b8a6, #3b82f6);
-  --grad-glow: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(59, 130, 246, 0.2));
+  --teal: #7BC2A2;
+  --blue: #3F8670;
+  --grad: linear-gradient(135deg, #7BC2A2, #3F8670);
+  --grad-glow: linear-gradient(135deg, rgba(123, 194, 162, 0.2), rgba(63, 134, 112, 0.2));
 
   --text: #f8fafc;
   --text-dim: #94a3b8;
@@ -92,12 +92,12 @@ body {
 .btn-primary {
   background: var(--grad);
   color: #fff;
-  box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+  box-shadow: 0 4px 15px rgba(123, 194, 162, 0.3);
 }
 
 .btn-primary:hover {
   filter: brightness(1.1);
-  box-shadow: 0 8px 25px rgba(20, 184, 166, 0.5);
+  box-shadow: 0 8px 25px rgba(123, 194, 162, 0.5);
   transform: translateY(-2px);
 }
 

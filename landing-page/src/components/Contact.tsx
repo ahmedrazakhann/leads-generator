@@ -20,11 +20,11 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-16">
           
           <div className="flex flex-col justify-center">
-            <div className="inline-block w-fit px-4 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
+            <div className="inline-block w-fit px-4 py-1.5 rounded-lg bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-6">
               Contact
             </div>
             <h2 className="text-4xl md:text-6xl font-black mb-8">
-              Get in <span className="text-blue-500">Touch</span>
+              Get in <span className="text-gradient">Touch</span>
             </h2>
             <p className="text-slate-400 text-lg mb-12 max-w-md">
               Have a question or need help? Send us a message and we will get back to you soon.
@@ -44,12 +44,12 @@ export default function Contact() {
               </div>
               
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-blue-500">
+                <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-primary">
                   <ExternalLink size={20}/>
                 </div>
                 <div>
                   <div className="text-sm font-bold text-slate-100">LinkedIn</div>
-                  <a href="https://www.linkedin.com/company/saasquatchleads/" className="text-slate-400 hover:text-blue-400 transition-colors">
+                  <a href="https://www.linkedin.com/company/saasquatchleads/" className="text-slate-400 hover:text-primary transition-colors">
                     linkedin.com/company/saasquatchleads
                   </a>
                 </div>

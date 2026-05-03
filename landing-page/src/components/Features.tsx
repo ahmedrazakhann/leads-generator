@@ -44,7 +44,7 @@ export default function Features() {
     <section className="py-24 bg-[#020617]" id="features">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-bold uppercase tracking-widest mb-4">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4">
             Features
           </div>
           <h2 className="text-4xl md:text-6xl font-black mb-6">
@@ -65,12 +65,12 @@ export default function Features() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className={`group glass-card p-8 rounded-3xl flex flex-col ${feature.wide ? 'md:col-span-2 lg:flex-row lg:items-center gap-8' : ''}`}
             >
-              <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:scale-110 group-hover:bg-teal-500 group-hover:text-white transition-all duration-300">
+              <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-110 group-hover:btn-gradient group-hover:text-white transition-all duration-300">
                 {feature.icon}
               </div>
               
               <div className="mt-6 lg:mt-0 flex-1">
-                <h3 className="text-xl font-bold mb-3 group-hover:text-teal-400 transition-colors">
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
                 <p className="text-slate-400 text-sm leading-relaxed mb-4">
@@ -81,7 +81,7 @@ export default function Features() {
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {feature.bullets.map(bullet => (
                       <li key={bullet} className="flex items-center gap-2 text-xs font-semibold text-slate-300">
-                        <div className="w-4 h-4 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-400">
+                        <div className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                           <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                         </div>
                         {bullet}
