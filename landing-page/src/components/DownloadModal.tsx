@@ -53,7 +53,7 @@ export default function DownloadModal() {
                   <Download size={40} />
                 </div>
                 
-                <h3 className="text-3xl font-black mb-4">Install MapLeads Pro</h3>
+                <h3 className="text-3xl font-black mb-4">Install SaaSquatch</h3>
                 <p className="text-slate-400 mb-10 leading-relaxed">
                   Follow these 4 quick steps to start using the extension.
                 </p>

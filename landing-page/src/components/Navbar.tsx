@@ -30,11 +30,8 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-2 group">
-          <MapPin className="text-teal-500 group-hover:scale-110 transition-transform" size={24} strokeWidth={2.5} />
-          <span className="text-xl font-extrabold tracking-tight">
-            Map<span className="text-gradient">Leads</span> Pro
-          </span>
+        <a href="#hero" className="flex items-center gap-3 group">
+          <img src="/images/logo_horizontal.png" alt="SaaSquatch" className="h-10 w-auto" />
         </a>
 
         {/* Desktop Links */}

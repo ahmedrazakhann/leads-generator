@@ -314,8 +314,8 @@ function pauseScraping() {
   if (!activeTabId || !isRunning) return;
   isPaused = !isPaused;
   btnPause.innerHTML = isPaused
-    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Resume`
-    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Pause`;
+    ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Resume`
+    : `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Pause`;
 
   setStatus(isPaused ? 'paused' : 'running', isPaused ? 'Paused' : 'Scraping in progress...');
 
@@ -330,7 +330,7 @@ function stopScraping() {
   btnStart.disabled = false;
   btnPause.disabled = true;
   btnStop.disabled = true;
-  btnPause.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Pause`;
+  btnPause.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Pause`;
 
   setStatus('idle', `Stopped — ${leads.length} leads collected`);
   chrome.tabs.sendMessage(activeTabId, { type: 'STOP_SCRAPE' });

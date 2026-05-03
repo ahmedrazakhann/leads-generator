@@ -27,10 +27,10 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-12 mb-20">
           <div>
-            <div className="flex items-center gap-2 mb-6">
-              <MapPin className="text-teal-500" size={24} strokeWidth={2.5} />
+            <div className="flex items-center gap-3 mb-6">
+              <img src="/images/logo_horizontal.png" alt="SaaSquatch" className="h-8 w-auto" />
               <span className="text-2xl font-black">
-                Map<span className="text-teal-500">Leads</span> Pro
+                SaaSquatch
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs mb-8">
@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-10 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-600 uppercase tracking-widest">
-          <div>© 2026 MapLeads Pro. All rights reserved.</div>
+          <div>© 2026 SaaSquatch. All rights reserved.</div>
           <div className="flex items-center gap-2">
             <span>Helping you find more customers.</span>
             <div className="w-1 h-1 rounded-full bg-slate-800" />

@@ -6,7 +6,8 @@
 <title>MapLeads Pro — Google Maps Lead Scraper Chrome Extension</title>
 <meta name="description" content="Scrape thousands of business leads from Google Maps in minutes. Export to CSV or Excel instantly. Free Chrome extension."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="landing.css"/>
 </head>
 <body>
@@ -15,8 +16,8 @@
 <nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="#" class="nav-logo">
-      <span class="logo-icon">📍</span>
-      <span>Map<span class="grad-text">Leads</span> Pro</span>
+      <img src="../icons/logo_horizontal.png" alt="SaaSquatch" style="height: 32px; width: auto;" />
+      <span>SaaSquatch</span>
     </a>
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
@@ -25,8 +26,10 @@
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#download" class="btn btn-primary nav-cta">Get Extension Free</a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <a href="#download" class="btn btn-primary nav-cta">Download Free</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
+    </div>
   </div>
 </nav>
 
@@ -35,56 +38,61 @@
   <div class="hero-bg-glow glow-1"></div>
   <div class="hero-bg-glow glow-2"></div>
   <div class="container hero-inner">
-    <div class="hero-badge"><span class="badge-dot"></span> Free Chrome Extension · No signup required</div>
-    <h1 class="hero-title">Scrape <span class="grad-text">Google Maps Leads</span> in Seconds</h1>
-    <p class="hero-sub">Extract business names, phones, addresses, websites, ratings and more from any Google Maps search. Export to CSV or Excel with one click.</p>
+    <div class="hero-badge"><span class="badge-dot"></span> Free Extension · No Signup Required</div>
+    <h1 class="hero-title">Extract <span class="grad-text">500+ Business Leads</span><br/>from Google Maps in Minutes</h1>
+    <p class="hero-sub">Search anything on Google Maps. Hit Start. Watch business names, phones, addresses, and websites fill up automatically. Export to Excel instantly.</p>
+    
     <div class="hero-cta-row">
       <a href="#download" class="btn btn-primary btn-lg">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
-        Add to Chrome — Free
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Add to Chrome — It's Free
       </a>
       <a href="#how" class="btn btn-outline btn-lg">See How It Works →</a>
     </div>
+
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Leads/session</span></div>
+      <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Leads/search</span></div>
       <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">10x</span><span class="stat-label">Faster than manual</span></div>
+      <div class="stat"><span class="stat-num">2 min</span><span class="stat-label">to get 100 leads</span></div>
       <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">CSV &amp; XLSX</span><span class="stat-label">Export formats</span></div>
+      <div class="stat"><span class="stat-num">CSV + XLSX</span><span class="stat-label">Export formats</span></div>
       <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Free forever</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Free access</span></div>
     </div>
 
     <!-- Mock Extension UI -->
     <div class="hero-mockup">
       <div class="mockup-browser">
         <div class="mockup-bar">
-          <span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span>
-          <div class="mockup-url">google.com/maps/search/restaurants+in+Dubai</div>
+          <div style="display: flex; gap: 8px;">
+            <span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span>
+          </div>
+          <div class="mockup-url">google.com/maps/search/restaurants+in+London</div>
         </div>
         <div class="mockup-body">
           <div class="mockup-map">
-            <div class="map-pin" style="top:35%;left:28%">📍</div>
-            <div class="map-pin" style="top:55%;left:48%">📍</div>
-            <div class="map-pin" style="top:42%;left:62%">📍</div>
-            <div class="map-pin" style="top:65%;left:35%">📍</div>
-            <div class="map-label">Google Maps</div>
+            <div class="map-pin" style="top:30%;left:25%;color:#14b8a6">📍</div>
+            <div class="map-pin" style="top:52%;left:52%;color:#3b82f6">📍</div>
+            <div class="map-pin" style="top:35%;left:70%;color:#8b5cf6">📍</div>
+            <div class="map-pin" style="top:60%;left:35%;color:#14b8a6">📍</div>
+            <div class="map-label">LONDON, UK</div>
           </div>
           <div class="mockup-popup">
             <div class="popup-header">
-              <span class="popup-logo">📍 Map<b>Leads</b></span>
-              <span class="popup-badge">47 leads</span>
+              <span class="popup-logo"><img src="../icons/logo_horizontal.png" style="height: 14px; width: auto; vertical-align: middle;" /> SaaSquatch</span>
+              <span class="popup-badge">47 leads found</span>
             </div>
             <div class="popup-row">
               <div class="popup-field">Max Results<br/><b>100</b></div>
               <div class="popup-field">Export As<br/><b>Excel</b></div>
             </div>
-            <div class="popup-btn">▶ Start Scraping</div>
+            <div class="popup-btn">▶ START SCRAPING</div>
             <div class="popup-table">
-              <div class="popup-th"><span>Name</span><span>Phone</span><span>Rating</span></div>
-              <div class="popup-tr r1"><span>Zuma Dubai</span><span>+971 4 425</span><span>⭐ 4.8</span></div>
-              <div class="popup-tr r2"><span>Nobu Dubai</span><span>+971 4 818</span><span>⭐ 4.7</span></div>
-              <div class="popup-tr r3"><span>Nusr-Et Steak</span><span>+971 4 667</span><span>⭐ 4.5</span></div>
+              <div class="popup-th"><span>Business Name</span><span>Phone</span><span>Rate</span></div>
+              <div class="popup-tr r1"><span>The Ledbury</span><span>+44 20 7792</span><span>⭐ 4.8</span></div>
+              <div class="popup-tr r2"><span>Dishoom</span><span>+44 20 7420</span><span>⭐ 4.7</span></div>
+              <div class="popup-tr r3"><span>Sketch London</span><span>+44 20 7659</span><span>⭐ 4.5</span></div>
+              <div class="popup-tr" style="animation-delay: 2.3s;"><span>Hakkasan</span><span>+44 20 7907</span><span>⭐ 4.6</span></div>
             </div>
           </div>
         </div>
@@ -93,17 +101,17 @@
   </div>
 </section>
 
-<!-- LOGOS / SOCIAL PROOF -->
+<!-- LOGOS -->
 <section class="logos-strip">
   <div class="container">
-    <p class="logos-label">Works seamlessly with your favourite tools</p>
+    <p class="logos-label">Trusted by growth hackers using</p>
     <div class="logos-row">
-      <span class="logo-pill">📊 Excel</span>
-      <span class="logo-pill">📄 Google Sheets</span>
-      <span class="logo-pill">🔗 HubSpot</span>
-      <span class="logo-pill">📧 Mailchimp</span>
-      <span class="logo-pill">💼 Salesforce</span>
-      <span class="logo-pill">🤖 Zapier</span>
+      <span class="logo-pill">Microsoft Excel</span>
+      <span class="logo-pill">Google Sheets</span>
+      <span class="logo-pill">HubSpot CRM</span>
+      <span class="logo-pill">Mailchimp</span>
+      <span class="logo-pill">Salesforce</span>
+      <span class="logo-pill">Zapier</span>
     </div>
   </div>
 </section>
@@ -112,45 +120,45 @@
 <section class="features" id="features">
   <div class="container">
     <div class="section-header">
-      <div class="section-tag">Features</div>
-      <h2>Everything You Need to <span class="grad-text">Scale Your Pipeline</span></h2>
-      <p>From discovery to export, MapLeads Pro automates your entire Google Maps lead generation workflow.</p>
+      <div class="section-tag">Powerful Features</div>
+      <h2>Everything You Need to <span class="grad-text">Build Your List</span></h2>
+      <p>Stop wasting hours copying data by hand. Our tool does the hard work for you.</p>
     </div>
     <div class="features-grid">
       <div class="feature-card featured-card">
         <div class="feature-icon">⚡</div>
-        <h3>Lightning Fast Scraping</h3>
-        <p>Auto-scrolls results and extracts data directly from list cards — no manual clicking required. Get 100 leads in under 2 minutes.</p>
+        <h3>Auto-Scrolling Engine</h3>
+        <p>Our extension automatically scrolls through Google Maps results to ensure every single lead is captured. You don't have to click a thing.</p>
         <ul class="feature-list">
-          <li>✓ Auto-scroll through all results</li>
-          <li>✓ Smart deduplication</li>
-          <li>✓ Pause &amp; resume anytime</li>
+          <li>✓ Extract 100 leads in < 2 minutes</li>
+          <li>✓ Handles infinite scroll automatically</li>
+          <li>✓ Intelligent deduplication logic</li>
         </ul>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📋</div>
-        <h3>10 Data Fields</h3>
-        <p>Capture everything you need: business name, category, address, phone, website, rating, review count, hours, plus code, and Maps URL.</p>
+        <h3>All Important Data</h3>
+        <p>We collect names, categories, addresses, phone numbers, websites, ratings, and even opening hours.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📥</div>
-        <h3>CSV &amp; Excel Export</h3>
-        <p>Download leads as a clean CSV or a formatted Excel file (XLSX) with one click. UTF-8 encoded for global compatibility.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3>Field Selector</h3>
-        <p>Choose exactly which columns to include in your export. Only scrape what you need — saves time and file size.</p>
+        <h3>One-Click Export</h3>
+        <p>Download your list instantly as a clean CSV or formatted Excel file. Use it immediately in any tool.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔒</div>
-        <h3>100% Private</h3>
-        <p>All data stays in your browser. No data is sent to any server. No account required. No API keys. Just install and go.</p>
+        <h3>Privacy First</h3>
+        <p>Everything stays on your computer. We never store your leads on any server. No accounts needed.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Field Filtering</h3>
+        <p>Choose exactly which data you want to save. Keeps your files clean and saves you manual cleanup time.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔄</div>
-        <h3>Session Persistence</h3>
-        <p>Leads accumulate across searches in the same session. Clear whenever you want, or keep appending from multiple queries.</p>
+        <h3>Session Logic</h3>
+        <p>Leads stay in your list as you search for different keywords. Build a massive database in one go.</p>
       </div>
     </div>
   </div>
@@ -160,59 +168,30 @@
 <section class="how" id="how">
   <div class="container">
     <div class="section-header">
-      <div class="section-tag">How It Works</div>
-      <h2>3 Steps to <span class="grad-text">Thousands of Leads</span></h2>
+      <div class="section-tag">Workflow</div>
+      <h2>Get Leads in <span class="grad-text">3 Simple Steps</span></h2>
     </div>
     <div class="steps-row">
       <div class="step-card">
         <div class="step-num">01</div>
-        <div class="step-icon">🗺️</div>
-        <h3>Search on Google Maps</h3>
-        <p>Go to Google Maps and search for any business type + location. E.g. "plumbers in Chicago" or "restaurants in Dubai".</p>
+        <div class="step-icon">🔍</div>
+        <h3>Search on Maps</h3>
+        <p>Open Google Maps and search for any business niche and location. E.g., "SaaS companies in San Francisco".</p>
       </div>
       <div class="step-arrow">→</div>
       <div class="step-card">
         <div class="step-num">02</div>
-        <div class="step-icon">▶️</div>
-        <h3>Click Start Scraping</h3>
-        <p>Open the MapLeads Pro extension, select your fields and max results, then hit Start. Watch leads populate in real time.</p>
+        <div class="step-icon">🚀</div>
+        <h3>Run Scraper</h3>
+        <p>Open the extension, set your limits, and hit Start. Watch the magic happen in the live results table.</p>
       </div>
       <div class="step-arrow">→</div>
       <div class="step-card">
         <div class="step-num">03</div>
-        <div class="step-icon">📤</div>
-        <h3>Export Your Leads</h3>
-        <p>Click Export to download a clean CSV or Excel file. Import directly into HubSpot, Sheets, or your outreach tool.</p>
+        <div class="step-icon">📄</div>
+        <h3>Export Data</h3>
+        <p>Download your data as CSV or XLSX. Your file is ready to be uploaded to your CRM or outreach tool.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- FIELDS TABLE -->
-<section class="fields-section">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-tag">Data Fields</div>
-      <h2>What Data Do You <span class="grad-text">Get?</span></h2>
-    </div>
-    <div class="fields-table-wrap">
-      <table class="fields-table">
-        <thead>
-          <tr><th>Field</th><th>Example Value</th><th>Requires Click</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>📌 Business Name</td><td>Zuma Dubai</td><td><span class="badge-no">Instant</span></td></tr>
-          <tr><td>🏷️ Category</td><td>Japanese Restaurant</td><td><span class="badge-no">Instant</span></td></tr>
-          <tr><td>📍 Address</td><td>DIFC, Dubai, UAE</td><td><span class="badge-no">Instant</span></td></tr>
-          <tr><td>⭐ Rating</td><td>4.8</td><td><span class="badge-no">Instant</span></td></tr>
-          <tr><td>💬 Reviews</td><td>3,241</td><td><span class="badge-no">Instant</span></td></tr>
-          <tr><td>📞 Phone</td><td>+971 4 425 5660</td><td><span class="badge-yes">Detail Panel</span></td></tr>
-          <tr><td>🌐 Website</td><td>zumarestaurant.com</td><td><span class="badge-yes">Detail Panel</span></td></tr>
-          <tr><td>🕐 Hours</td><td>Open until 11 PM</td><td><span class="badge-yes">Detail Panel</span></td></tr>
-          <tr><td>🔢 Plus Code</td><td>8H4W+M9 Dubai</td><td><span class="badge-yes">Detail Panel</span></td></tr>
-          <tr><td>🗺️ Maps URL</td><td>google.com/maps/place/...</td><td><span class="badge-no">Instant</span></td></tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </section>
@@ -222,48 +201,45 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">Pricing</div>
-      <h2>Simple, <span class="grad-text">Transparent Pricing</span></h2>
-      <p>Start free. Upgrade only if you need more power.</p>
+      <h2>Transparent <span class="grad-text">Plans for Everyone</span></h2>
     </div>
     <div class="pricing-grid">
       <div class="price-card">
-        <div class="price-tag">Free</div>
-        <div class="price-amount">$0<span>/forever</span></div>
-        <p class="price-desc">Perfect for individuals and small prospecting tasks.</p>
+        <div class="price-tag">Free Plan</div>
+        <div class="price-amount">$0<span>/mo</span></div>
+        <p class="price-desc">Great for small prospecting tasks and testing the waters.</p>
         <ul class="price-features">
-          <li>✓ Up to 100 leads/session</li>
-          <li>✓ CSV export</li>
-          <li>✓ 6 data fields</li>
-          <li>✓ No signup needed</li>
-          <li>✓ Unlimited searches</li>
+          <li>100 leads per session</li>
+          <li>CSV Export</li>
+          <li>Standard Fields</li>
+          <li>No Signup Required</li>
         </ul>
-        <a href="#download" class="btn btn-outline w-full">Download Free</a>
+        <a href="#download" class="btn btn-outline w-full">Start Free</a>
       </div>
       <div class="price-card price-popular">
-        <div class="popular-ribbon">Most Popular</div>
-        <div class="price-tag">Pro</div>
-        <div class="price-amount">$19<span>/month</span></div>
-        <p class="price-desc">For sales teams and agencies running high-volume campaigns.</p>
+        <div class="popular-ribbon">Best Value</div>
+        <div class="price-tag">Pro Plan</div>
+        <div class="price-amount">$19<span>/mo</span></div>
+        <p class="price-desc">For serious sales teams and agencies scaling outreach.</p>
         <ul class="price-features">
-          <li>✓ Unlimited leads/session</li>
-          <li>✓ CSV + Excel export</li>
-          <li>✓ All 10 data fields</li>
-          <li>✓ Session persistence</li>
-          <li>✓ Priority support</li>
-          <li>✓ Bulk search mode</li>
+          <li>Unlimited leads per session</li>
+          <li>CSV + Excel Export</li>
+          <li>All 10 Data Fields</li>
+          <li>Session Persistence</li>
+          <li>Priority Support</li>
         </ul>
         <a href="#contact" class="btn btn-primary w-full">Get Pro Access</a>
       </div>
       <div class="price-card">
-        <div class="price-tag">Enterprise</div>
+        <div class="price-tag">Agency</div>
         <div class="price-amount">Custom</div>
-        <p class="price-desc">For agencies and large teams with API and CRM integration needs.</p>
+        <p class="price-desc">Custom solutions for large teams with specific CRM needs.</p>
         <ul class="price-features">
-          <li>✓ Everything in Pro</li>
-          <li>✓ API access</li>
-          <li>✓ CRM integration</li>
-          <li>✓ Dedicated account manager</li>
-          <li>✓ Custom field mapping</li>
+          <li>Everything in Pro</li>
+          <li>CRM Integration</li>
+          <li>API Access</li>
+          <li>Team Management</li>
+          <li>Custom Field Mapping</li>
         </ul>
         <a href="#contact" class="btn btn-outline w-full">Contact Sales</a>
       </div>
@@ -275,24 +251,25 @@
 <section class="testimonials">
   <div class="container">
     <div class="section-header">
-      <div class="section-tag">Testimonials</div>
-      <h2>Loved by <span class="grad-text">Sales Teams</span> Worldwide</h2>
+      <div class="section-tag">Success Stories</div>
+      <h2>Loved by <span class="grad-text">Modern Sales Teams</span></h2>
     </div>
-    <div class="testimonials-grid">
+    <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
       <div class="testi-card">
-        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-        <p>"I scraped 400 restaurant leads in Dubai in under 5 minutes. This tool is an absolute game changer for our outreach campaigns."</p>
-        <div class="testi-author"><div class="testi-avatar">AK</div><div><b>Ahmad Khalil</b><span>Sales Director, FoodTech Startup</span></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <p>"I scraped 400 targeted leads in under 5 minutes. This tool is a game changer for our cold outreach."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AK</div>
+          <div><b>Ahmad Khalil</b><span>Growth Manager, TechScale</span></div>
+        </div>
       </div>
       <div class="testi-card">
-        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-        <p>"We replaced a $300/month data vendor with this free extension. The phone numbers and addresses are super accurate."</p>
-        <div class="testi-author"><div class="testi-avatar">SR</div><div><b>Sarah Reynolds</b><span>Growth Lead, B2B Agency</span></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-        <p>"The Excel export is perfectly formatted. I paste it straight into our CRM. Saves our team literally hours every week."</p>
-        <div class="testi-author"><div class="testi-avatar">MR</div><div><b>Marco Ricci</b><span>Founder, Local SEO Agency</span></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <p>"The most accurate Maps scraper I've used. The phone numbers and websites are always spot on."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SR</div>
+          <div><b>Sarah Reynolds</b><span>SDR at B2B Flows</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -302,34 +279,14 @@
 <section class="faq" id="faq">
   <div class="container faq-inner">
     <div class="section-header">
-      <div class="section-tag">FAQ</div>
+      <div class="section-tag">Support</div>
       <h2>Frequently Asked <span class="grad-text">Questions</span></h2>
     </div>
     <div class="faq-list">
-      <details class="faq-item"><summary>Is MapLeads Pro free?</summary><p>Yes! The core extension is completely free. You can scrape up to 100 leads per session and export to CSV at no cost. Pro and Enterprise plans unlock higher limits and more features.</p></details>
-      <details class="faq-item"><summary>Does it work on all Google Maps searches?</summary><p>Yes — it works on any Google Maps business search, worldwide. Search for any niche + location and the extension will scrape all visible results.</p></details>
-      <details class="faq-item"><summary>Do I need to create an account?</summary><p>No. Install the Chrome extension and start scraping immediately. No signup, no API keys, no credit card.</p></details>
-      <details class="faq-item"><summary>How fast does it scrape?</summary><p>For basic fields (Name, Rating, Category, Address) it takes ~80ms per lead — 100 leads in under 10 seconds. For phone and website (requires clicking each card) it takes ~1.5 seconds per lead.</p></details>
-      <details class="faq-item"><summary>Where does my data go?</summary><p>All scraped data stays 100% in your browser. Nothing is sent to any external server. Your leads are private and belong only to you.</p></details>
-      <details class="faq-item"><summary>Can I export to Google Sheets?</summary><p>Yes — export as CSV, then import into Google Sheets via File → Import. You can also open the CSV directly in Excel or Numbers.</p></details>
-      <details class="faq-item"><summary>Will it work if Google updates their Maps UI?</summary><p>Google occasionally changes their Maps DOM structure. When this happens, we update the extension selectors and push a new version. You'll get the update automatically through Chrome.</p></details>
+      <details class="faq-item"><summary>Is it really free?</summary><p>Yes, the core extension is free and allows you to scrape up to 100 leads per session. No credit card is required to start.</p></details>
+      <details class="faq-item"><summary>Where is my data stored?</summary><p>All data stays 100% locally in your browser. We do not store or see your leads. Your privacy is our priority.</p></details>
+      <details class="faq-item"><summary>How many leads can I scrape?</summary><p>The Free plan allows 100 leads per session. The Pro plan has no limits, allowing you to build massive databases in one go.</p></details>
     </div>
-  </div>
-</section>
-
-<!-- CTA BANNER -->
-<section class="cta-banner">
-  <div class="cta-glow"></div>
-  <div class="container cta-inner">
-    <h2>Ready to Fill Your Pipeline?</h2>
-    <p>Join 2,000+ sales professionals already using MapLeads Pro to generate targeted leads every day.</p>
-    <div class="cta-row">
-      <a href="#download" class="btn btn-primary btn-lg">
-        🚀 Add to Chrome — It's Free
-      </a>
-      <a href="#contact" class="btn btn-outline btn-lg">Talk to Sales</a>
-    </div>
-    <p class="cta-note">No credit card · No signup · Works in 60 seconds</p>
   </div>
 </section>
 
@@ -337,32 +294,23 @@
 <section class="contact" id="contact">
   <div class="container contact-inner">
     <div class="contact-info">
-      <div class="section-tag">Contact</div>
+      <div class="section-tag">Support</div>
       <h2>Get in <span class="grad-text">Touch</span></h2>
-      <p>Our team is ready to help. We respond within 24 hours.</p>
+      <p>Have a question or need a custom plan? We respond within 24 hours.</p>
       <div class="contact-items">
         <div class="contact-item">
-          <span class="contact-icon">📧</span>
-          <div><b>Email</b><a href="mailto:support@saasquatchleads.com">support@saasquatchleads.com</a></div>
+          <div class="contact-icon">✉️</div>
+          <div><b>Email Us</b><a href="mailto:support@saasquatchleads.com">support@saasquatchleads.com</a></div>
         </div>
         <div class="contact-item">
-          <span class="contact-icon">💼</span>
-          <div><b>LinkedIn</b><a href="https://www.linkedin.com/company/saasquatchleads/" target="_blank">linkedin.com/company/saasquatchleads</a></div>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">🏢</span>
-          <div><b>Office</b><span>Caprae Capital Partners, Glendale, California</span></div>
+          <div class="contact-icon">📍</div>
+          <div><b>Office</b><span>Caprae Capital, Glendale, California</span></div>
         </div>
       </div>
     </div>
     <form class="contact-form" id="contactForm">
-      <div class="form-row">
-        <div class="form-group"><label>First Name</label><input type="text" placeholder="John"/></div>
-        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe"/></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" placeholder="john@company.com"/></div>
-      <div class="form-group"><label>Company</label><input type="text" placeholder="Your company name"/></div>
-      <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Tell us how we can help..."></textarea></div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@company.com"/></div>
+      <div class="form-group"><label>Message</label><textarea rows="4" placeholder="How can we help?"></textarea></div>
       <button type="submit" class="btn btn-primary w-full">Send Message →</button>
     </form>
   </div>
@@ -374,10 +322,10 @@
     <div class="footer-top">
       <div class="footer-brand">
         <span class="nav-logo">📍 Map<span class="grad-text">Leads</span> Pro</span>
-        <p>AI-powered Google Maps lead scraper for sales teams, agencies, and growth hackers.</p>
+        <p>AI-powered Google Maps lead scraper built for modern sales teams and growth agencies.</p>
         <div class="footer-social">
-          <a href="https://www.linkedin.com/company/saasquatchleads/" target="_blank" class="social-btn">in</a>
-          <a href="mailto:support@saasquatchleads.com" class="social-btn">✉</a>
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">X</a>
         </div>
       </div>
       <div class="footer-links">
@@ -386,47 +334,21 @@
           <a href="#features">Features</a>
           <a href="#pricing">Pricing</a>
           <a href="#how">How It Works</a>
-          <a href="#download">Download</a>
         </div>
         <div class="footer-col">
-          <b>Resources</b>
-          <a href="#">Documentation</a>
-          <a href="#">Changelog</a>
-          <a href="#">API Docs</a>
-          <a href="#">Blog</a>
-        </div>
-        <div class="footer-col">
-          <b>Company</b>
-          <a href="https://www.saasquatchleads.com/" target="_blank">SaaSquatch Leads</a>
+          <b>Support</b>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <a href="#">Privacy</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 SaaSquatch Leads / MapLeads Pro. All rights reserved.</span>
-      <span>Built with ❤️ for sales teams worldwide</span>
+      <span>© 2026 MapLeads Pro. All rights reserved.</span>
+      <span>Built for Sales Teams</span>
     </div>
   </div>
 </footer>
-
-<!-- DOWNLOAD MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="modal-close" id="modalClose">✕</button>
-    <div class="modal-icon">🚀</div>
-    <h3>Get MapLeads Pro</h3>
-    <p>The extension is ready to install. Load it in Chrome Developer Mode.</p>
-    <ol class="modal-steps">
-      <li>Open <b>chrome://extensions/</b></li>
-      <li>Enable <b>Developer Mode</b> (top right)</li>
-      <li>Click <b>Load unpacked</b></li>
-      <li>Select the <b>extension/</b> folder</li>
-    </ol>
-    <a href="#" class="btn btn-primary w-full" onclick="document.getElementById('modalOverlay').classList.remove('active')">Got It!</a>
-  </div>
-</div>
 
 <script src="landing.js"></script>
 </body>
