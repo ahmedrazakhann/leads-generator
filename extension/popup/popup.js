@@ -14,7 +14,6 @@ let isPaused = false;
 let activeTabId = null;
 let maxResults = 100;
 
-// Field mapping: id → { key, label }
 const FIELD_MAP = {
   'f-name':     { key: 'name',     label: 'Name' },
   'f-category': { key: 'category', label: 'Category' },
@@ -24,8 +23,6 @@ const FIELD_MAP = {
   'f-rating':   { key: 'rating',   label: 'Rating' },
   'f-reviews':  { key: 'reviews',  label: 'Reviews' },
   'f-hours':    { key: 'hours',    label: 'Hours' },
-  'f-plusCode': { key: 'plusCode', label: 'Plus Code' },
-  'f-mapsUrl':  { key: 'mapsUrl',  label: 'Maps URL' },
 };
 
 // ─────────────────────────────────────────────────────────
@@ -50,6 +47,9 @@ const leadsHead   = $('leadsHead');
 const leadsBody   = $('leadsBody');
 const resultsSection = $('resultsSection');
 const toastEl     = $('toast');
+const heroSection   = $('heroSection');
+const activeScoping = $('activeScoping');
+const computationBox = $('computationBox');
 
 // ─────────────────────────────────────────────────────────
 //  Toast
@@ -71,15 +71,36 @@ function setStatus(type, message) {
 }
 
 function updateBadge() {
-  leadCount.textContent = leads.length;
-  leadBadge.classList.add('pulse');
-  setTimeout(() => leadBadge.classList.remove('pulse'), 400);
+  const count = leads.length;
+  leadCount.textContent = count;
 }
 
 function updateProgress(current, max) {
   const pct = max > 0 ? Math.min((current / max) * 100, 100) : 0;
   progressFill.style.width = `${pct}%`;
   progressLabel.textContent = `${current} / ${max}`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  UI Transitions
+// ─────────────────────────────────────────────────────────
+function showScrapingUI() {
+  heroSection.style.display = 'none';
+  activeScoping.style.display = 'block';
+  computationBox.style.display = 'block';
+  progressWrap.style.display = 'block';
+}
+
+function showInitialUI() {
+  if (leads.length === 0) {
+    heroSection.style.display = 'block';
+    activeScoping.style.display = 'none';
+    computationBox.style.display = 'none';
+  } else {
+    heroSection.style.display = 'none';
+    activeScoping.style.display = 'block';
+    computationBox.style.display = 'none'; // Only show when actually running
+  }
 }
 
 // ─────────────────────────────────────────────────────────
@@ -117,13 +138,6 @@ function appendLeadRow(lead) {
       td.appendChild(a);
     } else if (key === 'rating' && val) {
       td.innerHTML = `<span class="cell-rating">⭐ ${val}</span>`;
-    } else if (key === 'mapsUrl' && val) {
-      const a = document.createElement('a');
-      a.href = val;
-      a.target = '_blank';
-      a.className = 'cell-link';
-      a.textContent = 'View →';
-      td.appendChild(a);
     } else {
       td.title = val;
       td.textContent = val;
@@ -134,9 +148,16 @@ function appendLeadRow(lead) {
 
   leadsBody.appendChild(tr);
 
-  // Auto-scroll to latest
-  const wrap = leadsBody.closest('.table-wrap');
-  if (wrap) wrap.scrollTop = wrap.scrollHeight;
+  // Auto-scroll to latest with a tiny delay to ensure DOM update
+  requestAnimationFrame(() => {
+    const wrap = leadsBody.closest('.table-wrap');
+    if (wrap) {
+      wrap.scrollTo({
+        top: wrap.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  });
 }
 
 function rebuildTable() {
@@ -175,22 +196,7 @@ function exportXLSX() {
   ];
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(data);
-
-  // Style header row
-  const headerRange = XLSX.utils.decode_range(ws['!ref']);
-  for (let col = headerRange.s.c; col <= headerRange.e.c; col++) {
-    const cell = ws[XLSX.utils.encode_cell({ r: 0, c: col })];
-    if (cell) {
-      cell.s = {
-        font: { bold: true, color: { rgb: 'FFFFFF' } },
-        fill: { patternType: 'solid', fgColor: { rgb: '1A2A3A' } },
-      };
-    }
-  }
-
-  // Column widths
   ws['!cols'] = fields.map(() => ({ wch: 22 }));
-
   XLSX.utils.book_append_sheet(wb, ws, 'Leads');
   const xlsBuf = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
   const blob = new Blob([xlsBuf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -206,7 +212,7 @@ function downloadBlob(blob, filename) {
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 5000);
-  showToast(`✓ Exported ${leads.length} leads as ${filename.split('.').pop().toUpperCase()}`, 'success');
+  showToast(`✓ Exported ${leads.length} leads`, 'success');
 }
 
 function timestamp() {
@@ -224,21 +230,7 @@ async function getActiveTab() {
   });
 }
 
-async function pingContentScript(tabId) {
-  return new Promise((resolve) => {
-    try {
-      chrome.tabs.sendMessage(tabId, { type: 'PING' }, (resp) => {
-        if (chrome.runtime.lastError) return resolve(false);
-        resolve(resp?.alive === true);
-      });
-    } catch {
-      resolve(false);
-    }
-  });
-}
-
 async function ensureContentScript(tabId) {
-  // Always inject fresh — clears any stale cached version
   return new Promise((resolve) => {
     chrome.scripting.executeScript(
       { target: { tabId }, files: ['content/scraper.js'] },
@@ -263,7 +255,7 @@ async function startScraping() {
 
   const url = tab.url || '';
   if (!url.includes('google.com/maps') && !url.includes('maps.google.com')) {
-    setStatus('error', 'Please open Google Maps first');
+    setStatus('error', 'Open Google Maps first');
     showToast('⚠️ Navigate to Google Maps first', 'error');
     return;
   }
@@ -273,7 +265,7 @@ async function startScraping() {
 
   const ok = await ensureContentScript(activeTabId);
   if (!ok) {
-    setStatus('error', 'Could not inject scraper');
+    setStatus('error', 'Inject failed');
     showToast('❌ Failed to inject scraper', 'error');
     return;
   }
@@ -285,11 +277,10 @@ async function startScraping() {
   btnPause.disabled = false;
   btnStop.disabled = false;
 
-  progressWrap.style.display = 'flex';
+  showScrapingUI();
   updateProgress(0, maxResults);
   setStatus('running', 'Scraping in progress...');
 
-  // Give the injected script time to initialize before sending message
   await sleep(700);
 
   chrome.tabs.sendMessage(activeTabId, {
@@ -300,8 +291,8 @@ async function startScraping() {
     },
   }, (resp) => {
     if (chrome.runtime.lastError) {
-      setStatus('error', 'Could not reach content script — reload the Maps tab');
-      showToast('❌ Could not reach scraper. Reload Maps tab.', 'error');
+      setStatus('error', 'Reload Maps tab');
+      showToast('❌ Connection lost. Reload Maps.', 'error');
       btnStart.disabled = false;
       btnPause.disabled = true;
       btnStop.disabled = true;
@@ -313,12 +304,13 @@ async function startScraping() {
 function pauseScraping() {
   if (!activeTabId || !isRunning) return;
   isPaused = !isPaused;
+  
   btnPause.innerHTML = isPaused
-    ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Resume`
-    : `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Pause`;
+    ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`
+    : `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
   setStatus(isPaused ? 'paused' : 'running', isPaused ? 'Paused' : 'Scraping in progress...');
-
+  computationBox.style.opacity = isPaused ? '0.3' : '1';
   chrome.tabs.sendMessage(activeTabId, { type: 'PAUSE_SCRAPE' });
 }
 
@@ -330,9 +322,10 @@ function stopScraping() {
   btnStart.disabled = false;
   btnPause.disabled = true;
   btnStop.disabled = true;
-  btnPause.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Pause`;
+  btnPause.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
-  setStatus('idle', `Stopped — ${leads.length} leads collected`);
+  setStatus('idle', `Collected ${leads.length} leads`);
+  computationBox.style.display = 'none';
   chrome.tabs.sendMessage(activeTabId, { type: 'STOP_SCRAPE' });
 }
 
@@ -348,7 +341,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
     if (leads.length === 1) {
       buildTableHeader();
-      resultsSection.style.display = 'flex';
+      resultsSection.style.display = 'block';
     }
     appendLeadRow(lead);
   }
@@ -362,15 +355,16 @@ chrome.runtime.onMessage.addListener((message) => {
       btnStart.disabled = false;
       btnPause.disabled = true;
       btnStop.disabled = true;
+      computationBox.style.display = 'none';
       if (status === 'done') {
-        showToast(`✓ Done! ${count || leads.length} leads scraped`, 'success');
+        showToast(`✓ Done! ${count || leads.length} leads collected`, 'success');
         progressFill.style.width = '100%';
       }
     }
   }
 
   if (message.type === 'CONTENT_READY') {
-    setStatus('idle', 'Ready — click Start Scraping');
+    setStatus('idle', 'Ready to launch');
   }
 });
 
@@ -383,7 +377,7 @@ btnStop.addEventListener('click', stopScraping);
 
 btnExport.addEventListener('click', () => {
   if (!leads.length) {
-    showToast('No leads to export yet', 'error');
+    showToast('No leads to export', 'error');
     return;
   }
   const fmt = exportFmtEl.value;
@@ -402,10 +396,10 @@ btnClear.addEventListener('click', () => {
   resultsSection.style.display = 'none';
   updateBadge();
   updateProgress(0, maxResults);
+  showInitialUI();
   showToast('Leads cleared', 'info');
 });
 
-// Field checkboxes — rebuild table header on change
 Object.keys(FIELD_MAP).forEach((id) => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('change', () => { if (leads.length) rebuildTable(); });
@@ -414,18 +408,18 @@ Object.keys(FIELD_MAP).forEach((id) => {
 // ─────────────────────────────────────────────────────────
 //  Init
 // ─────────────────────────────────────────────────────────
-// Simple sleep helper for popup
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 (async function init() {
   const tab = await getActiveTab();
   if (!tab) return;
-
+  showInitialUI();
+  
   const url = tab.url || '';
   if (url.includes('google.com/maps') || url.includes('maps.google.com')) {
-    setStatus('idle', 'Ready — search on Maps and click Start');
+    setStatus('idle', 'Maps detected — ready to launch');
     activeTabId = tab.id;
   } else {
-    setStatus('idle', 'Open Google Maps and run a search first');
+    setStatus('idle', 'Waiting for Google Maps...');
   }
 })();
