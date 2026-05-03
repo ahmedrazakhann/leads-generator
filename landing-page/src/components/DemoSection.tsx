@@ -15,12 +15,12 @@ const LEADS = [
 ];
 
 const PINS = [
-  { x: '22%', y: '38%', color: '#14b8a6' },
-  { x: '45%', y: '55%', color: '#3b82f6' },
-  { x: '62%', y: '28%', color: '#14b8a6' },
-  { x: '35%', y: '68%', color: '#8b5cf6' },
-  { x: '72%', y: '48%', color: '#14b8a6' },
-  { x: '55%', y: '72%', color: '#3b82f6' },
+  { x: '22%', y: '38%', color: '#7BC2A2' },
+  { x: '45%', y: '55%', color: '#3F8670' },
+  { x: '62%', y: '28%', color: '#7BC2A2' },
+  { x: '35%', y: '68%', color: '#4a9d7e' },
+  { x: '72%', y: '48%', color: '#7BC2A2' },
+  { x: '55%', y: '72%', color: '#3F8670' },
 ];
 
 export default function DemoSection() {
@@ -116,7 +116,7 @@ export default function DemoSection() {
                   initial={{ top: '0%' }}
                   animate={{ top: '100%' }}
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-teal-500 to-transparent shadow-sm shadow-teal-500/30 z-10"
+                  className="absolute left-0 right-0 h-[2px] btn-gradient shadow-sm shadow-primary/30 z-10"
                 />
               )}
             </div>
@@ -137,7 +137,7 @@ export default function DemoSection() {
             <div className="flex items-center gap-3">
               <div className="flex-1 h-2 bg-slate-900 rounded-full overflow-hidden">
                 <motion.div 
-                  className="h-full bg-linear-to-r from-teal-500 to-blue-600"
+                  className="h-full btn-gradient"
                   initial={{ width: '0%' }}
                   animate={{ width: `${progress}%` }}
                 />
@@ -193,7 +193,7 @@ export default function DemoSection() {
                 >
                   <Zap size={14} /> Try Again
                 </button>
-                <button className="flex-1 py-3 px-4 rounded-xl bg-linear-to-r from-teal-500 to-blue-600 hover:shadow-md hover:shadow-teal-500/10 transition-all text-xs font-bold text-white flex items-center justify-center gap-2">
+                <button className="flex-1 py-3 px-4 rounded-xl btn-gradient hover:shadow-md hover:shadow-primary/10 transition-all text-xs font-bold text-white flex items-center justify-center gap-2">
                   <FileDown size={14} /> Export CSV
                 </button>
               </div>

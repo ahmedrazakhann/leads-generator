@@ -135,7 +135,7 @@ export default function DownloadModal() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleDownload}
-                    className="w-full py-6 bg-gradient-to-r from-teal-500 to-blue-600 rounded-[24px] font-black text-white text-xl shadow-lg shadow-teal-500/10 hover:shadow-xl hover:shadow-teal-500/20 transition-all flex items-center justify-center gap-3"
+                    className="w-full py-6 btn-gradient rounded-[24px] font-black text-white text-xl shadow-lg shadow-primary/10 hover:shadow-xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-3"
                   >
                     <Download size={24} />
                     Download Extension Now

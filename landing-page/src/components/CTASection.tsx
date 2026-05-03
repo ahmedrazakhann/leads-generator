@@ -34,7 +34,7 @@ export default function CTASection() {
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             <button 
               onClick={openModal}
-              className="px-10 py-5 text-xl font-black text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 transition-all flex items-center gap-3 shadow-lg"
+              className="px-10 py-5 text-xl font-black text-white btn-gradient rounded-full hover:shadow-xl hover:shadow-primary/20 hover:scale-105 transition-all flex items-center gap-3 shadow-lg"
             >
               <Download size={24} /> Add to Chrome for Free
             </button>

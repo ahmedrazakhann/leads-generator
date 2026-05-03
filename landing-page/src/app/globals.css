@@ -8,8 +8,8 @@
   --color-bg-card: #0f172a;
   --color-bg-inner: #1e293b;
 
-  --color-primary: #14b8a6;
-  --color-secondary: #3b82f6;
+  --color-primary: #7BC2A2;
+  --color-secondary: #3F8670;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
@@ -23,7 +23,11 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-linear-to-r from-teal-400 via-blue-500 to-purple-600;
+    @apply bg-clip-text text-transparent bg-linear-to-r from-[#7BC2A2] to-[#3F8670];
+  }
+
+  .btn-gradient {
+    @apply bg-linear-to-r from-[#7BC2A2] to-[#3F8670];
   }
 
   .glass-card {

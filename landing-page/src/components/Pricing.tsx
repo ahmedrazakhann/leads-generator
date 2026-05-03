@@ -61,7 +61,7 @@ export default function Pricing() {
               )}
             >
               {plan.popular && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-linear-to-r from-teal-500 to-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md shadow-teal-500/10">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 btn-gradient text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md shadow-primary/10">
                   Most Popular
                 </div>
               )}
@@ -93,7 +93,7 @@ export default function Pricing() {
                 className={cn(
                   "w-full py-4 rounded-2xl font-bold text-center transition-all flex items-center justify-center gap-2",
                   plan.primary 
-                    ? "bg-white text-slate-950 hover:bg-teal-500 hover:text-white" 
+                    ? "bg-white text-slate-950 hover:btn-gradient hover:text-white" 
                     : "bg-slate-900 text-white border border-slate-800 hover:border-teal-500"
                 )}
               >

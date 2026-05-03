@@ -101,7 +101,7 @@ export default function Hero() {
                   </div>
                 </div>
 
-                <button className="w-full py-2 bg-linear-to-r from-teal-500 to-blue-600 rounded text-[11px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-teal-500/5">
+                <button className="w-full py-2 btn-gradient rounded text-[11px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-primary/5">
                   <Zap size={12} /> Start Scraping
                 </button>
 
@@ -141,7 +141,7 @@ export default function Hero() {
         >
           <button 
             onClick={() => document.getElementById('download-modal')?.dispatchEvent(new CustomEvent('open'))}
-            className="px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-lg hover:shadow-teal-500/10 hover:scale-105 transition-all flex items-center gap-2"
+            className="px-8 py-4 text-lg font-bold text-white btn-gradient rounded-full hover:shadow-lg hover:shadow-primary/10 hover:scale-105 transition-all flex items-center gap-2"
           >
             <Download size={20} /> Add to Chrome. It is Free.
           </button>
