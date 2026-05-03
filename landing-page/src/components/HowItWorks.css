@@ -1,0 +1,31 @@
+.how { padding: 100px 0; background: var(--bg2); }
+.how__steps {
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+}
+.how__card {
+  flex: 1; max-width: 300px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 32px 28px; text-align: center;
+  transition: all var(--tr);
+}
+.how__card:hover { border-color: rgba(20,184,166,0.35); transform: translateY(-4px); }
+.how__num {
+  font-size: 48px; font-weight: 900; line-height: 1;
+  background: var(--grad); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 12px;
+}
+.how__icon {
+  width: 60px; height: 60px; border-radius: 14px;
+  background: rgba(20,184,166,0.08); border: 1px solid rgba(20,184,166,0.18);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--teal); margin: 0 auto 18px;
+}
+.how__card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+.how__card p  { color: var(--text2); font-size: 13px; line-height: 1.65; }
+.how__arrow { color: var(--border2); flex-shrink: 0; }
+@media (max-width: 768px) {
+  .how__steps { flex-direction: column; }
+  .how__arrow { transform: rotate(90deg); }
+  .how__card { max-width: 100%; width: 100%; }
+}
