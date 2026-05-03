@@ -46,8 +46,6 @@ export default function DownloadModal() {
   useEffect(() => {
     const handleOpen = () => {
       setIsOpen(true);
-      // Auto-trigger download when modal opens from external button
-      handleDownload();
     };
     document.getElementById('download-modal')?.addEventListener('open', handleOpen);
     return () => document.getElementById('download-modal')?.removeEventListener('open', handleOpen);

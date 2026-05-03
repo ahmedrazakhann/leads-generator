@@ -42,20 +42,22 @@
 
 html {
   font-size: 14px;
+  width: 420px;
+  height: 600px; /* Chrome limit is 600px */
+  overflow: hidden;
 }
 
 body {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg-deep);
   color: var(--text-main);
-  width: 420px;
-  max-height: 600px;
+  width: 100%;
+  height: 100%;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   position: relative;
   letter-spacing: -0.01em;
-  height: 600px; /* Fixed height for extension popups is often better */
 }
 
 .main-content {
