@@ -49,7 +49,6 @@ const resultsSection = $('resultsSection');
 const toastEl     = $('toast');
 const heroSection   = $('heroSection');
 const activeScoping = $('activeScoping');
-const computationBox = $('computationBox');
 
 // ─────────────────────────────────────────────────────────
 //  Toast
@@ -87,7 +86,6 @@ function updateProgress(current, max) {
 function showScrapingUI() {
   heroSection.style.display = 'none';
   activeScoping.style.display = 'block';
-  computationBox.style.display = 'block';
   progressWrap.style.display = 'block';
 }
 
@@ -95,11 +93,9 @@ function showInitialUI() {
   if (leads.length === 0) {
     heroSection.style.display = 'block';
     activeScoping.style.display = 'none';
-    computationBox.style.display = 'none';
   } else {
     heroSection.style.display = 'none';
     activeScoping.style.display = 'block';
-    computationBox.style.display = 'none'; // Only show when actually running
   }
 }
 
@@ -310,7 +306,6 @@ function pauseScraping() {
     : `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
   setStatus(isPaused ? 'paused' : 'running', isPaused ? 'Paused' : 'Scraping in progress...');
-  computationBox.style.opacity = isPaused ? '0.3' : '1';
   chrome.tabs.sendMessage(activeTabId, { type: 'PAUSE_SCRAPE' });
 }
 
@@ -325,7 +320,6 @@ function stopScraping() {
   btnPause.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
   setStatus('idle', `Collected ${leads.length} leads`);
-  computationBox.style.display = 'none';
   chrome.tabs.sendMessage(activeTabId, { type: 'STOP_SCRAPE' });
 }
 
@@ -355,7 +349,6 @@ chrome.runtime.onMessage.addListener((message) => {
       btnStart.disabled = false;
       btnPause.disabled = true;
       btnStop.disabled = true;
-      computationBox.style.display = 'none';
       if (status === 'done') {
         showToast(`✓ Done! ${count || leads.length} leads collected`, 'success');
         progressFill.style.width = '100%';
