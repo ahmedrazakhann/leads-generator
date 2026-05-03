@@ -181,7 +181,7 @@ function exportCSV() {
 
 async function getLogoBase64() {
   try {
-    const response = await fetch('../icons/logo.png');
+    const response = await fetch('../icons/logo_horizontal.png');
     const blob = await response.blob();
     return new Promise((resolve) => {
       const reader = new FileReader();
@@ -208,10 +208,9 @@ async function exportXLSX() {
   // 1. Setup Branding Row (Row 1)
   worksheet.mergeCells(1, 1, 1, fields.length);
   const brandRow = worksheet.getRow(1);
-  brandRow.height = 60;
+  brandRow.height = 80; // Increased height for a larger logo
   const brandCell = worksheet.getCell(1, 1);
-  brandCell.value = '            SAASQUATCH PRO'; // Extra spaces to make room for logo
-  brandCell.font = { name: 'Arial Black', size: 18, bold: true, color: { argb: 'FFFFFFFF' } };
+  brandCell.value = ''; 
   brandCell.fill = {
     type: 'pattern',
     pattern: 'solid',
@@ -219,19 +218,19 @@ async function exportXLSX() {
   };
   brandCell.alignment = { vertical: 'middle', horizontal: 'center' };
 
-  // 2. Add Logo (Centered with text)
+  // 2. Add Logo (Centered & Enlarged)
   const logoBase64 = await getLogoBase64();
   if (logoBase64) {
     const imageId = workbook.addImage({
       base64: logoBase64,
       extension: 'png',
     });
-    // Calculate approximate center position for logo
+    
     const totalWidth = fields.length;
-    const centerCol = totalWidth / 2;
+    // Enlarged logo with precise vertical centering calculation
     worksheet.addImage(imageId, {
-      tl: { col: centerCol - 1.2, row: 0.15 }, // Offset to the left of the center text
-      ext: { width: 45, height: 45 }
+      tl: { col: (totalWidth / 2) - 1.5, row: 0.12 }, // row offset for vertical center
+      ext: { width: 300, height: 60 } // Much larger logo
     });
   }
 
@@ -245,12 +244,14 @@ async function exportXLSX() {
     cell.fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: 'FF0F172A' } // Also Dark Navy as requested
+      fgColor: { argb: 'FF1E293B' } // Slightly lighter navy for differentiation
     };
     cell.alignment = { vertical: 'middle', horizontal: 'left', indent: 1 };
     cell.border = {
       top: { style: 'thin', color: { argb: 'FF334155' } },
-      bottom: { style: 'medium', color: { argb: 'FF14B8A6' } } // Keep teal accent on border
+      left: { style: 'thin', color: { argb: 'FF334155' } },
+      bottom: { style: 'thin', color: { argb: 'FF334155' } },
+      right: { style: 'thin', color: { argb: 'FF334155' } }
     };
   });
 
@@ -262,6 +263,14 @@ async function exportXLSX() {
       cell.value = lead[field.key] || '';
       cell.alignment = { vertical: 'middle', horizontal: 'left', wrapText: true, indent: 1 };
       
+      // Default borders for all data cells
+      cell.border = {
+        top: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+        left: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+        bottom: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+        right: { style: 'thin', color: { argb: 'FFD1D5DB' } }
+      };
+
       if (index % 2 === 1) {
         cell.fill = {
           type: 'pattern',
