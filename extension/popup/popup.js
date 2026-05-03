@@ -208,7 +208,7 @@ async function exportXLSX() {
   // 1. Setup Branding Row (Row 1)
   worksheet.mergeCells(1, 1, 1, fields.length);
   const brandRow = worksheet.getRow(1);
-  brandRow.height = 80; // Increased height for a larger logo
+  brandRow.height = 90; 
   const brandCell = worksheet.getCell(1, 1);
   brandCell.value = ''; 
   brandCell.fill = {
@@ -227,10 +227,10 @@ async function exportXLSX() {
     });
     
     const totalWidth = fields.length;
-    // Enlarged logo with precise vertical centering calculation
+    // Horizontal logo with 14px top margin (14/90 = 0.155)
     worksheet.addImage(imageId, {
-      tl: { col: (totalWidth / 2) - 1.5, row: 0.12 }, // row offset for vertical center
-      ext: { width: 300, height: 60 } // Much larger logo
+      tl: { col: (totalWidth / 2) - 1.5, row: 0.155 }, 
+      ext: { width: 350, height: 90 } // Increased logo height to 70
     });
   }
 
@@ -260,8 +260,23 @@ async function exportXLSX() {
     const row = worksheet.getRow(index + 3);
     fields.forEach((field, colIndex) => {
       const cell = row.getCell(colIndex + 1);
-      cell.value = lead[field.key] || '';
-      cell.alignment = { vertical: 'middle', horizontal: 'left', wrapText: true, indent: 1 };
+      let val = lead[field.key] || '';
+      
+      // Handle missing data with a centered dash
+      if (!val || val.toString().trim() === '') {
+        cell.value = '-';
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+      } else {
+        cell.value = val;
+        // Center specific columns: Category, Phone, and Website
+        const shouldCenter = ['category', 'phone', 'website'].includes(field.key);
+        cell.alignment = { 
+          vertical: 'middle', 
+          horizontal: shouldCenter ? 'center' : 'left', 
+          wrapText: true, 
+          indent: shouldCenter ? 0 : 1 
+        };
+      }
       
       // Default borders for all data cells
       cell.border = {
