@@ -85,7 +85,6 @@ export default function Hero() {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2 text-xs font-bold text-white">
                     <img src="/images/logo_horizontal.png" alt="SaaSquatch" className="h-4 w-auto" />
-                    <span>SaaSquatch</span>
                   </div>
                   <span className="bg-teal-500/20 text-teal-400 rounded-full px-2 py-0.5 text-[10px] font-bold">47 leads</span>
                 </div>
