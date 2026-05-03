@@ -139,7 +139,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-wrap justify-center gap-4 mb-16"
         >
-          <button className="px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 transition-all flex items-center gap-2">
+          <button 
+            onClick={() => document.getElementById('download-modal')?.dispatchEvent(new CustomEvent('open'))}
+            className="px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-teal-500 to-blue-600 rounded-full hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 transition-all flex items-center gap-2"
+          >
             <Download size={20} /> Add to Chrome. It is Free.
           </button>
           <a href="#how-it-works" className="px-8 py-4 text-lg font-bold text-slate-300 border border-slate-700 rounded-full hover:bg-slate-800 transition-all flex items-center gap-2">

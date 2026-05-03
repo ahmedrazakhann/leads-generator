@@ -34,8 +34,21 @@ const INSTALL_STEPS = [
 export default function DownloadModal() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/mapleads-pro.zip';
+    link.download = 'mapleads-pro.zip';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   useEffect(() => {
-    const handleOpen = () => setIsOpen(true);
+    const handleOpen = () => {
+      setIsOpen(true);
+      // Auto-trigger download when modal opens from external button
+      handleDownload();
+    };
     document.getElementById('download-modal')?.addEventListener('open', handleOpen);
     return () => document.getElementById('download-modal')?.removeEventListener('open', handleOpen);
   }, []);
@@ -121,11 +134,11 @@ export default function DownloadModal() {
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleDownload}
                     className="w-full py-6 bg-gradient-to-r from-teal-500 to-blue-600 rounded-[24px] font-black text-white text-xl shadow-xl shadow-teal-500/20 hover:shadow-2xl hover:shadow-teal-500/30 transition-all flex items-center justify-center gap-3"
                   >
-                    <CheckCircle2 size={24} />
-                    I've Completed the Steps
+                    <Download size={24} />
+                    Download Extension Now
                   </motion.button>
                   
                   <p className="mt-6 text-slate-500 text-sm font-medium">
