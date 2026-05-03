@@ -104,7 +104,7 @@ body {
 }
 
 .lead-badge {
-  background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(59, 130, 246, 0.1));
+  background: linear-gradient(135deg, rgba(123, 194, 162, 0.1), rgba(63, 134, 112, 0.1));
   border: 1px solid rgba(20, 184, 166, 0.3);
   border-radius: 30px;
   padding: 6px 14px;
@@ -122,7 +122,7 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 0%, rgba(20, 184, 166, 0.15), transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(123, 194, 162, 0.15), transparent 70%);
 }
 
 .hero-icon-pulse {

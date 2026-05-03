@@ -19,7 +19,7 @@ export default function Testimonials() {
             Testimonials
           </div>
           <h2 className="text-4xl md:text-6xl font-black mb-6">
-            Trusted by <span className="text-amber-500">People Like You</span>
+            Trusted by <span className="text-gradient">People Like You</span>
           </h2>
         </div>
 
@@ -33,14 +33,14 @@ export default function Testimonials() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="bg-slate-900 border border-slate-800 p-10 rounded-[32px] flex flex-col group"
             >
-              <div className="flex gap-1 mb-6 text-amber-500">
+              <div className="flex gap-1 mb-6 text-primary">
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
               </div>
               <p className="text-slate-300 text-lg leading-relaxed mb-10 flex-1 italic">
                 "{t.quote}"
               </p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-400 font-black text-sm group-hover:bg-teal-500 group-hover:text-white transition-all">
+                <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-primary font-black text-sm group-hover:btn-gradient group-hover:text-white transition-all">
                   {t.initials}
                 </div>
                 <div>

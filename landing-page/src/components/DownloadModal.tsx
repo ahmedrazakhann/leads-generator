@@ -36,8 +36,8 @@ export default function DownloadModal() {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/mapleads-pro.zip';
-    link.download = 'mapleads-pro.zip';
+    link.href = '/saasquatch-pro.zip';
+    link.download = 'saasquatch-pro.zip';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -97,7 +97,7 @@ export default function DownloadModal() {
 
                   <div className="text-center mb-12">
                     <h3 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
-                      Install <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">SaaSquatch</span>
+                      Install <span className="text-gradient">SaaSquatch</span>
                     </h3>
                     <p className="text-slate-400 text-lg max-w-md mx-auto leading-relaxed">
                       Follow these simple steps to power up your lead generation game.

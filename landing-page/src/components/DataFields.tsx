@@ -28,7 +28,7 @@ export default function DataFields() {
             What you get
           </div>
           <h2 className="text-4xl md:text-6xl font-black mb-6">
-            Every Detail is <span className="text-teal-500">Collected</span>
+            Every Detail is <span className="text-gradient">Collected</span>
           </h2>
         </div>
 
