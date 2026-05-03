@@ -393,6 +393,8 @@ body {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+  display: inline-block;
+  transform-origin: center;
 }
 
 .btn-primary:disabled {

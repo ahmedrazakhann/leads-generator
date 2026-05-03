@@ -268,6 +268,23 @@ async function exportXLSX() {
         cell.alignment = { vertical: 'middle', horizontal: 'center' };
       } else {
         cell.value = val;
+
+        // Hyperlinks for Website and Phone
+        if (field.key === 'website' && val) {
+          cell.value = { 
+            text: val, 
+            hyperlink: val.startsWith('http') ? val : `https://${val}` 
+          };
+          cell.font = { color: { argb: 'FF0EA5E9' }, underline: true };
+        } else if (field.key === 'phone' && val) {
+          const cleanPhone = val.replace(/[^0-9+]/g, '');
+          cell.value = { 
+            text: val, 
+            hyperlink: `tel:${cleanPhone}` 
+          };
+          cell.font = { color: { argb: 'FF0EA5E9' }, underline: true };
+        }
+
         // Center specific columns: Category, Phone, and Website
         const shouldCenter = ['category', 'phone', 'website'].includes(field.key);
         cell.alignment = { 
