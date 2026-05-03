@@ -386,6 +386,23 @@ body {
   transform: translateY(0);
 }
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .btn-subgroup {
   display: flex;
   gap: 12px;

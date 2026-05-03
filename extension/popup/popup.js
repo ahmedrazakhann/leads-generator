@@ -338,6 +338,8 @@ function downloadBlob(blob, filename) {
   showToast(`✓ Exported ${leads.length} leads`, 'success');
 }
 
+
+
 function timestamp() {
   const d = new Date();
   return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`;
@@ -397,6 +399,7 @@ async function startScraping() {
   isPaused = false;
 
   btnStart.disabled = true;
+  btnStart.innerHTML = `<svg class="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Scraping...`;
   btnPause.disabled = false;
   btnStop.disabled = false;
 
@@ -442,6 +445,7 @@ function stopScraping() {
   isPaused = false;
 
   btnStart.disabled = false;
+  btnStart.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Launch Scraper`;
   btnPause.disabled = true;
   btnStop.disabled = true;
   btnPause.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
@@ -474,6 +478,7 @@ chrome.runtime.onMessage.addListener((message) => {
     if (status === 'done' || status === 'error') {
       isRunning = false;
       btnStart.disabled = false;
+      btnStart.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Launch Scraper`;
       btnPause.disabled = true;
       btnStop.disabled = true;
       if (status === 'done') {
