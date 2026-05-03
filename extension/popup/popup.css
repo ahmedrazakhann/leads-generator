@@ -80,27 +80,18 @@ body {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
 }
 
-.logo-icon {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logo-horizontal-img {
+  height: 40px;
+  object-fit: contain;
+  width: auto;
+  display: block;
 }
 
-.logo-icon img {
-  width: 20px;
-  height: 20px;
-}
-
-.logo-text {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--text-main);
+font-weight: 800;
+letter-spacing: -0.5px;
+color: var(--text-main);
 }
 
 .logo-text .accent {
