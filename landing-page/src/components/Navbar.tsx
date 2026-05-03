@@ -31,7 +31,10 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <a href="#hero" className="flex items-center gap-3 group">
-          <img src="/images/logo_horizontal.png" alt="SaaSquatch" className="h-10 w-auto" />
+          <img src="/images/logo.png" alt="SaaSquatch" className="h-8 w-auto" />
+          <span className="text-xl font-extrabold tracking-tight hidden sm:block">
+            SaaSquatch
+          </span>
         </a>
 
         {/* Desktop Links */}

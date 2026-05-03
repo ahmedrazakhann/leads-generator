@@ -28,7 +28,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-12 mb-20">
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <img src="/images/logo_horizontal.png" alt="SaaSquatch" className="h-8 w-auto" />
+              <img src="/images/logo.png" alt="SaaSquatch" className="h-8 w-auto" />
               <span className="text-2xl font-black">
                 SaaSquatch
               </span>
