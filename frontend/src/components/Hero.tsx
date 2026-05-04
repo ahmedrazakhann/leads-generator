@@ -70,10 +70,21 @@ export default function Hero() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] h-[300px] md:h-[380px]">
-              <div className="relative overflow-hidden bg-slate-950 p-6 flex flex-col justify-center items-center">
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(123,194,162,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(123,194,162,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+              <div className="relative overflow-hidden bg-slate-950 p-6 flex flex-col justify-center items-center group/map">
+                {/* Map Background */}
+                <img 
+                  src="/images/dubai_map.png" 
+                  alt="Dubai Map" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-20 contrast-125 grayscale"
+                />
+                <div className="absolute inset-0 bg-slate-950/40" />
                 
-                <div className="relative grid grid-cols-2 gap-4 w-full max-w-md">
+                {/* Floating Pins */}
+                <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[30%] left-[20%] text-teal-500/50"><MapPin size={16} fill="currentColor" /></motion.div>
+                <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} className="absolute top-[60%] left-[45%] text-teal-500/50"><MapPin size={16} fill="currentColor" /></motion.div>
+                <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[25%] left-[75%] text-teal-500/50"><MapPin size={16} fill="currentColor" /></motion.div>
+
+                <div className="relative grid grid-cols-2 gap-4 w-full max-w-md z-10">
                   {[
                     { label: 'Website Status', status: 'Missing', color: 'text-red-400' },
                     { label: 'Review Velocity', status: 'Low', color: 'text-amber-400' },
@@ -85,9 +96,9 @@ export default function Hero() {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.6 + i * 0.1 }}
-                      className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl backdrop-blur-sm"
+                      className="bg-slate-900/90 border border-slate-800 p-3 rounded-xl backdrop-blur-md shadow-xl"
                     >
-                      <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-1">{item.label}</div>
+                      <div className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1">{item.label}</div>
                       <div className={`text-xs font-black ${item.color}`}>{item.status}</div>
                     </motion.div>
                   ))}
@@ -96,12 +107,12 @@ export default function Hero() {
                 <motion.div 
                   animate={{ y: [0, -5, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
-                  className="mt-8 px-6 py-3 bg-teal-500/10 border border-teal-500/30 rounded-2xl flex items-center gap-3"
+                  className="relative z-10 mt-8 px-6 py-3 bg-teal-500/10 border border-teal-500/30 rounded-2xl flex items-center gap-3 backdrop-blur-md"
                 >
                   <Target className="text-teal-400" size={20} />
                   <div className="text-left">
-                    <div className="text-[10px] text-slate-400 font-bold uppercase">Opportunity Found</div>
-                    <div className="text-xs font-bold text-white">Pitch: Online Booking Migration</div>
+                    <div className="text-[10px] text-slate-400 font-black uppercase">Opportunity Found</div>
+                    <div className="text-xs font-black text-white uppercase tracking-tight">Booking System Gap</div>
                   </div>
                 </motion.div>
               </div>
