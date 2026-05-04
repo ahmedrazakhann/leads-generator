@@ -26,7 +26,7 @@ export default function ScriptHighlight() {
               AI Sales Assistant
             </div>
             <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight text-white">
-              Your Sales Pitch — <br />
+              Your Sales Pitch<br />
               <span className="text-gradient">Ready in Seconds.</span>
             </h2>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">
