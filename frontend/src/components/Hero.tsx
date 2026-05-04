@@ -14,26 +14,28 @@ const STATS = [
 export default function Hero() {
   return (
     <section className="relative min-h-screen pt-20 pb-10 overflow-hidden flex items-center justify-center bg-[#020617]" id="hero">
-      {/* Background Glows */}
-      <div className="absolute top-[-15%] left-[-12%] w-[700px] h-[700px] rounded-full bg-teal-500/10 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-0 right-[-5%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[130px] pointer-events-none" />
+      {/* Background Map Image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/images/hero_bg_map.png" 
+          alt="Background Map" 
+          className="w-full h-full object-cover opacity-[0.15] contrast-125 grayscale"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_100%)]" />
+      </div>
+
+      {/* Background Glows (kept for depth) */}
+      <div className="absolute top-[-15%] left-[-12%] w-[700px] h-[700px] rounded-full bg-teal-500/5 blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-0 right-[-5%] w-[500px] h-[500px] rounded-full bg-blue-500/5 blur-[130px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10 text-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-medium mb-6"
-        >
-          <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse shadow-sm shadow-teal-500/50" />
-          More than a scraper. This is your sales engine.
-        </motion.div>
-
+      
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] mb-4"
+          className="text-4xl md:text-6xl mt-12 font-black tracking-tight leading-[1.05] mb-4"
         >
           Find Leads. Know What to Sell.<br />
           <span className="text-gradient">Close Faster.</span>
