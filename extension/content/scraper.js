@@ -9,33 +9,54 @@
   let scrapedHrefs = new Set();
   const T = {
     afterClick:    900,
-    afterPanel:    600,
+    afterPanel:    800,
     betweenItems:   80,
     scrollWait:    700,
   };
   const GROQ_API_KEY = '';
   async function getAIAnalysis(data) {
     if (!GROQ_API_KEY) return { leadInsight: '', whatToSell: '', competitor: '', coldCallScript: '' };
-    const prompt = `You are a high-end business consultant and sales strategist. Analyze this business lead:
+   const prompt = `You are an expert sales strategist who follows modern, human-first cold calling principles (non-pushy, conversational, value-driven).
+
+Analyze this business lead:
 Name: ${data.name}
 Category: ${data.category}
 Rating: ${data.rating}
 Reviews: ${data.reviews}
 Website: ${data.website || 'None'}
 Phone: ${data.phone || 'None'}
+
 Please provide:
-1. Lead Insight: A short, punchy sentence about what is missing or weak (e.g., "No website, missing online customers").
-2. What to Sell: The best service to offer them based on their weakness.
-3. Competitor: Identify a likely top competitor in the same area/category.
-4. Cold Call Script: A short, professional sales script (under 60 words).
-Structure:
-Personalized opening
-The problem you noticed
-The opportunity
-Simple pitch
-Closing line
-Return the result as a JSON object with keys: leadInsight, whatToSell, competitor, coldCallScript. 
-Do not include any other text, just the JSON.`;
+
+1. Lead Insight:
+A short, sharp observation about what they are missing or where they are weak.
+
+2. What to Sell:
+The most relevant service to help them improve (simple and clear).
+
+3. Competitor:
+Name a realistic competitor in the same category/location.
+
+4. Cold Call Script:
+Write a natural, human-sounding cold call (MAX 80 words, simple English).
+
+Script MUST follow this structure:
+- Friendly, casual opening (not salesy)
+- Show you did quick research (mention something specific)
+- Point out a problem or missed opportunity
+- Give a simple benefit (how you help)
+- Ask a soft question (NOT pushy, no hard selling)
+
+Tone rules:
+- Use very simple English
+- Sound like a real human, not a script
+- No buzzwords, no corporate language
+- No pressure phrases like "limited offer" or "buy now"
+- Make it feel like a helpful conversation
+
+Return ONLY a JSON object with keys:
+leadInsight, whatToSell, competitor, coldCallScript.
+Do not include any extra text.`;
     try {
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
@@ -133,13 +154,14 @@ Do not include any other text, just the JSON.`;
     }
     let imageUrl = '';
     const imgEl = realContainer.querySelector('img');
-    if (imgEl) {
-      imageUrl = imgEl.src || '';
-    }
+    if (imgEl) imageUrl = imgEl.src || '';
+    let website = '';
+    const webCardEl = realContainer.querySelector('a[aria-label*="Website"], a[data-value="Website"]');
+    if (webCardEl) website = webCardEl.href || '';
     const { city, country } = extractLocation(address);
     return { 
       name, category, address, city, country, rating, reviews, 
-      phone: '', website: '', hours: '', plusCode: '', mapsUrl, imageUrl, 
+      phone: '', website, hours: '', plusCode: '', mapsUrl, imageUrl, 
       leadInsight: '', whatToSell: '', competitor: '', coldCallScript: '', leadType: '' 
     };
   }
@@ -151,10 +173,6 @@ Do not include any other text, just the JSON.`;
         || phoneEl.getAttribute('href')?.replace('tel:', '').trim()
         || phoneEl.innerText.trim();
     }
-    const webEl = qs('a[aria-label*="Website:"], a[data-item-id*="authority"], [data-item-id*="authority"] a');
-    if (webEl) {
-      baseData.website = webEl.href || ariaVal('a[aria-label*="Website:"]', 'Website');
-    }
     const addrEl = qs('button[aria-label*="Address:"], [data-item-id*="address"] .Io6YTe');
     if (addrEl) {
       const ariaLabel = addrEl.getAttribute('aria-label') || '';
@@ -165,6 +183,36 @@ Do not include any other text, just the JSON.`;
     if (catEl) {
       const panelCat = catEl.innerText.trim();
       if (panelCat) baseData.category = panelCat;
+    }
+    const webEl = qs('a[data-item-id="authority"], a[aria-label*="Website:"], [data-item-id="authority"] a, a[jsaction*="website"], a[data-value="Website"]');
+    if (webEl && webEl.href) {
+      if (webEl.href.includes('google.com/url')) {
+        try {
+          const url = new URL(webEl.href);
+          baseData.website = url.searchParams.get('q') || url.searchParams.get('url') || webEl.href;
+        } catch { baseData.website = webEl.href; }
+      } else if (!webEl.href.includes('google.com/search')) {
+        baseData.website = webEl.href;
+      }
+    } else {
+      const allLinks = qsa('.m67Hec a, .R61m6b a, .CsS9M a, [role="main"] a');
+      for (const a of allLinks) {
+        const h = a.href || '';
+        if (h && !h.includes('google.com') && !h.includes('gstatic.com') && !h.startsWith('tel:')) {
+          if (a.querySelector('img[src*="public/images/quill/listing/web"]') || a.innerText.toLowerCase().includes('website') || a.getAttribute('aria-label')?.toLowerCase().includes('website')) {
+            baseData.website = h;
+            break;
+          }
+        }
+      }
+    }
+    if (!baseData.website) {
+      const webBtn = qs('button[aria-label*="Website"]');
+      if (webBtn) {
+        const aria = webBtn.getAttribute('aria-label') || '';
+        const match = aria.match(/https?:\/\/[^\s]+/);
+        if (match) baseData.website = match[0];
+      }
     }
     if (!baseData.rating) {
       const ratingEl = qs('span[aria-label*="stars"]');
