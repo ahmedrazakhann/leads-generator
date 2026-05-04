@@ -51,47 +51,40 @@
   }
 
   // ─── Extract data from a list card (no click needed) ──────
-  function extractFromCard(cardEl) {
-    // Name from aria-label on the <a> tag
-    const name = (cardEl.getAttribute('aria-label') || '').trim();
+  function extractFromCard(container) {
+    const linkEl = container.querySelector('a.hfpxzc');
+    if (!linkEl) return null;
+
+    // Name
+    const nameEl = container.querySelector('.qBF1Pd');
+    const name = (nameEl ? nameEl.innerText : linkEl.getAttribute('aria-label') || '').trim();
 
     // href contains the place URL
-    const href = cardEl.getAttribute('href') || '';
+    const href = linkEl.getAttribute('href') || '';
     const mapsUrl = href.startsWith('http') ? href : 'https://www.google.com' + href;
 
-    // Card inner content — try various child span selectors
-    // Google uses obfuscated class names but consistent structure
-    const cardText = (cardEl.innerText || '').split('\n').map(s => s.trim()).filter(Boolean);
+    // Rating
+    const ratingEl = container.querySelector('.MW4etd');
+    let rating = ratingEl ? ratingEl.innerText.trim().replace(',', '.') : '';
 
-    // Rating is usually a number like "4.5"
-    let rating = '';
+    // Reviews
+    const reviewsEl = container.querySelector('.UY7F9');
     let reviews = '';
-    let category = '';
-    let address = '';
-
-    for (let i = 0; i < cardText.length; i++) {
-      const line = cardText[i];
-
-      // Rating: looks like "4.5" or "4,5"
-      if (!rating && /^[1-5][.,]\d$/.test(line)) {
-        rating = line.replace(',', '.');
-        continue;
+    if (reviewsEl) {
+      const revMatch = reviewsEl.innerText.match(/\(([\d,.]+)\)/) || reviewsEl.innerText.match(/([\d,.]+)/);
+      if (revMatch) {
+        reviews = revMatch[1].replace(/[,.]/g, '');
       }
-      // Reviews: "(1,234)" or "1,234"
-      if (!reviews && /^\([\d,]+\)$/.test(line)) {
-        reviews = line.replace(/[()]/g, '').replace(/,/g, '');
-        continue;
-      }
-      // Skip the name line
-      if (line === name) continue;
     }
 
-    // Category: typically the second non-name, non-rating line
-    // We grab spans inside the card with specific patterns
-    const spans = Array.from(cardEl.querySelectorAll('span, div'));
-    for (const span of spans) {
-      const t = (span.innerText || '').trim();
-      if (!t || t === name || /^[1-5][.,]\d$/.test(t) || /^\([\d,]+\)$/.test(t)) continue;
+    // Category & Address
+    // These are often in spans with class W44u9b or similar, or just text lines
+    let category = '';
+    let address = '';
+    const infoLines = Array.from(container.querySelectorAll('.W44u9b, .AJ79B, .fontBodyMedium span')).map(s => s.innerText.trim()).filter(Boolean);
+    
+    for (const t of infoLines) {
+      if (!t || t === name || t === rating || t.includes(reviews)) continue;
       // Category is usually short and doesn't look like an address
       if (!category && t.length < 40 && !/\d/.test(t) && !/,/.test(t)) {
         category = t;
@@ -100,10 +93,16 @@
       if (!address && ((/\d/.test(t) && t.length > 8) || /,.+,.+/.test(t))) {
         address = t;
       }
-      if (category && address) break;
     }
 
-    return { name, category, address, rating, reviews, phone: '', website: '', hours: '', plusCode: '', mapsUrl };
+    // Image URL
+    let imageUrl = '';
+    const imgEl = container.querySelector('img');
+    if (imgEl) {
+      imageUrl = imgEl.src || '';
+    }
+
+    return { name, category, address, rating, reviews, phone: '', website: '', hours: '', plusCode: '', mapsUrl, imageUrl };
   }
 
   // ─── Extract extra details from opened detail panel ────────
@@ -185,7 +184,7 @@
   // ─── MAIN SCRAPING LOOP ────────────────────────────────────
   async function startScraping(options = {}) {
     const { maxResults = 100, fields = [] } = options;
-    const needsDetail = fields.some(f => ['phone', 'website', 'hours', 'plusCode'].includes(f));
+    const needsDetail = fields.some(f => ['phone', 'website', 'hours', 'plusCode', 'score'].includes(f));
 
     isRunning = true;
     isPaused  = false;
@@ -216,14 +215,18 @@
       while (isPaused && isRunning) await sleep(300);
       if (!isRunning) break;
 
-      const cards = qsa('a.hfpxzc');
+      const cards = qsa('div.Nv2PK');
 
       if (cards.length === 0) {
-        sendToPopup('SCRAPE_STATUS', {
-          status: 'error',
-          message: '❌ No result cards found. Make sure you have search results visible.',
-        });
-        break;
+        // Fallback to older selector if needed
+        const fallbackCards = qsa('a.hfpxzc');
+        if (fallbackCards.length === 0) {
+          sendToPopup('SCRAPE_STATUS', {
+            status: 'error',
+            message: '❌ No result cards found. Make sure you have search results visible.',
+          });
+          break;
+        }
       }
 
       let foundNew = false;
@@ -232,11 +235,9 @@
         if (!isRunning) break;
         while (isPaused && isRunning) await sleep(300);
 
-        const href = card.getAttribute('href') || '';
+        const linkEl = card.querySelector('a.hfpxzc');
+        const href = linkEl ? linkEl.getAttribute('href') || '' : '';
         if (!href || scrapedHrefs.has(href)) continue;
-
-        const name = (card.getAttribute('aria-label') || '').trim();
-        if (!name) continue;
 
         scrapedHrefs.add(href);
         foundNew = true;
@@ -244,14 +245,25 @@
 
         // ── FAST PASS: extract from card DOM immediately ──
         let data = extractFromCard(card);
+        if (!data) continue;
 
         // ── DETAIL PASS: click card to get phone/website ──
         if (needsDetail || !data.address) {
-          card.click();
+          if (linkEl) linkEl.click();
           await sleep(T.afterClick);
           await sleep(T.afterPanel);
           data = await extractDetailPanel(data);
         }
+
+        // ── CALCULATE SCORE ──
+        let score = 0;
+        const revNum = parseInt(data.reviews) || 0;
+        const ratNum = parseFloat(data.rating) || 0;
+        
+        if (revNum > 100) score += 2;
+        if (ratNum > 0 && ratNum < 4) score += 2;
+        if (!data.website) score += 3;
+        data.score = score;
 
         sendToPopup('SCRAPE_RESULT', { lead: data, count: scraped });
         sendToPopup('SCRAPE_STATUS', {

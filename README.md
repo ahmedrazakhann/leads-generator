@@ -42,3 +42,13 @@ Fifth, the tool will automatically scroll through the results and collect the in
 Finally, when it is done, you click the Export button to download your list of leads.
 
 That is all there is to it. Enjoy your lead generation!
+
+## Lead Opportunity Score
+
+We have added a special Score column to help you find the best leads. The score is calculated like this:
+1. If a business has more than 100 reviews, it gets +2 points (means they are popular).
+2. If a business has a rating below 4 stars, it gets +2 points (means they might need help with their reputation).
+3. If a business has no website listed, it gets +3 points (this is a big opportunity to sell them a website).
+
+A higher score means the business is a better lead for your services!
+

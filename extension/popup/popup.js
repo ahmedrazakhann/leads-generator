@@ -15,6 +15,7 @@ let activeTabId = null;
 let maxResults = 100;
 
 const FIELD_MAP = {
+  'f-image':    { key: 'imageUrl', label: 'Photo' },
   'f-name':     { key: 'name',     label: 'Name' },
   'f-category': { key: 'category', label: 'Category' },
   'f-address':  { key: 'address',  label: 'Address' },
@@ -23,6 +24,7 @@ const FIELD_MAP = {
   'f-rating':   { key: 'rating',   label: 'Rating' },
   'f-reviews':  { key: 'reviews',  label: 'Reviews' },
   'f-hours':    { key: 'hours',    label: 'Hours' },
+  'f-score':    { key: 'score',    label: 'Score' },
 };
 
 // ─────────────────────────────────────────────────────────
@@ -125,7 +127,14 @@ function appendLeadRow(lead) {
     const td = document.createElement('td');
     const val = lead[key] || '';
 
-    if (key === 'website' && val) {
+    if (key === 'imageUrl') {
+      td.classList.add('cell-photo');
+      const img = document.createElement('img');
+      img.src = val || '../icons/icon128.png'; // Fallback icon
+      img.className = 'cell-img';
+      img.alt = 'Business';
+      td.appendChild(img);
+    } else if (key === 'website' && val) {
       const a = document.createElement('a');
       a.href = val.startsWith('http') ? val : `https://${val}`;
       a.target = '_blank';
@@ -134,6 +143,13 @@ function appendLeadRow(lead) {
       td.appendChild(a);
     } else if (key === 'rating' && val) {
       td.innerHTML = `<span class="cell-rating">⭐ ${val}</span>`;
+    } else if (key === 'score') {
+      const s = parseInt(val) || 0;
+      let color = '#94a3b8'; // Default slate
+      if (s >= 5) color = '#10b981'; // Green
+      else if (s >= 3) color = '#f59e0b'; // Amber
+      
+      td.innerHTML = `<span style="color: ${color}; font-weight: 800; font-size: 1.1em;">${s}</span>`;
     } else {
       td.title = val;
       td.textContent = val;
@@ -201,7 +217,7 @@ async function exportXLSX() {
     return;
   }
 
-  const fields = getActiveFields();
+  const fields = getActiveFields().filter(f => f.key !== 'imageUrl');
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Leads');
 
@@ -246,7 +262,7 @@ async function exportXLSX() {
       pattern: 'solid',
       fgColor: { argb: 'FF1E293B' } // Slightly lighter navy for differentiation
     };
-    cell.alignment = { vertical: 'middle', horizontal: 'left', indent: 1 };
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
     cell.border = {
       top: { style: 'thin', color: { argb: 'FF334155' } },
       left: { style: 'thin', color: { argb: 'FF334155' } },
@@ -260,33 +276,67 @@ async function exportXLSX() {
     const row = worksheet.getRow(index + 3);
     fields.forEach((field, colIndex) => {
       const cell = row.getCell(colIndex + 1);
-      let val = lead[field.key] || '';
+      let rawVal = lead[field.key];
+      let val = (rawVal === 0) ? 0 : (rawVal || '');
       
-      // Handle missing data with a centered dash
-      if (!val || val.toString().trim() === '') {
+      // Default font
+      cell.font = { name: 'Arial', size: 10, color: { argb: 'FF1E293B' } };
+
+      // Handle truly missing data with a centered dash
+      if (val === '') {
         cell.value = '-';
         cell.alignment = { vertical: 'middle', horizontal: 'center' };
       } else {
         cell.value = val;
 
+        // ── Colorful Backgrounds for Stats ──
+        if (field.key === 'score' || field.key === 'rating' || field.key === 'reviews') {
+          const numVal = (field.key === 'rating') ? parseFloat(val) : parseInt(val);
+          if (!isNaN(numVal)) {
+            cell.value = numVal;
+            cell.alignment = { vertical: 'middle', horizontal: 'center' };
+            cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: 'FF0F172A' } };
+
+            let bgColor = 'FFF1F5F9'; // Default Light Slate
+
+            if (field.key === 'score') {
+              if (numVal >= 5) bgColor = 'FFD1FAE5'; // Light Green
+              else if (numVal >= 3) bgColor = 'FFFef3c7'; // Light Amber
+            } else if (field.key === 'rating') {
+              if (numVal >= 4.5) bgColor = 'FFD1FAE5'; // Light Green
+              else if (numVal >= 4.0) bgColor = 'FFFef3c7'; // Light Amber
+              else bgColor = 'FFFEE2E2'; // Light Red
+            } else if (field.key === 'reviews') {
+              if (numVal >= 500) bgColor = 'FFD1FAE5'; // Light Green
+              else if (numVal >= 100) bgColor = 'FFFef3c7'; // Light Amber
+            }
+
+            cell.fill = {
+              type: 'pattern',
+              pattern: 'solid',
+              fgColor: { argb: bgColor }
+            };
+          }
+        }
+
         // Hyperlinks for Website and Phone
         if (field.key === 'website' && val) {
           cell.value = { 
-            text: val, 
-            hyperlink: val.startsWith('http') ? val : `https://${val}` 
+            text: val.toString(), 
+            hyperlink: val.toString().startsWith('http') ? val.toString() : `https://${val}` 
           };
           cell.font = { color: { argb: 'FF0EA5E9' }, underline: true };
         } else if (field.key === 'phone' && val) {
-          const cleanPhone = val.replace(/[^0-9+]/g, '');
+          const cleanPhone = val.toString().replace(/[^0-9+]/g, '');
           cell.value = { 
-            text: val, 
+            text: val.toString(), 
             hyperlink: `tel:${cleanPhone}` 
           };
           cell.font = { color: { argb: 'FF0EA5E9' }, underline: true };
         }
 
-        // Center specific columns: Category, Phone, and Website
-        const shouldCenter = ['category', 'phone', 'website'].includes(field.key);
+        // Center specific columns: Category, Phone, Website, and Score
+        const shouldCenter = ['category', 'phone', 'website', 'score', 'rating', 'reviews'].includes(field.key);
         cell.alignment = { 
           vertical: 'middle', 
           horizontal: shouldCenter ? 'center' : 'left', 
@@ -328,7 +378,12 @@ async function exportXLSX() {
       const val = String(lead[field.key] || '');
       if (val.length > maxLen) maxLen = val.length;
     });
-    worksheet.getColumn(i + 1).width = Math.min(maxLen + 8, 40);
+    
+    let colWidth = Math.min(maxLen + 10, 60); // Increased max width
+    if (field.key === 'name' || field.key === 'address') colWidth = Math.max(colWidth, 35);
+    if (field.key === 'score' || field.key === 'rating' || field.key === 'reviews') colWidth = 12;
+    
+    worksheet.getColumn(i + 1).width = colWidth;
   });
 
   worksheet.views = [{ state: 'frozen', xSplit: 0, ySplit: 2 }];

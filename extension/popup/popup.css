@@ -557,6 +557,22 @@ body {
   font-weight: 700;
 }
 
+.cell-img {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  border: 1px solid var(--border-light);
+  background: var(--bg-input);
+}
+
+.cell-photo {
+  width: 60px;
+  min-width: 60px;
+  padding: 8px !important;
+  text-align: center;
+}
+
 /* ── Toast ──────────────────────────────────── */
 .toast {
   position: fixed;
