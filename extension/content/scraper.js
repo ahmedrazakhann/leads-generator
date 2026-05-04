@@ -28,18 +28,31 @@
 
   const GROQ_API_KEY = '';
 
-  async function getAIInsight(data) {
-    if (!GROQ_API_KEY) return '';
-    const prompt = `You are a friendly business growth advisor. Analyze this business:
+  async function getAIAnalysis(data) {
+    if (!GROQ_API_KEY) return { leadInsight: '', whatToSell: '', coldCallScript: '' };
+    
+    const prompt = `You are a high-end business consultant and sales strategist. Analyze this business lead:
 Name: ${data.name}
 Category: ${data.category}
 Rating: ${data.rating}
 Reviews: ${data.reviews}
 Website: ${data.website || 'None'}
+Phone: ${data.phone || 'None'}
 
-In one short, natural, human-sounding sentence, suggest the best way to help them grow.
-Speak like a person, not a robot. Use phrases like "I'd suggest offering..." or "They look like a great candidate for...". 
-Do not use labels like "Opportunity:" or "Service:". Just give the advice directly.`;
+Please provide:
+1. Lead Insight: A short, punchy sentence about what is missing or weak (e.g., "No website, missing online customers").
+2. What to Sell: The best service to offer them based on their weakness.
+3. Competitor: Identify a likely top competitor in the same area/category.
+4. Cold Call Script: A short, professional sales script (under 60 words).
+Structure:
+Personalized opening
+The problem you noticed
+The opportunity
+Simple pitch
+Closing line
+
+Return the result as a JSON object with keys: leadInsight, whatToSell, competitor, coldCallScript. 
+Do not include any other text, just the JSON.`;
 
     try {
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -51,15 +64,22 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [{ role: 'user', content: prompt }],
-          max_tokens: 60,
-          temperature: 0.7
+          max_tokens: 300,
+          temperature: 0.6,
+          response_format: { type: "json_object" }
         })
       });
       const json = await response.json();
-      return json.choices?.[0]?.message?.content?.trim()?.replace(/^"/, '')?.replace(/"$/, '') || '';
+      const content = JSON.parse(json.choices?.[0]?.message?.content || '{}');
+      return {
+        leadInsight: content.leadInsight || '',
+        whatToSell: content.whatToSell || '',
+        competitor: content.competitor || '',
+        coldCallScript: content.coldCallScript || ''
+      };
     } catch (e) {
       console.error('[LeadScraper] AI Error:', e);
-      return '';
+      return { leadInsight: '', whatToSell: '', competitor: '', coldCallScript: '' };
     }
   }
 
@@ -107,26 +127,34 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
 
   // ─── Extract data from a list card (no click needed) ──────
   function extractFromCard(container) {
-    const linkEl = container.querySelector('a.hfpxzc');
+    let linkEl = container.tagName === 'A' ? container : container.querySelector('a.hfpxzc');
     if (!linkEl) return null;
 
+    // If we passed the link, find the container div for better context
+    const realContainer = container.tagName === 'A' ? container.closest('.Nv2PK, .Ua6m6c, .jANv9b') || container : container;
+
     // Name
-    const nameEl = container.querySelector('.qBF1Pd');
-    const name = (nameEl ? nameEl.innerText : linkEl.getAttribute('aria-label') || '').trim();
+    const nameEl = realContainer.querySelector('.qBF1Pd, .fontHeadlineSmall, [aria-label]');
+    const name = (nameEl ? (nameEl.innerText || nameEl.getAttribute('aria-label')) : linkEl.getAttribute('aria-label') || '').trim();
 
     // href contains the place URL
     const href = linkEl.getAttribute('href') || '';
     const mapsUrl = href.startsWith('http') ? href : 'https://www.google.com' + href;
 
     // Rating
-    const ratingEl = container.querySelector('.MW4etd');
-    let rating = ratingEl ? ratingEl.innerText.trim().replace(',', '.') : '';
+    const ratingEl = realContainer.querySelector('.MW4etd, .fontBodyMedium span[aria-label*="stars"]');
+    let rating = '';
+    if (ratingEl) {
+      const ratMatch = ratingEl.innerText.trim().replace(',', '.') || ratingEl.getAttribute('aria-label')?.match(/[\d.]+/)?.[0];
+      rating = ratMatch || '';
+    }
 
     // Reviews
-    const reviewsEl = container.querySelector('.UY7F9');
+    const reviewsEl = realContainer.querySelector('.UY7F9, .fontBodyMedium span[aria-label*="review"]');
     let reviews = '';
     if (reviewsEl) {
-      const revMatch = reviewsEl.innerText.match(/\(([\d,.]+)\)/) || reviewsEl.innerText.match(/([\d,.]+)/);
+      const revStr = reviewsEl.innerText || reviewsEl.getAttribute('aria-label') || '';
+      const revMatch = revStr.match(/\(([\d,.]+)\)/) || revStr.match(/([\d,.]+)/);
       if (revMatch) {
         reviews = revMatch[1].replace(/[,.]/g, '');
       }
@@ -135,13 +163,15 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
     // Category & Address
     let category = '';
     let address = '';
-    const infoLines = Array.from(container.querySelectorAll('.W44u9b, .AJ79B, .fontBodyMedium span')).map(s => s.innerText.trim()).filter(Boolean);
+    const infoLines = Array.from(realContainer.querySelectorAll('.W44u9b, .AJ79B, .fontBodyMedium span, .lS30S')).map(s => s.innerText.trim()).filter(Boolean);
     
     for (const t of infoLines) {
       if (!t || t === name || t === rating || t.includes(reviews)) continue;
+      // Category is usually short and doesn't have numbers
       if (!category && t.length < 40 && !/\d/.test(t) && !/,/.test(t)) {
         category = t;
       }
+      // Address usually has a comma or numbers
       if (!address && ((/\d/.test(t) && t.length > 8) || /,.+,.+/.test(t))) {
         address = t;
       }
@@ -149,14 +179,18 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
 
     // Image URL
     let imageUrl = '';
-    const imgEl = container.querySelector('img');
+    const imgEl = realContainer.querySelector('img');
     if (imgEl) {
       imageUrl = imgEl.src || '';
     }
 
     const { city, country } = extractLocation(address);
 
-    return { name, category, address, city, country, rating, reviews, phone: '', website: '', hours: '', plusCode: '', mapsUrl, imageUrl, aiInsight: '' };
+    return { 
+      name, category, address, city, country, rating, reviews, 
+      phone: '', website: '', hours: '', plusCode: '', mapsUrl, imageUrl, 
+      leadInsight: '', whatToSell: '', competitor: '', coldCallScript: '', leadType: '' 
+    };
   }
 
   // ─── Extract extra details from opened detail panel ────────
@@ -243,7 +277,7 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
   // ─── MAIN SCRAPING LOOP ────────────────────────────────────
   async function startScraping(options = {}) {
     const { maxResults = 100, fields = [] } = options;
-    const needsDetail = fields.some(f => ['phone', 'website', 'hours', 'plusCode', 'score'].includes(f));
+    const needsDetail = fields.some(f => ['phone', 'website', 'hours', 'plusCode', 'leadType'].includes(f));
 
     isRunning = true;
     isPaused  = false;
@@ -252,7 +286,19 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
 
     sendToPopup('SCRAPE_STATUS', { status: 'running', message: 'Locating results list...' });
 
-    const listEl = qs('div[role="feed"]');
+    let listEl = qs('div[role="feed"]') || qs('div.m67Hec') || qs('div[role="main"] div[jsaction*="scroll"]');
+    
+    // If still not found, try to find the container of the cards
+    if (!listEl) {
+      const firstCard = qs('.Nv2PK, .Ua6m6c, a.hfpxzc');
+      if (firstCard) {
+        listEl = firstCard.parentElement;
+        while (listEl && listEl.scrollHeight <= listEl.clientHeight) {
+          listEl = listEl.parentElement;
+        }
+      }
+    }
+
     if (!listEl) {
       sendToPopup('SCRAPE_STATUS', {
         status: 'error',
@@ -274,16 +320,21 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
       while (isPaused && isRunning) await sleep(300);
       if (!isRunning) break;
 
-      let cards = qsa('div.Nv2PK');
+      // Broad selector for business cards
+      let cards = qsa('.Nv2PK, .Ua6m6c, .jANv9b, .THL2l, a.hfpxzc');
 
       if (cards.length === 0) {
-        cards = qsa('a.hfpxzc');
+        // Retry with a scroll if nothing found
+        await scrollList(listEl, 1);
+        cards = qsa('.Nv2PK, .Ua6m6c, .jANv9b, .THL2l, a.hfpxzc');
+        
         if (cards.length === 0) {
           sendToPopup('SCRAPE_STATUS', {
             status: 'error',
-            message: '❌ No result cards found. Make sure you have search results visible.',
+            message: '❌ No results found yet. Try scrolling the list manually.',
           });
-          break;
+          await sleep(2000);
+          continue; 
         }
       }
 
@@ -319,18 +370,30 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
           data = await extractDetailPanel(data);
         }
 
-        // ── CALCULATE SCORE ──
-        let score = 0;
+        // ── CALCULATE LEAD TYPE ──
         const revNum = parseInt(data.reviews) || 0;
         const ratNum = parseFloat(data.rating) || 0;
+        const hasWebsite = !!data.website;
         
-        if (revNum > 100) score += 2;
-        if (ratNum > 0 && ratNum < 4) score += 2;
-        if (!data.website) score += 3;
-        data.score = score;
+        let leadType = 'Cold';
+        if (!hasWebsite) {
+          if (revNum > 10 || ratNum > 0) leadType = 'Hot';
+          else leadType = 'Warm';
+        } else if (ratNum > 0 && ratNum < 4.2) {
+          leadType = 'Hot';
+        } else if (revNum < 20) {
+          leadType = 'Warm';
+        }
+        data.leadType = leadType;
 
-        // ── GENERATE AI INSIGHT ──
-        data.aiInsight = await getAIInsight(data);
+        // ── GENERATE AI ANALYSIS ──
+        if (fields.includes('leadInsight') || fields.includes('whatToSell') || fields.includes('coldCallScript') || fields.includes('competitor')) {
+          const analysis = await getAIAnalysis(data);
+          data.leadInsight = analysis.leadInsight;
+          data.whatToSell = analysis.whatToSell;
+          data.competitor = analysis.competitor;
+          data.coldCallScript = analysis.coldCallScript;
+        }
 
         sendToPopup('SCRAPE_RESULT', { lead: data, count: scraped });
         sendToPopup('SCRAPE_STATUS', {
@@ -345,14 +408,20 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
       // If we got no new cards this round, scroll to load more
       if (!foundNew || cards.length === prevCount) {
         noNewRounds++;
-        if (noNewRounds >= 3) break; // No more results available
-        await scrollList(listEl, 3);
+        if (noNewRounds >= 5) break; // Increased patience
+        
+        sendToPopup('SCRAPE_STATUS', {
+          status: 'running',
+          message: `Scrolling to find more leads... (Attempt ${noNewRounds}/5)`,
+        });
+        
+        await scrollList(listEl, 4); // More aggressive scroll
         prevCount = cards.length;
       } else {
         noNewRounds = 0;
         prevCount = cards.length;
         // Scroll a bit each batch too
-        await scrollList(listEl, 2);
+        await scrollList(listEl, 1);
       }
     }
 

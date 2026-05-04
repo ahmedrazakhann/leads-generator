@@ -85,7 +85,7 @@
         </label>
         <label class="chip">
           <input type="checkbox" id="f-name" checked />
-          <span>Name</span>
+          <span>Business Name</span>
         </label>
         <label class="chip">
           <input type="checkbox" id="f-category" checked />
@@ -124,12 +124,24 @@
           <span>Hours</span>
         </label>
         <label class="chip">
-          <input type="checkbox" id="f-score" checked />
-          <span>Score</span>
+          <input type="checkbox" id="f-leadType" checked />
+          <span>Lead Type</span>
         </label>
         <label class="chip">
-          <input type="checkbox" id="f-ai" checked />
-          <span>What You Can Sell</span>
+          <input type="checkbox" id="f-insight" checked />
+          <span>Lead Insight</span>
+        </label>
+        <label class="chip">
+          <input type="checkbox" id="f-sell" checked />
+          <span>What to Sell</span>
+        </label>
+        <label class="chip">
+          <input type="checkbox" id="f-competitor" checked />
+          <span>Competitor</span>
+        </label>
+        <label class="chip">
+          <input type="checkbox" id="f-script" checked />
+          <span>Call Script</span>
         </label>
       </div>
     </section>
@@ -179,6 +191,22 @@
 
   <!-- ── Toast ── -->
   <div class="toast" id="toast"></div>
+
+  <!-- ── Modal for Script ── -->
+  <div class="modal" id="scriptModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Cold Call Script</h2>
+        <button class="btn-close" id="btnCloseModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="scriptText"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCopyScript">Copy Script</button>
+      </div>
+    </div>
+  </div>
 
   <script src="../lib/exceljs.min.js"></script>
   <script src="popup.js"></script>

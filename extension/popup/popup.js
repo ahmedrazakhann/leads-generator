@@ -16,18 +16,21 @@ let maxResults = 100;
 
 const FIELD_MAP = {
   'f-image':    { key: 'imageUrl', label: 'Photo' },
-  'f-name':     { key: 'name',     label: 'Name' },
-  'f-ai':       { key: 'aiInsight', label: 'What You Can Sell' },
+  'f-name':     { key: 'name',     label: 'Business Name' },
+  'f-leadType': { key: 'leadType', label: 'Lead Type' },
+  'f-insight':  { key: 'leadInsight', label: 'Lead Insight' },
+  'f-sell':     { key: 'whatToSell', label: 'What to Sell' },
+  'f-competitor': { key: 'competitor', label: 'Competitor' },
+  'f-script':   { key: 'coldCallScript', label: 'Call Script' },
+  'f-rating':   { key: 'rating',   label: 'Rating' },
+  'f-reviews':  { key: 'reviews',  label: 'Reviews' },
   'f-category': { key: 'category', label: 'Category' },
   'f-address':  { key: 'address',  label: 'Address' },
   'f-city':     { key: 'city',     label: 'City' },
   'f-country':  { key: 'country',  label: 'Country' },
   'f-phone':    { key: 'phone',    label: 'Phone' },
   'f-website':  { key: 'website',  label: 'Website' },
-  'f-rating':   { key: 'rating',   label: 'Rating' },
-  'f-reviews':  { key: 'reviews',  label: 'Reviews' },
   'f-hours':    { key: 'hours',    label: 'Hours' },
-  'f-score':    { key: 'score',    label: 'Score' },
 };
 
 // ─────────────────────────────────────────────────────────
@@ -54,6 +57,12 @@ const resultsSection = $('resultsSection');
 const toastEl     = $('toast');
 const heroSection   = $('heroSection');
 const activeScoping = $('activeScoping');
+
+// Modal refs
+const scriptModal = $('scriptModal');
+const scriptText  = $('scriptText');
+const btnCloseModal = $('btnCloseModal');
+const btnCopyScript = $('btnCopyScript');
 
 // ─────────────────────────────────────────────────────────
 //  Toast
@@ -146,16 +155,26 @@ function appendLeadRow(lead) {
       td.appendChild(a);
     } else if (key === 'rating' && val) {
       td.innerHTML = `<span class="cell-rating">⭐ ${val}</span>`;
-    } else if (key === 'score') {
-      const s = parseInt(val) || 0;
-      let color = '#94a3b8'; // Default slate
-      if (s >= 5) color = '#10b981'; // Green
-      else if (s >= 3) color = '#f59e0b'; // Amber
-      
-      td.innerHTML = `<span style="color: ${color}; font-weight: 800; font-size: 1.1em;">${s}</span>`;
-    } else if (key === 'aiInsight') {
+    } else if (key === 'leadType') {
+      const type = val || 'Cold';
+      const badgeClass = `badge-${type.toLowerCase()}`;
+      td.innerHTML = `<span class="badge-lead ${badgeClass}">${type} Lead</span>`;
+    } else if (key === 'coldCallScript') {
+      if (val) {
+        const btn = document.createElement('button');
+        btn.className = 'btn-script';
+        btn.textContent = 'View Script';
+        btn.onclick = () => {
+          scriptText.textContent = val;
+          scriptModal.classList.add('show');
+        };
+        td.appendChild(btn);
+      } else {
+        td.textContent = '...';
+      }
+    } else if (key === 'leadInsight' || key === 'whatToSell' || key === 'competitor') {
       td.innerHTML = `<span style="color: #4a9d7e; font-style: italic; font-weight: 600;">${val || 'Analyzing...'}</span>`;
-      td.style.maxWidth = '250px';
+      td.style.maxWidth = '200px';
       td.style.whiteSpace = 'normal';
     } else {
       td.title = val;
@@ -300,33 +319,33 @@ async function exportXLSX() {
         cell.value = val;
 
         // ── Colorful Backgrounds for Stats ──
-        if (field.key === 'score' || field.key === 'rating' || field.key === 'reviews') {
-          const numVal = (field.key === 'rating') ? parseFloat(val) : parseInt(val);
-          if (!isNaN(numVal)) {
-            cell.value = numVal;
-            cell.alignment = { vertical: 'middle', horizontal: 'center' };
-            cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: 'FF0F172A' } };
+        if (field.key === 'leadType' || field.key === 'rating' || field.key === 'reviews') {
+          const rawVal = lead[field.key];
+          cell.alignment = { vertical: 'middle', horizontal: 'center' };
+          cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: 'FF0F172A' } };
 
-            let bgColor = 'FFF1F5F9'; // Default Light Slate
+          let bgColor = 'FFF1F5F9'; // Default Light Slate
 
-            if (field.key === 'score') {
-              if (numVal >= 5) bgColor = 'FFD1FAE5'; // Light Green
-              else if (numVal >= 3) bgColor = 'FFFef3c7'; // Light Amber
-            } else if (field.key === 'rating') {
-              if (numVal >= 4.5) bgColor = 'FFD1FAE5'; // Light Green
-              else if (numVal >= 4.0) bgColor = 'FFFef3c7'; // Light Amber
-              else bgColor = 'FFFEE2E2'; // Light Red
-            } else if (field.key === 'reviews') {
-              if (numVal >= 500) bgColor = 'FFD1FAE5'; // Light Green
-              else if (numVal >= 100) bgColor = 'FFFef3c7'; // Light Amber
-            }
-
-            cell.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: bgColor }
-            };
+          if (field.key === 'leadType') {
+            if (rawVal === 'Hot') bgColor = 'FFFEE2E2'; // Light Red for Hot
+            else if (rawVal === 'Warm') bgColor = 'FFFef3c7'; // Light Amber
+            else bgColor = 'FFF1F5F9'; // Cold
+          } else if (field.key === 'rating') {
+            const numVal = parseFloat(rawVal);
+            if (numVal >= 4.5) bgColor = 'FFD1FAE5'; // Light Green
+            else if (numVal >= 4.0) bgColor = 'FFFef3c7'; // Light Amber
+            else bgColor = 'FFFEE2E2'; // Light Red
+          } else if (field.key === 'reviews') {
+            const numVal = parseInt(rawVal);
+            if (numVal >= 500) bgColor = 'FFD1FAE5'; // Light Green
+            else if (numVal >= 100) bgColor = 'FFFef3c7'; // Light Amber
           }
+
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: bgColor }
+          };
         }
 
         // Hyperlinks for Website and Phone
@@ -345,8 +364,8 @@ async function exportXLSX() {
           cell.font = { color: { argb: 'FF0EA5E9' }, underline: true };
         }
 
-        // Center specific columns: Category, Phone, Website, Score, Rating, Reviews, City, Country
-        const shouldCenter = ['category', 'phone', 'website', 'score', 'rating', 'reviews', 'city', 'country'].includes(field.key);
+        // Center specific columns
+        const shouldCenter = ['category', 'phone', 'website', 'leadType', 'rating', 'reviews', 'city', 'country', 'competitor'].includes(field.key);
         cell.alignment = { 
           vertical: 'middle', 
           horizontal: shouldCenter ? 'center' : 'left', 
@@ -619,6 +638,35 @@ btnClear.addEventListener('click', () => {
 Object.keys(FIELD_MAP).forEach((id) => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('change', () => { if (leads.length) rebuildTable(); });
+});
+
+// Modal Event Listeners
+btnCloseModal.addEventListener('click', () => {
+  scriptModal.classList.remove('show');
+});
+
+window.addEventListener('click', (e) => {
+  if (e.target === scriptModal) {
+    scriptModal.classList.remove('show');
+  }
+});
+
+btnCopyScript.addEventListener('click', () => {
+  const text = scriptText.textContent;
+  if (!text) return;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btnCopyScript.textContent;
+    btnCopyScript.textContent = '✓ Copied!';
+    btnCopyScript.style.background = '#10b981';
+    btnCopyScript.style.color = '#fff';
+    
+    setTimeout(() => {
+      btnCopyScript.textContent = originalText;
+      btnCopyScript.style.background = '';
+      btnCopyScript.style.color = '';
+    }, 2000);
+  });
 });
 
 // ─────────────────────────────────────────────────────────
