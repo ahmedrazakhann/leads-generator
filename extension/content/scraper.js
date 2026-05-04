@@ -29,6 +29,7 @@
   const GROQ_API_KEY = '';
 
   async function getAIInsight(data) {
+    if (!GROQ_API_KEY) return '';
     const prompt = `You are a friendly business growth advisor. Analyze this business:
 Name: ${data.name}
 Category: ${data.category}
@@ -55,9 +56,10 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
         })
       });
       const json = await response.json();
-      return json.choices[0].message.content.trim().replace(/^"/, '').replace(/"$/, '');
+      return json.choices?.[0]?.message?.content?.trim()?.replace(/^"/, '')?.replace(/"$/, '') || '';
     } catch (e) {
-      return 'Potential upsell for digital services.';
+      console.error('[LeadScraper] AI Error:', e);
+      return '';
     }
   }
 
@@ -272,12 +274,12 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
       while (isPaused && isRunning) await sleep(300);
       if (!isRunning) break;
 
-      const cards = qsa('div.Nv2PK');
+      let cards = qsa('div.Nv2PK');
 
       if (cards.length === 0) {
         // Fallback to older selector if needed
-        const fallbackCards = qsa('a.hfpxzc');
-        if (fallbackCards.length === 0) {
+        cards = qsa('a.hfpxzc');
+        if (cards.length === 0) {
           sendToPopup('SCRAPE_STATUS', {
             status: 'error',
             message: '❌ No result cards found. Make sure you have search results visible.',
