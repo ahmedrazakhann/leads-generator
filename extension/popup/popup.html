@@ -10,8 +10,6 @@
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-
-  <!-- ── Header ── -->
   <header class="header">
     <div class="header-left">
       <div class="logo">
@@ -24,9 +22,7 @@
       </div>
     </div>
   </header>
-
   <main class="main-content">
-    <!-- ── Initial State ── -->
     <div class="hero-section" id="heroSection">
       <div class="hero-content">
         <div class="hero-icon-pulse">
@@ -36,16 +32,11 @@
         <p>Search for businesses on Google Maps and click Start to collect high-quality leads instantly.</p>
       </div>
     </div>
-
-    <!-- ── Status & Computation ── -->
     <div class="active-scoping" id="activeScoping" style="display:none">
       <div class="status-bar" id="statusBar">
         <div class="status-dot" id="statusDot"></div>
         <span id="statusText">Ready to scrape</span>
       </div>
-
-  
-
       <div class="progress-wrap" id="progressWrap" style="display:none">
         <div class="progress-header">
           <span class="progress-label">SCRAPING PROGRESS</span>
@@ -56,8 +47,6 @@
         </div>
       </div>
     </div>
-
-    <!-- ── Controls ── -->
     <section class="controls-section">
       <div class="control-row">
         <div class="field-group">
@@ -75,8 +64,6 @@
           </select>
         </div>
       </div>
-
-      <!-- Field selector -->
       <div class="field-label" style="margin-bottom: 12px;">Extraction Fields</div>
       <div class="chips-grid" id="fieldsGrid">
         <label class="chip">
@@ -145,8 +132,6 @@
         </label>
       </div>
     </section>
-
-    <!-- ── Action Buttons ── -->
     <div class="btn-group">
       <button class="btn btn-primary" id="btnStart">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -161,8 +146,6 @@
         </button>
       </div>
     </div>
-
-    <!-- ── Results Table ── -->
     <section class="results-section" id="resultsSection" style="display:none">
       <div class="results-header">
         <div class="results-title-group">
@@ -179,7 +162,6 @@
           </button>
         </div>
       </div>
-
       <div class="table-wrap">
         <table class="leads-table" id="leadsTable">
           <thead id="leadsHead"></thead>
@@ -188,11 +170,7 @@
       </div>
     </section>
   </main>
-
-  <!-- ── Toast ── -->
   <div class="toast" id="toast"></div>
-
-  <!-- ── Modal for Script ── -->
   <div class="modal" id="scriptModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -207,7 +185,6 @@
       </div>
     </div>
   </div>
-
   <script src="../lib/exceljs.min.js"></script>
   <script src="popup.js"></script>
 </body>
