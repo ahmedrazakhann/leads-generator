@@ -35,24 +35,21 @@ A short, sharp observation about what they are missing or where they are weak.
 The most relevant service to help them improve (simple and clear).
 
 3. Competitor:
-Name a realistic competitor in the same category/location.
+Provide the name of a real, specific competitor in the same area. If you are not 100% sure of a specific name, return "Top-rated nearby competitors".
 
 4. Cold Call Script:
-Write a natural, human-sounding cold call (MAX 80 words, simple English).
+Write a highly specific, data-driven cold call script (approx 150-180 words).
 
-Script MUST follow this structure:
-- Friendly, casual opening (not salesy)
-- Show you did quick research (mention something specific)
-- Point out a problem or missed opportunity
-- Give a simple benefit (how you help)
-- Ask a soft question (NOT pushy, no hard selling)
+Script MUST follow this data-driven structure:
+- Professional Opening (10s): Casual but business-ready.
+- Data Reference (15s): Mention their REAL stats (e.g., "I saw you have ${data.reviews} reviews with a ${data.rating} rating").
+- Specific Problem (15s): Connect their data to a gap (e.g., "With that many reviews, missing a ${data.website ? 'modern booking system' : 'website'} is likely costing you 20% in direct leads").
+- Opportunity & Solution (15s): Explain how your service turns that gap into profit.
+- Low-Pressure Close (5s): A simple question to start a chat.
 
 Tone rules:
-- Use very simple English
-- Sound like a real human, not a script
-- No buzzwords, no corporate language
-- No pressure phrases like "limited offer" or "buy now"
-- Make it feel like a helpful conversation
+- No generic templates. Use the specific business category and location context.
+- Sound like a researcher who found a genuine opportunity for them.
 
 Return ONLY a JSON object with keys:
 leadInsight, whatToSell, competitor, coldCallScript.
@@ -67,7 +64,7 @@ Do not include any extra text.`;
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [{ role: 'user', content: prompt }],
-          max_tokens: 300,
+          max_tokens: 600,
           temperature: 0.6,
           response_format: { type: "json_object" }
         })
@@ -92,9 +89,17 @@ Do not include any extra text.`;
     const parts = address.split(',').map(p => p.trim());
     if (parts.length === 1) return { city: '', country: parts[0] };
     let country = parts[parts.length - 1];
-    let city = parts[parts.length - 2];
-    if (/\d/.test(city) && parts.length >= 3) {
-      city = parts[parts.length - 3];
+    let city = '';
+    for (let i = parts.length - 2; i >= 0; i--) {
+      let segment = parts[i];
+      let clean = segment.replace(/\b\d+[\w\s]*\b/g, '').trim();
+      if (clean && clean.length > 2 && !/^\d/.test(segment)) {
+        city = clean;
+        break;
+      }
+    }
+    if (!city && parts.length >= 2) {
+      city = parts[parts.length - 2].split(' ')[0];
     }
     return { city, country };
   }
@@ -306,8 +311,12 @@ Do not include any extra text.`;
         if (!href) continue;
         const urlIdMatch = href.match(/!1s(0x[a-f0-9]+:0x[a-f0-9]+)/i);
         const normalizedId = urlIdMatch ? urlIdMatch[1] : href.split('?')[0].split('@')[0];
-        if (scrapedHrefs.has(normalizedId)) continue;
+        const name = (card.tagName === 'A') ? card.getAttribute('aria-label') : (card.querySelector('.qBF1Pd, .fontHeadlineSmall')?.innerText || '');
+        const rawAddr = (card.querySelector('.W44u9b, .AJ79B, .fontBodyMedium span:last-child')?.innerText || '');
+        const dedupeKey = (name + '|' + rawAddr).toLowerCase().replace(/\s+/g, '');
+        if (scrapedHrefs.has(normalizedId) || (rawAddr && scrapedHrefs.has(dedupeKey))) continue;
         scrapedHrefs.add(normalizedId);
+        if (rawAddr) scrapedHrefs.add(dedupeKey);
         foundNew = true;
         scraped++;
         let data = extractFromCard(card);
@@ -318,6 +327,8 @@ Do not include any extra text.`;
           await sleep(T.afterPanel);
           data = await extractDetailPanel(data);
         }
+        data.rating = data.rating.toString().match(/[\d.]+/)?.[0] || '';
+        data.reviews = data.reviews.toString().replace(/\D/g, '');
         const revNum = parseInt(data.reviews) || 0;
         const ratNum = parseFloat(data.rating) || 0;
         const hasWebsite = !!data.website;
