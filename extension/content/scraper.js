@@ -71,6 +71,7 @@ Do not include any other text, just the JSON.`;
       });
       const json = await response.json();
       const content = JSON.parse(json.choices?.[0]?.message?.content || '{}');
+      console.log('[LeadScraper] AI Analysis Complete for:', data.name, content);
       return {
         leadInsight: content.leadInsight || '',
         whatToSell: content.whatToSell || '',
@@ -386,20 +387,28 @@ Do not include any other text, just the JSON.`;
         }
         data.leadType = leadType;
 
-        // ── GENERATE AI ANALYSIS ──
-        if (fields.includes('leadInsight') || fields.includes('whatToSell') || fields.includes('coldCallScript') || fields.includes('competitor')) {
-          const analysis = await getAIAnalysis(data);
-          data.leadInsight = analysis.leadInsight;
-          data.whatToSell = analysis.whatToSell;
-          data.competitor = analysis.competitor;
-          data.coldCallScript = analysis.coldCallScript;
-        }
-
         sendToPopup('SCRAPE_RESULT', { lead: data, count: scraped });
         sendToPopup('SCRAPE_STATUS', {
           status: 'running',
           message: `Scraped ${scraped}/${maxResults}: ${data.name}`,
         });
+
+        // ── ASYNC AI ANALYSIS (Background) ──
+        if (fields.includes('leadInsight') || fields.includes('whatToSell') || fields.includes('coldCallScript') || fields.includes('competitor')) {
+          console.log('[LeadScraper] Triggering AI for:', data.name);
+          (async () => {
+            const analysis = await getAIAnalysis(data);
+            
+            // Send update to popup for this specific lead
+            console.log('[LeadScraper] Sending AI update to popup for:', data.name);
+            sendToPopup('SCRAPE_UPDATE', { 
+              mapsUrl: data.mapsUrl, 
+              name: data.name,
+              address: data.address,
+              analysis 
+            });
+          })();
+        }
 
         if (scraped >= maxResults) break;
         await sleep(T.betweenItems);

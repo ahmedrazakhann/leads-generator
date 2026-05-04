@@ -12,7 +12,7 @@ let leads = [];
 let isRunning = false;
 let isPaused = false;
 let activeTabId = null;
-let maxResults = 100;
+let maxResults = 10;
 
 const FIELD_MAP = {
   'f-image':    { key: 'imageUrl', label: 'Photo' },
@@ -579,6 +579,57 @@ chrome.runtime.onMessage.addListener((message) => {
       resultsSection.style.display = 'block';
     }
     appendLeadRow(lead);
+  }
+
+  if (message.type === 'SCRAPE_UPDATE') {
+    const { mapsUrl, name, address, analysis } = message;
+    console.log('[Popup] Received AI update for:', name);
+    
+    // Find lead in state
+    const index = leads.findIndex(l => 
+      (l.mapsUrl && mapsUrl && l.mapsUrl === mapsUrl) || 
+      (l.name === name && l.address === address)
+    );
+
+    if (index !== -1) {
+      console.log('[Popup] Updating lead at index:', index);
+      leads[index] = { ...leads[index], ...analysis };
+      
+      // Update the UI row specifically instead of rebuilding the entire table
+      // To keep it simple and correct with current structure, let's find the row in DOM
+      const rows = leadsBody.querySelectorAll('tr');
+      if (rows[index]) {
+        const tr = rows[index];
+        const fields = getActiveFields();
+        const tds = tr.querySelectorAll('td');
+        
+        fields.forEach((field, colIndex) => {
+          if (['leadInsight', 'whatToSell', 'competitor', 'coldCallScript'].includes(field.key)) {
+            const td = tds[colIndex];
+            if (td) {
+              const val = analysis[field.key];
+              if (field.key === 'coldCallScript') {
+                if (val) {
+                  td.innerHTML = '';
+                  const btn = document.createElement('button');
+                  btn.className = 'btn-script';
+                  btn.textContent = 'View Script';
+                  btn.onclick = () => {
+                    scriptText.textContent = val;
+                    scriptModal.classList.add('show');
+                  };
+                  td.appendChild(btn);
+                } else {
+                  td.textContent = '...';
+                }
+              } else {
+                td.innerHTML = `<span style="color: #4a9d7e; font-style: italic; font-weight: 600;">${val || 'Analyzing...'}</span>`;
+              }
+            }
+          }
+        });
+      }
+    }
   }
 
   if (message.type === 'SCRAPE_STATUS') {
