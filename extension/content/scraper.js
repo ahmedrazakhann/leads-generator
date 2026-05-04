@@ -26,8 +26,61 @@
     scrollWait:    700,   // wait after scrolling
   };
 
+  const GROQ_API_KEY = '';
+
+  async function getAIInsight(data) {
+    const prompt = `You are a friendly business growth advisor. Analyze this business:
+Name: ${data.name}
+Category: ${data.category}
+Rating: ${data.rating}
+Reviews: ${data.reviews}
+Website: ${data.website || 'None'}
+
+In one short, natural, human-sounding sentence, suggest the best way to help them grow.
+Speak like a person, not a robot. Use phrases like "I'd suggest offering..." or "They look like a great candidate for...". 
+Do not use labels like "Opportunity:" or "Service:". Just give the advice directly.`;
+
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: 60,
+          temperature: 0.7
+        })
+      });
+      const json = await response.json();
+      return json.choices[0].message.content.trim().replace(/^"/, '').replace(/"$/, '');
+    } catch (e) {
+      return 'Potential upsell for digital services.';
+    }
+  }
+
   // ─── Helpers ──────────────────────────────────────────────
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+  function extractLocation(address) {
+    if (!address) return { city: '', country: '' };
+    const parts = address.split(',').map(p => p.trim());
+    if (parts.length === 1) return { city: '', country: parts[0] };
+    
+    let country = parts[parts.length - 1];
+    let city = parts[parts.length - 2];
+
+    // If country looks like a postcode (lots of digits) or is very short, 
+    // it might be a partial address, but we'll stick to last 2 parts for now.
+    // If there are 3+ parts and the 2nd to last has digits (postcode), take 3rd to last.
+    if (/\d/.test(city) && parts.length >= 3) {
+      city = parts[parts.length - 3];
+    }
+    
+    return { city, country };
+  }
 
   function qs(sel) {
     try { return document.querySelector(sel); } catch { return null; }
@@ -78,18 +131,15 @@
     }
 
     // Category & Address
-    // These are often in spans with class W44u9b or similar, or just text lines
     let category = '';
     let address = '';
     const infoLines = Array.from(container.querySelectorAll('.W44u9b, .AJ79B, .fontBodyMedium span')).map(s => s.innerText.trim()).filter(Boolean);
     
     for (const t of infoLines) {
       if (!t || t === name || t === rating || t.includes(reviews)) continue;
-      // Category is usually short and doesn't look like an address
       if (!category && t.length < 40 && !/\d/.test(t) && !/,/.test(t)) {
         category = t;
       }
-      // Address often has numbers or commas
       if (!address && ((/\d/.test(t) && t.length > 8) || /,.+,.+/.test(t))) {
         address = t;
       }
@@ -102,7 +152,9 @@
       imageUrl = imgEl.src || '';
     }
 
-    return { name, category, address, rating, reviews, phone: '', website: '', hours: '', plusCode: '', mapsUrl, imageUrl };
+    const { city, country } = extractLocation(address);
+
+    return { name, category, address, city, country, rating, reviews, phone: '', website: '', hours: '', plusCode: '', mapsUrl, imageUrl, aiInsight: '' };
   }
 
   // ─── Extract extra details from opened detail panel ────────
@@ -168,6 +220,11 @@
       baseData.plusCode = (plusEl.getAttribute('aria-label') || '')
         .replace(/^Plus code:\s*/i, '').trim() || plusEl.innerText.trim();
     }
+
+    // Re-extract City & Country from updated address
+    const { city, country } = extractLocation(baseData.address);
+    baseData.city = city;
+    baseData.country = country;
 
     return baseData;
   }
@@ -264,6 +321,9 @@
         if (ratNum > 0 && ratNum < 4) score += 2;
         if (!data.website) score += 3;
         data.score = score;
+
+        // ── GENERATE AI INSIGHT ──
+        data.aiInsight = await getAIInsight(data);
 
         sendToPopup('SCRAPE_RESULT', { lead: data, count: scraped });
         sendToPopup('SCRAPE_STATUS', {

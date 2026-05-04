@@ -17,8 +17,11 @@ let maxResults = 100;
 const FIELD_MAP = {
   'f-image':    { key: 'imageUrl', label: 'Photo' },
   'f-name':     { key: 'name',     label: 'Name' },
+  'f-ai':       { key: 'aiInsight', label: 'What You Can Sell' },
   'f-category': { key: 'category', label: 'Category' },
   'f-address':  { key: 'address',  label: 'Address' },
+  'f-city':     { key: 'city',     label: 'City' },
+  'f-country':  { key: 'country',  label: 'Country' },
   'f-phone':    { key: 'phone',    label: 'Phone' },
   'f-website':  { key: 'website',  label: 'Website' },
   'f-rating':   { key: 'rating',   label: 'Rating' },
@@ -150,6 +153,10 @@ function appendLeadRow(lead) {
       else if (s >= 3) color = '#f59e0b'; // Amber
       
       td.innerHTML = `<span style="color: ${color}; font-weight: 800; font-size: 1.1em;">${s}</span>`;
+    } else if (key === 'aiInsight') {
+      td.innerHTML = `<span style="color: #4a9d7e; font-style: italic; font-weight: 600;">${val || 'Analyzing...'}</span>`;
+      td.style.maxWidth = '250px';
+      td.style.whiteSpace = 'normal';
     } else {
       td.title = val;
       td.textContent = val;
@@ -201,7 +208,10 @@ async function getLogoBase64() {
     const blob = await response.blob();
     return new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
+      reader.onloadend = () => {
+        const base64 = reader.result.split(',')[1];
+        resolve(base64);
+      };
       reader.readAsDataURL(blob);
     });
   } catch (e) {
@@ -242,11 +252,11 @@ async function exportXLSX() {
       extension: 'png',
     });
     
-    const totalWidth = fields.length;
-    // Horizontal logo with 14px top margin (14/90 = 0.155)
+    // Position logo in the center of the merged header row
+    const centerCol = Math.max(0, (fields.length / 2) - 1);
     worksheet.addImage(imageId, {
-      tl: { col: (totalWidth / 2) - 1.5, row: 0.155 }, 
-      ext: { width: 350, height: 90 } // Increased logo height to 70
+      tl: { col: centerCol, row: 0.1 }, 
+      ext: { width: 280, height: 70 } 
     });
   }
 
@@ -335,8 +345,8 @@ async function exportXLSX() {
           cell.font = { color: { argb: 'FF0EA5E9' }, underline: true };
         }
 
-        // Center specific columns: Category, Phone, Website, and Score
-        const shouldCenter = ['category', 'phone', 'website', 'score', 'rating', 'reviews'].includes(field.key);
+        // Center specific columns: Category, Phone, Website, Score, Rating, Reviews, City, Country
+        const shouldCenter = ['category', 'phone', 'website', 'score', 'rating', 'reviews', 'city', 'country'].includes(field.key);
         cell.alignment = { 
           vertical: 'middle', 
           horizontal: shouldCenter ? 'center' : 'left', 
@@ -379,9 +389,9 @@ async function exportXLSX() {
       if (val.length > maxLen) maxLen = val.length;
     });
     
-    let colWidth = Math.min(maxLen + 10, 60); // Increased max width
-    if (field.key === 'name' || field.key === 'address') colWidth = Math.max(colWidth, 35);
-    if (field.key === 'score' || field.key === 'rating' || field.key === 'reviews') colWidth = 12;
+    let colWidth = Math.min(maxLen + 10, 60); 
+    if (field.key === 'name' || field.key === 'address' || field.key === 'aiInsight') colWidth = Math.max(colWidth, 40);
+    if (field.key === 'score' || field.key === 'rating' || field.key === 'reviews' || field.key === 'city' || field.key === 'country') colWidth = 15;
     
     worksheet.getColumn(i + 1).width = colWidth;
   });
