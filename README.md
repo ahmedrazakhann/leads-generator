@@ -1,54 +1,114 @@
-# SaaSquatch Lead Scraper
+# SaaSquatch Intelligence 🦖
 
-Welcome to SaaSquatch. This project helps you find business leads from Google Maps very easily. It comes with a chrome extension that does the scraping and a nice landing page where people can download it.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://saasquatch-leads-scraper.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tech Stack](https://img.shields.io/badge/Stack-Next.js%20|%20Manifest%20V3%20|%20AI-blue)](https://nextjs.org/)
 
-## What is this project
+**SaaSquatch Intelligence** is a high-performance lead generation and sales intelligence engine built for modern sales teams. It transforms raw Google Maps business data into actionable sales strategies using real-time extraction and AI-driven insights.
 
-This is a tool made for people who want to collect business information like names, phone numbers, and addresses from Google Maps without doing it manually. You just search for what you need on Maps, and the extension grabs all the data for you so you can save it as an Excel or CSV file.
+Developed as part of the **Caprae Capital AI Readiness Challenge**, this platform bridges the gap between simple data scraping and true business intelligence.
 
-## How to set everything up
+---
 
-Follow these simple steps to get the project running on your computer.
+## 🚀 Key Features
 
-### Step 1: Run the landing page
+- **Real-Time Extraction**: A custom Chrome Extension that scrapes live business data directly from Google Maps search results.
+- **AI Lead Classification**: Automatically categorizes leads into **Hot**, **Warm**, or **Cold** based on reviews, ratings, and digital presence.
+- **Business Gap Insights**: Identifies specific weaknesses in a lead's digital footprint (e.g., missing booking systems, outdated websites).
+- **Personalized Cold Call Scripts**: Generates high-converting, data-driven outreach scripts tailored to each specific business.
+- **Premium UI/UX**: A sophisticated, dark-mode dashboard built with Next.js for seamless data visualization and management.
+- **Export Ready**: Instant export to **Excel (.xlsx)** and **CSV** for immediate CRM integration.
 
-The landing page is built with Next.js. This is where users see the product and download the extension.
+---
 
-1. Open your terminal and go into the frontend folder.
-2. Run the command npm install to get all the needed files.
-3. Run the command npm run dev to start the website.
-4. You can now see the website at http://localhost:3000.
+## 🛠 Tech Stack
 
-### Step 2: Install the extension in Chrome
+### Frontend (Intelligence Dashboard)
+- **Framework**: Next.js 15 (App Router)
+- **UI/UX**: React 19, Tailwind CSS 4, Framer Motion
+- **Icons**: Lucide React
+- **Deployment**: Vercel (Serverless Architecture)
 
-The extension is the actual tool that scrapes the data.
+### Chrome Extension (The Scraper)
+- **API**: Web Extensions API (Manifest V3)
+- **Logic**: Vanilla JavaScript with optimized DOM traversal
+- **AI Engine**: Llama 3.3 (via Groq API) for real-time sales strategy generation
 
-1. Open your Google Chrome browser.
-2. Go to the address chrome://extensions.
-3. Turn on the Developer Mode switch at the top right corner.
-4. Click the button that says Load unpacked.
-5. Select the extension folder from this project.
-6. You will now see the SaaSquatch icon in your browser toolbar.
+### Production Design (Proposed)
+- **Backend**: FastAPI or Node.js
+- **Database**: PostgreSQL (Prisma ORM)
+- **Caching**: Redis for deduplication and API response caching
 
-## How it works in real life
+---
 
-Using the tool is very simple.
+## 🏗 System Architecture
 
-First, you go to Google Maps in your browser.
-Second, you search for a business like "Pizza in New York" or "Plumbers in London".
-Third, you click the SaaSquatch icon in your toolbar and a window will pop up.
-Fourth, you choose how many leads you want and click the Start button.
-Fifth, the tool will automatically scroll through the results and collect the information.
-Finally, when it is done, you click the Export button to download your list of leads.
+```mermaid
+graph TD
+    A[Google Maps] -->|Real-time Extraction| B[Chrome Extension]
+    B -->|Local Processing| C{Data Engine}
+    C -->|API Request| D[Groq/Llama 3 AI]
+    D -->|AI Insights| C
+    C -->|Export| E[Excel/CSV File]
+    F[Next.js Dashboard] -->|Showcase & Preview| G[User]
+    B -.->|Future: Sync| H[PostgreSQL Backend]
+```
 
-That is all there is to it. Enjoy your lead generation!
+---
 
-## Lead Opportunity Score
+## 🔧 Installation & Setup
 
-We have added a special Score column to help you find the best leads. The score is calculated like this:
-1. If a business has more than 100 reviews, it gets +2 points (means they are popular).
-2. If a business has a rating below 4 stars, it gets +2 points (means they might need help with their reputation).
-3. If a business has no website listed, it gets +3 points (this is a big opportunity to sell them a website).
+### 1. Intelligence Dashboard (Frontend)
+```bash
+# Clone the repository
+git clone https://github.com/ahmedrazakhann/saasquatch-intelligence.git
+cd saasquatch-intelligence/frontend
 
-A higher score means the business is a better lead for your services!
+# Install dependencies
+npm install
 
+# Run development server
+npm run dev
+```
+The dashboard will be available at `http://localhost:3000`.
+
+### 2. Chrome Extension Setup (Developer Mode)
+To use the lead extraction tool, you must load the extension manually:
+
+1. Open **Google Chrome** and navigate to `chrome://extensions/`.
+2. Toggle **Developer mode** (top-right corner) to ON.
+3. Click the **Load unpacked** button.
+4. Navigate to the project root and select the `extension` folder.
+5. The SaaSquatch icon will now appear in your browser toolbar.
+
+> [!TIP]
+> To enable AI-generated scripts, add your `GROQ_API_KEY` in `extension/content/scraper.js`.
+
+---
+
+## 💼 Business Value & Design Rationale
+
+SaaSquatch was designed with a "Strategy-First" approach. Most lead generators provide a list of emails; SaaSquatch provides a **reason to call**.
+
+### 1. Data Field Normalization
+We don't just grab text. We normalize phone numbers, extract clean URLs, and parse complex address strings into searchable City/Country fields.
+
+### 2. The "Gap" Methodology
+By analyzing the delta between a business's reputation (reviews/rating) and their digital infrastructure (website presence/booking flow), we identify high-intent sales opportunities.
+
+### 3. SEO-Driven Growth
+The landing page is built using Next.js Server-Side Rendering (SSR) to ensure maximum crawlability, targeting organic keywords like "Google Maps Lead Scraper" and "AI Sales Intelligence".
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+## 👥 Contact
+
+**Project Lead** - [@ahmedrazakhann](https://github.com/ahmedrazakhann)  
+**Challenge** - Caprae Capital AI Readiness Pre-Screening  
+**Demo** - [saasquatch-leads-scraper.vercel.app](https://saasquatch-leads-scraper.vercel.app/)
