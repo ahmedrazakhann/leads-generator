@@ -6,6 +6,7 @@ import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
 import DemoSection from "@/components/DemoSection";
 import DataFields from "@/components/DataFields";
+import SampleOutput from "@/components/SampleOutput";
 import Pricing from "@/components/Pricing";
 import Stats from "@/components/Stats";
 import Testimonials from "@/components/Testimonials";
@@ -46,6 +47,7 @@ export default function Home() {
       <HowItWorks />
       <DemoSection />
       <DataFields />
+      <SampleOutput />
       <Pricing />
       <Stats />
       <Testimonials />

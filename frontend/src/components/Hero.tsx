@@ -13,7 +13,7 @@ const STATS = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen pt-32 pb-20 overflow-hidden flex items-center justify-center bg-[#020617]" id="hero">
+    <section className="relative min-h-screen pt-20 pb-10 overflow-hidden flex items-center justify-center bg-[#020617]" id="hero">
       {/* Background Glows */}
       <div className="absolute top-[-15%] left-[-12%] w-[700px] h-[700px] rounded-full bg-teal-500/10 blur-[130px] pointer-events-none" />
       <div className="absolute bottom-0 right-[-5%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[130px] pointer-events-none" />
@@ -23,7 +23,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-medium mb-8"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-medium mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse shadow-sm shadow-teal-500/50" />
           Free Chrome Extension. Works in 60 seconds.
@@ -33,8 +33,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl md:text-7xl font-black tracking-tight leading-[1.05] mb-6"
-        >
+          className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] mb-4"
+>
           Get 500 Business Leads<br />
           from Google Maps <span className="text-gradient">in 2 Minutes</span>
         </motion.h1>
@@ -43,7 +43,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed"
+          className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed"
         >
           Search anything on Google Maps. Hit Start. Watch names, phones, addresses, 
           websites, and ratings fill up automatically. Export to Excel. Done.
@@ -54,7 +54,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="max-w-5xl mx-auto mb-12 relative"
+          className="max-w-4xl mx-auto mb-8 relative"
         >
           <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg shadow-black/20">
             <div className="flex items-center gap-2 px-4 py-3 bg-[#0c1526] border-b border-slate-800">
@@ -68,7 +68,7 @@ export default function Hero() {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_290px] h-[350px] md:h-[450px]">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_290px] h-[300px] md:h-[380px]">
               <div className="relative overflow-hidden bg-slate-900">
                 <img 
                   src="/images/dubai_map.png" 
@@ -137,7 +137,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-wrap justify-center gap-4 mb-16"
+          className="flex flex-wrap justify-center gap-4 mb-10"
         >
           <button 
             onClick={() => document.getElementById('download-modal')?.dispatchEvent(new CustomEvent('open'))}
@@ -145,8 +145,8 @@ export default function Hero() {
           >
             <Download size={20} /> Add to Chrome. It is Free.
           </button>
-          <a href="#how-it-works" className="px-8 py-4 text-lg font-bold text-slate-300 border border-slate-700 rounded-full hover:bg-slate-800 transition-all flex items-center gap-2">
-            See How It Works <ArrowRight size={20} />
+          <a href="#sample-output" className="px-8 py-4 text-lg font-bold text-slate-300 border border-slate-700 rounded-full hover:bg-slate-800 transition-all flex items-center gap-2 group">
+            See Sample Output <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>
 
