@@ -542,6 +542,15 @@ function stopScraping() {
 chrome.runtime.onMessage.addListener((message) => {
   if (message.type === 'SCRAPE_RESULT') {
     const lead = message.lead;
+    
+    // Prevent duplicates in UI
+    const isDuplicate = leads.some(l => 
+      (l.mapsUrl && lead.mapsUrl && l.mapsUrl === lead.mapsUrl) || 
+      (l.name === lead.name && l.address === lead.address)
+    );
+    
+    if (isDuplicate) return;
+
     leads.push(lead);
     updateBadge();
     updateProgress(leads.length, maxResults);

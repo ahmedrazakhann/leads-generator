@@ -277,7 +277,6 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
       let cards = qsa('div.Nv2PK');
 
       if (cards.length === 0) {
-        // Fallback to older selector if needed
         cards = qsa('a.hfpxzc');
         if (cards.length === 0) {
           sendToPopup('SCRAPE_STATUS', {
@@ -294,11 +293,17 @@ Do not use labels like "Opportunity:" or "Service:". Just give the advice direct
         if (!isRunning) break;
         while (isPaused && isRunning) await sleep(300);
 
-        const linkEl = card.querySelector('a.hfpxzc');
-        const href = linkEl ? linkEl.getAttribute('href') || '' : '';
-        if (!href || scrapedHrefs.has(href)) continue;
+        const linkEl = (card.tagName === 'A') ? card : card.querySelector('a.hfpxzc');
+        let href = linkEl ? linkEl.getAttribute('href') || '' : '';
+        if (!href) continue;
 
-        scrapedHrefs.add(href);
+        // Normalize URL to prevent duplicates
+        const urlIdMatch = href.match(/!1s(0x[a-f0-9]+:0x[a-f0-9]+)/i);
+        const normalizedId = urlIdMatch ? urlIdMatch[1] : href.split('?')[0].split('@')[0];
+
+        if (scrapedHrefs.has(normalizedId)) continue;
+
+        scrapedHrefs.add(normalizedId);
         foundNew = true;
         scraped++;
 
