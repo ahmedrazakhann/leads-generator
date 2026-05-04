@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Download, ArrowRight, MapPin, Zap, Star } from 'lucide-react';
+import { Download, ArrowRight, MapPin, Zap, Star, Search, ShieldCheck, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const STATS = [
-  { value: '500+', label: 'Leads per search' },
-  { value: '2 min', label: 'To get 100 leads' },
-  { value: 'CSV + XLSX', label: 'Export formats' },
-  { value: 'Free', label: 'No credit card' },
+  { value: '500+', label: 'Prospects per search' },
+  { value: 'Seconds', label: 'To identify gaps' },
+  { value: 'AI-Powered', label: 'Pitch generation' },
+  { value: 'Free', label: 'Get started now' },
 ];
 
 export default function Hero() {
@@ -26,7 +26,7 @@ export default function Hero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-medium mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse shadow-sm shadow-teal-500/50" />
-          Free Chrome Extension. Works in 60 seconds.
+          More than a scraper. This is your sales engine.
         </motion.div>
 
         <motion.h1 
@@ -34,9 +34,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] mb-4"
->
-          Get 500 Business Leads<br />
-          from Google Maps <span className="text-gradient">in 2 Minutes</span>
+        >
+          Find Leads. Know What to Sell.<br />
+          <span className="text-gradient">Close Faster.</span>
         </motion.h1>
 
         <motion.p 
@@ -45,88 +45,98 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed"
         >
-          Search anything on Google Maps. Hit Start. Watch names, phones, addresses, 
-          websites, and ratings fill up automatically. Export to Excel. Done.
+          Automatically analyze local businesses, uncover their critical gaps, 
+          and generate personalized cold outreach scripts in seconds.
         </motion.p>
 
-        {/* Browser Mockup Visual */}
+        {/* Sales Workflow Visual */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           className="max-w-4xl mx-auto mb-8 relative"
         >
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg shadow-black/20">
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#0c1526] border-b border-slate-800">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
+            <div className="flex items-center justify-between px-4 py-3 bg-[#0c1526] border-b border-slate-800">
               <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-amber-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                <div className="w-3 h-3 rounded-full bg-green-500/50" />
               </div>
-              <div className="flex-1 bg-slate-800/50 rounded py-1 px-3 text-[11px] text-slate-500 text-left ml-2">
-                google.com/maps/search/restaurants+in+Dubai
+              <div className="flex-1 bg-slate-800/50 rounded py-1 px-3 text-[10px] text-slate-400 text-center max-w-md mx-auto flex items-center justify-center gap-2">
+                <Search size={10} /> analyzing_prospects_dubai.exe
               </div>
+              <div className="w-12" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_290px] h-[300px] md:h-[380px]">
-              <div className="relative overflow-hidden bg-slate-900">
-                <img 
-                  src="/images/dubai_map.png" 
-                  alt="Dubai Map" 
-                  className="w-full h-full object-cover opacity-80 contrast-110 brightness-90"
-                />
-                {/* Floating Pins */}
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[35%] left-[25%] text-teal-400 drop-shadow-md"><MapPin size={28} fill="currentColor" /></motion.div>
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} className="absolute top-[52%] left-[52%] text-blue-400 drop-shadow-md"><MapPin size={28} fill="currentColor" /></motion.div>
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="absolute top-[30%] left-[70%] text-purple-400 drop-shadow-md"><MapPin size={28} fill="currentColor" /></motion.div>
-              </div>
-
-              <div className="bg-slate-950 border-l border-slate-800 p-4 flex flex-col gap-3 overflow-hidden">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2 text-xs font-bold text-white">
-                    <img src="/images/logo.png" alt="SaaSquatch" className="h-4 w-auto" />
-                    <span>SaaSquatch</span>
-                  </div>
-                  <span className="bg-teal-500/20 text-teal-400 rounded-full px-2 py-0.5 text-[10px] font-bold">47 leads</span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="bg-slate-900 rounded p-2 text-left">
-                    <div className="text-[9px] text-slate-500 uppercase">Max Results</div>
-                    <div className="text-xs font-bold text-slate-200">100</div>
-                  </div>
-                  <div className="bg-slate-900 rounded p-2 text-left">
-                    <div className="text-[9px] text-slate-500 uppercase">Export As</div>
-                    <div className="text-xs font-bold text-slate-200">Excel</div>
-                  </div>
-                </div>
-
-                <button className="w-full py-2 btn-gradient rounded text-[11px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-primary/5">
-                  <Zap size={12} /> Start Scraping
-                </button>
-
-                <div className="flex-1 flex flex-col gap-2 overflow-hidden">
-                  <div className="grid grid-cols-[1fr_1fr_40px] px-2 py-1 bg-slate-900/50 text-[9px] font-bold text-slate-500 uppercase tracking-wider">
-                    <span>Name</span><span>Phone</span><span>Rate</span>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] h-[300px] md:h-[380px]">
+              <div className="relative overflow-hidden bg-slate-950 p-6 flex flex-col justify-center items-center">
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(123,194,162,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(123,194,162,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+                
+                <div className="relative grid grid-cols-2 gap-4 w-full max-w-md">
                   {[
-                    ['Zuma Dubai', '+971 4 425', '4.8'],
-                    ['Nobu Dubai', '+971 4 818', '4.7'],
-                    ['Nusr-Et',    '+971 4 667', '4.5'],
-                    ['COYA Dubai', '+971 4 316', '4.6'],
-                  ].map(([name, phone, rate], i) => (
+                    { label: 'Website Status', status: 'Missing', color: 'text-red-400' },
+                    { label: 'Review Velocity', status: 'Low', color: 'text-amber-400' },
+                    { label: 'Maps Ranking', status: 'Page 4', color: 'text-red-400' },
+                    { label: 'Booking System', status: 'Manual', color: 'text-blue-400' },
+                  ].map((item, i) => (
                     <motion.div 
-                      key={name}
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 + i * 0.2 }}
-                      className="grid grid-cols-[1fr_1fr_40px] px-2 py-2 border-b border-slate-800/50 text-[10px] text-slate-300"
+                      key={item.label}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.6 + i * 0.1 }}
+                      className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl backdrop-blur-sm"
                     >
-                      <span className="truncate font-medium">{name}</span>
-                      <span className="truncate">{phone}</span>
-                      <span className="flex items-center gap-1 text-amber-500"><Star size={8} fill="currentColor" /> {rate}</span>
+                      <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-1">{item.label}</div>
+                      <div className={`text-xs font-black ${item.color}`}>{item.status}</div>
                     </motion.div>
                   ))}
+                </div>
+
+                <motion.div 
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="mt-8 px-6 py-3 bg-teal-500/10 border border-teal-500/30 rounded-2xl flex items-center gap-3"
+                >
+                  <Target className="text-teal-400" size={20} />
+                  <div className="text-left">
+                    <div className="text-[10px] text-slate-400 font-bold uppercase">Opportunity Found</div>
+                    <div className="text-xs font-bold text-white">Pitch: Online Booking Migration</div>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className="bg-slate-900 border-l border-slate-800 p-4 flex flex-col gap-3 overflow-hidden">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center gap-2 text-[10px] font-black text-white uppercase tracking-widest">
+                    <div className="w-4 h-4 bg-teal-500 rounded flex items-center justify-center text-[8px]"><Zap size={8} fill="white" /></div>
+                    Sales Engine
+                  </div>
+                  <span className="bg-teal-500/20 text-teal-400 rounded-full px-2 py-0.5 text-[8px] font-black">ACTIVE</span>
+                </div>
+
+                <div className="flex-1 flex flex-col gap-2 overflow-hidden">
+                  <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Generated Pitch</div>
+                  <div className="bg-slate-950 border border-slate-800 rounded-lg p-3 text-[10px] text-slate-400 leading-relaxed italic relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ShieldCheck size={12} className="text-teal-500" />
+                    </div>
+                    "Hi, I noticed [Business] has 500+ reviews but still takes bookings manually. Our system..."
+                    <div className="mt-2 flex gap-1">
+                      <div className="h-1 w-8 bg-teal-500/30 rounded" />
+                      <div className="h-1 w-12 bg-teal-500/30 rounded" />
+                    </div>
+                  </div>
+
+                  <div className="mt-auto space-y-2">
+                    <div className="flex justify-between items-center text-[10px] px-1">
+                      <span className="text-slate-500">Lead Strength</span>
+                      <span className="text-red-400 font-black">HOT</span>
+                    </div>
+                    <button className="w-full py-2 btn-gradient rounded-lg text-[10px] font-black text-white flex items-center justify-center gap-2 uppercase tracking-widest">
+                      <Target size={12} /> Close Deal
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -141,11 +151,11 @@ export default function Hero() {
         >
           <button 
             onClick={() => document.getElementById('download-modal')?.dispatchEvent(new CustomEvent('open'))}
-            className="px-8 py-4 text-lg font-bold text-white btn-gradient rounded-full hover:shadow-lg hover:shadow-primary/10 hover:scale-105 transition-all flex items-center gap-2"
+            className="px-8 py-4 text-base font-black text-white btn-gradient rounded-full hover:shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all flex items-center gap-2 uppercase tracking-widest"
           >
-            <Download size={20} /> Add to Chrome. It is Free.
+            Get Started. It's Free.
           </button>
-          <a href="#sample-output" className="px-8 py-4 text-lg font-bold text-slate-300 border border-slate-700 rounded-full hover:bg-slate-800 transition-all flex items-center gap-2 group">
+          <a href="#sample-output" className="px-8 py-4 text-base font-black text-slate-300 border border-slate-700 rounded-full hover:bg-slate-800 transition-all flex items-center gap-2 group uppercase tracking-widest">
             See Sample Output <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>
@@ -155,14 +165,14 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="inline-flex flex-wrap items-center justify-center gap-0 bg-slate-900/60 border border-slate-800 rounded-2xl p-2 sm:p-4"
+          className="inline-flex flex-wrap items-center justify-center gap-0 bg-slate-900/40 border border-slate-800 rounded-2xl p-1"
         >
           {STATS.map((s, i) => (
             <React.Fragment key={s.label}>
-              {i > 0 && <div className="hidden sm:block w-[1px] h-10 bg-slate-800 mx-6" />}
-              <div className="px-6 py-2 flex flex-col items-center min-w-[140px]">
-                <span className="text-2xl font-black text-gradient">{s.value}</span>
-                <span className="text-[10px] uppercase tracking-widest font-bold text-slate-500 mt-1">{s.label}</span>
+              {i > 0 && <div className="hidden sm:block w-[1px] h-8 bg-slate-800 mx-4" />}
+              <div className="px-5 py-2 flex flex-col items-center min-w-[120px]">
+                <span className="text-xl font-black text-gradient">{s.value}</span>
+                <span className="text-[9px] uppercase tracking-widest font-black text-slate-500 mt-1">{s.label}</span>
               </div>
             </React.Fragment>
           ))}

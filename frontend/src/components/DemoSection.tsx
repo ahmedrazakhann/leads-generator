@@ -1,17 +1,17 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { MapPin, Zap, FileDown, Star } from 'lucide-react';
+import { MapPin, Zap, FileDown, Star, Target, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 const LEADS = [
-  { name: 'Zuma Dubai',        phone: '+971 4 425 5660', rating: '4.8', category: 'Japanese Restaurant' },
-  { name: 'Nobu Dubai',        phone: '+971 4 818 1111', rating: '4.7', category: 'Fine Dining' },
-  { name: 'Nusr-Et Steakhouse',phone: '+971 4 667 5880', rating: '4.5', category: 'Steakhouse' },
-  { name: 'Nammos Dubai',      phone: '+971 4 376 7476', rating: '4.6', category: 'Mediterranean' },
-  { name: 'La Petite Maison',  phone: '+971 4 439 0505', rating: '4.7', category: 'French Restaurant' },
-  { name: 'Ossiano',           phone: '+971 4 426 2626', rating: '4.9', category: 'Seafood' },
+  { name: 'Zuma Dubai',        phone: '+971 4 425 5660', rating: '4.8', gap: 'No Online Booking' },
+  { name: 'Nobu Dubai',        phone: '+971 4 818 1111', rating: '4.7', gap: 'Weak SEO Presence' },
+  { name: 'Nusr-Et Steakhouse',phone: '+971 4 667 5880', rating: '4.5', gap: 'Missing Reviews' },
+  { name: 'Nammos Dubai',      phone: '+971 4 376 7476', rating: '4.6', gap: 'No Mobile Site' },
+  { name: 'La Petite Maison',  phone: '+971 4 439 0505', rating: '4.7', gap: 'Old Map Data' },
+  { name: 'Ossiano',           phone: '+971 4 426 2626', rating: '4.9', gap: 'Slow Load Time' },
 ];
 
 const PINS = [
@@ -42,7 +42,7 @@ export default function DemoSection() {
         clearInterval(interval);
         setScanning(false);
       }
-    }, 1000);
+    }, 800);
   };
 
   useEffect(() => {
@@ -55,27 +55,27 @@ export default function DemoSection() {
   }, []);
 
   return (
-    <section className="py-24 bg-[#020617]" ref={sectionRef}>
+    <section className="py-24 bg-[#020617]" ref={sectionRef} id="demo">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-widest mb-4">
-            See it in Action
+          <div className="inline-block px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-black uppercase tracking-widest mb-4">
+            Live Analysis
           </div>
           <h2 className="text-4xl md:text-6xl font-black mb-6">
-            Scraping <span className="text-gradient">Made Simple</span>
+            Identify Opportunities <span className="text-gradient">in Real-Time</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Watch how it automatically finds data while you sit back and relax.
+            Watch how our AI scans every business to find exactly what they're missing—and builds your pipeline automatically.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 items-start max-w-7xl mx-auto">
           {/* Map Side */}
-          <div className="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-lg shadow-black/20 relative group">
+          <div className="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl relative group">
             <div className="flex items-center justify-between p-4 bg-[#0f1e36] border-b border-slate-800">
               <div className="flex items-center gap-3 bg-slate-950/50 border border-slate-800 rounded-lg px-3 py-2 flex-1 max-w-md text-xs text-slate-500">
                 <MapPin size={14} className="text-teal-500" />
-                <span>dentists in London, UK</span>
+                <span>restaurants in Dubai, UAE</span>
               </div>
               <div className="flex gap-2 ml-4">
                 <div className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-800" />
@@ -85,12 +85,11 @@ export default function DemoSection() {
             
             <div className="relative h-[400px] md:h-[500px]">
               <img 
-                src="/images/london_map.png" 
-                alt="London Map" 
-                className="w-full h-full object-cover opacity-70 contrast-125 grayscale-[20%]"
+                src="/images/dubai_map.png" 
+                alt="Dubai Map" 
+                className="w-full h-full object-cover opacity-60 contrast-125 grayscale-[20%]"
               />
               
-              {/* Animated pins */}
               <AnimatePresence>
                 {PINS.slice(0, visibleRows).map((pin, i) => (
                   <motion.div
@@ -102,7 +101,7 @@ export default function DemoSection() {
                   >
                     <div className="relative">
                       <MapPin size={32} fill="currentColor" className="drop-shadow-md" />
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-slate-950 border border-slate-800 rounded px-2 py-1 text-[10px] font-bold text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-slate-950 border border-slate-800 rounded px-2 py-1 text-[10px] font-black text-white whitespace-nowrap">
                         {LEADS[i]?.name}
                       </div>
                     </div>
@@ -110,27 +109,26 @@ export default function DemoSection() {
                 ))}
               </AnimatePresence>
 
-              {/* Scan line */}
               {scanning && (
                 <motion.div 
                   initial={{ top: '0%' }}
                   animate={{ top: '100%' }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-[2px] btn-gradient shadow-sm shadow-primary/30 z-10"
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0 h-[2px] btn-gradient shadow-sm shadow-teal-500/30 z-10"
                 />
               )}
             </div>
           </div>
 
-          {/* Extension Side */}
-          <div className="lg:sticky lg:top-24 bg-slate-950 rounded-3xl border border-slate-800 p-6 flex flex-col gap-6 shadow-lg shadow-black/20">
+          {/* Analysis Side */}
+          <div className="lg:sticky lg:top-24 bg-slate-950 rounded-3xl border border-slate-800 p-6 flex flex-col gap-6 shadow-2xl">
             <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2 text-sm font-bold text-white">
-                <MapPin size={18} className="text-teal-500" />
-                <span>Map<span className="text-teal-500">Leads</span> Pro</span>
+              <div className="flex items-center gap-2 text-sm font-black text-white uppercase tracking-widest">
+                <Zap size={18} className="text-teal-500 fill-teal-500" />
+                <span>Sales Engine</span>
               </div>
-              <div className="bg-teal-500/10 text-teal-400 rounded-full px-3 py-1 text-[11px] font-bold">
-                {visibleRows} / {LEADS.length}
+              <div className="bg-teal-500/10 text-teal-400 rounded-full px-3 py-1 text-[11px] font-black">
+                {visibleRows} PROSPECTS
               </div>
             </div>
 
@@ -142,42 +140,33 @@ export default function DemoSection() {
                   animate={{ width: `${progress}%` }}
                 />
               </div>
-              <span className="text-xs font-bold text-teal-500 min-w-[35px] text-right">{progress}%</span>
-            </div>
-
-            <div className={cn(
-              "flex items-center gap-2 text-xs font-medium transition-colors",
-              scanning ? "text-slate-400" : "text-green-500"
-            )}>
-              <span className={cn(
-                "w-2 h-2 rounded-full",
-                scanning ? "bg-teal-500 animate-pulse" : "bg-green-500"
-              )} />
-              {scanning ? `Searching... ${visibleRows} found` : `Finished! ${visibleRows} leads saved`}
+              <span className="text-xs font-black text-teal-500 min-w-[35px] text-right">{progress}%</span>
             </div>
 
             <div className="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/30 flex-1">
-              <div className="grid grid-cols-[1fr_50px_80px] px-3 py-2 bg-slate-800/50 text-[9px] font-black text-slate-500 uppercase tracking-widest">
-                <span>Business</span><span>Rate</span><span>Phone</span>
+              <div className="grid grid-cols-[1fr_50px_100px] px-3 py-2 bg-slate-800/50 text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                <span>Business</span><span>Rate</span><span>Analysis</span>
               </div>
-              <div className="max-h-[250px] overflow-hidden">
+              <div className="max-h-[300px] overflow-hidden">
                 {LEADS.slice(0, visibleRows).map((lead, i) => (
                   <motion.div 
                     key={lead.name}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="grid grid-cols-[1fr_50px_80px] px-3 py-2.5 border-b border-slate-800/50 text-[11px] items-center"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="grid grid-cols-[1fr_50px_100px] px-3 py-3 border-b border-slate-800/50 text-[11px] items-center"
                   >
-                    <span className="truncate font-semibold text-slate-200">{lead.name}</span>
-                    <span className="flex items-center gap-1 text-amber-500 font-bold">
+                    <span className="truncate font-black text-slate-200">{lead.name}</span>
+                    <span className="flex items-center gap-1 text-amber-500 font-black">
                       <Star size={10} fill="currentColor" /> {lead.rating}
                     </span>
-                    <span className="text-slate-500 truncate text-[10px]">{lead.phone.split(' ')[0]}...</span>
+                    <span className="text-teal-400 font-black uppercase text-[8px] tracking-tighter truncate bg-teal-500/5 px-1.5 py-0.5 rounded border border-teal-500/10">
+                      {lead.gap}
+                    </span>
                   </motion.div>
                 ))}
                 
                 {visibleRows < LEADS.length && (
-                  <div className="p-3 space-y-2">
+                  <div className="p-4 space-y-3">
                     <div className="h-3 w-3/4 bg-slate-800/50 rounded-full animate-pulse" />
                     <div className="h-2 w-1/2 bg-slate-800/30 rounded-full animate-pulse" />
                   </div>
@@ -186,15 +175,15 @@ export default function DemoSection() {
             </div>
 
             {!scanning && visibleRows > 0 && (
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-3">
+                <button className="w-full py-3 px-4 rounded-xl btn-gradient text-xs font-black text-white flex items-center justify-center gap-2 uppercase tracking-widest">
+                  <MessageSquare size={14} /> Get All Call Scripts
+                </button>
                 <button 
                   onClick={startDemo}
-                  className="flex-1 py-3 px-4 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 transition-colors text-xs font-bold text-slate-300 flex items-center justify-center gap-2"
+                  className="w-full py-3 px-4 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 transition-colors text-xs font-black text-slate-400 flex items-center justify-center gap-2 uppercase tracking-widest"
                 >
-                  <Zap size={14} /> Try Again
-                </button>
-                <button className="flex-1 py-3 px-4 rounded-xl btn-gradient hover:shadow-md hover:shadow-primary/10 transition-all text-xs font-bold text-white flex items-center justify-center gap-2">
-                  <FileDown size={14} /> Export CSV
+                  <Target size={14} /> Run New Analysis
                 </button>
               </div>
             )}

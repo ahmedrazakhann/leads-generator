@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, Flame, Thermometer, Snowflake, Lightbulb, ShoppingCart, MessageSquare, Star, MapPin, Globe } from 'lucide-react';
+import { Download, Flame, Thermometer, Snowflake, Lightbulb, ShoppingCart, MessageSquare, Star, LayoutGrid, Target } from 'lucide-react';
 
 const SAMPLE_DATA = [
   {
@@ -44,26 +44,6 @@ const SAMPLE_DATA = [
     insight: 'Missing out on efficient appointment scheduling, potentially leading to lost bookings and revenue.',
     whatToSell: 'A modern, integrated booking system for barbershops',
     script: "Hi, I'm calling from [Your Company]. I came across Ted's Grooming Room near Liverpool Street — 1,428 reviews with a 4.9 rating is exceptional. You're clearly one of the best in the area. I did notice your online booking experience could be more seamless, which might be costing you bookings during peak periods. Our platform is used by some of London's top grooming rooms — it's sleek, branded, and reduces no-shows with automated reminders. Would you be interested in a quick demo?"
-  },
-  {
-    name: 'Huckle the Barber - Holborn',
-    type: 'Cold',
-    rating: '5.0',
-    reviews: '457',
-    category: 'Barber shop',
-    insight: 'Lacks an integrated online booking system to manage high demand, potentially frustrating customers.',
-    whatToSell: 'Customizable booking and appointment management software',
-    script: "Hi, I'm calling from [Your Company]. I came across Huckle the Barber in Holborn — 457 reviews and a perfect 5.0 rating. You've built something really special. With that level of demand, scheduling must get hectic. Our appointment management software handles bookings 24/7, integrates with your existing tools, and reduces no-shows by up to 40%. Would you be open to seeing how it could work for Huckle?"
-  },
-  {
-    name: 'The Groomsmith | London Bridge',
-    type: 'Cold',
-    rating: '4.9',
-    reviews: '698',
-    category: 'Barber shop',
-    insight: 'Website may not be optimized for converting visitors into booked appointments.',
-    whatToSell: 'A modern, integrated online booking and customer management system',
-    script: "Hi, I'm calling from [Your Company]. I came across The Groomsmith in London Bridge — 698 reviews and a 4.9 rating is fantastic. With that kind of reputation, I'd imagine you're turning away customers because your booking process isn't as smooth as it could be. Our integrated system turns website visitors into confirmed bookings automatically. We've helped similar shops increase direct bookings by up to 30%. Would you be open to a quick demo?"
   }
 ];
 
@@ -101,9 +81,9 @@ export default function SampleOutput() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block px-4 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 text-xs font-bold uppercase tracking-widest mb-4"
+            className="inline-block px-4 py-1.5 rounded-lg bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-black uppercase tracking-widest mb-4"
           >
-            Real Extraction Data
+            Dashboard Preview
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -112,7 +92,7 @@ export default function SampleOutput() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-6xl font-black mb-6"
           >
-            Sample <span className="text-gradient">Output</span>
+            See Your <span className="text-gradient">Sales Pipeline</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -121,120 +101,54 @@ export default function SampleOutput() {
             transition={{ delay: 0.2 }}
             className="text-slate-400 text-lg max-w-2xl mx-auto"
           >
-            Here’s exactly what our AI generates. We don't just find businesses; we find opportunities.
+            We don't just provide leads. We provide a strategy for every single prospect.
           </motion.p>
         </div>
 
-        {/* Featured Example */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
-          <div className="glass-card rounded-[32px] p-8 md:p-10 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Snowflake size={120} className="text-blue-500" />
-            </div>
-            
-            <div className="relative z-10">
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                <TypeBadge type={featured.type} />
-                <div className="flex items-center gap-1 text-amber-500 font-bold text-sm">
-                  <Star size={14} fill="currentColor" /> {featured.rating} ({featured.reviews} reviews)
+        {/* Dashboard Grid View */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {SAMPLE_DATA.map((row, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass-card p-6 rounded-[32px] border border-slate-800 hover:border-teal-500/30 transition-all group flex flex-col h-full"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="bg-slate-900 w-10 h-10 rounded-xl flex items-center justify-center text-teal-500 group-hover:scale-110 transition-transform">
+                  <LayoutGrid size={20} />
                 </div>
-                <span className="text-slate-500 text-sm font-bold uppercase tracking-widest">Featured Insight</span>
+                <TypeBadge type={row.type} />
               </div>
-              
-              <h3 className="text-3xl font-black mb-8 text-white">{featured.name}</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-teal-500 font-bold text-xs uppercase tracking-widest">
-                    <Lightbulb size={14} /> The Gap
-                  </div>
-                  <p className="text-slate-300 text-sm leading-relaxed">{featured.insight}</p>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-teal-500 font-bold text-xs uppercase tracking-widest">
-                    <ShoppingCart size={14} /> Solution to Pitch
-                  </div>
-                  <p className="text-slate-300 text-sm leading-relaxed">{featured.whatToSell}</p>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-teal-500 font-bold text-xs uppercase tracking-widest">
-                    <MessageSquare size={14} /> AI Outreach Script
-                  </div>
-                  <p className="text-slate-300 text-xs leading-relaxed italic border-l-2 border-slate-700 pl-4 py-1">"{featured.script.substring(0, 150)}..."</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
-        {/* Table Preview */}
-        <div className="bg-slate-950 border border-slate-800 rounded-[32px] overflow-hidden shadow-2xl mb-12">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-slate-900 border-b border-slate-800">
-                  <th className="px-6 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Business Name</th>
-                  <th className="px-6 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Rating</th>
-                  <th className="px-6 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
-                  <th className="px-6 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Lead Insight</th>
-                  <th className="px-6 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">What to Sell</th>
-                  <th className="px-6 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Outreach Preview</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/50">
-                {SAMPLE_DATA.map((row, idx) => (
-                  <motion.tr 
-                    key={idx}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.05 }}
-                    className="group hover:bg-slate-900 transition-colors"
-                  >
-                    <td className="px-6 py-5">
-                      <div className="flex flex-col">
-                        <span className="font-bold text-slate-200 block truncate max-w-[180px]" title={row.name}>
-                          {row.name}
-                        </span>
-                        <span className="text-[10px] text-slate-500">{row.category}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-1 text-amber-500 font-bold text-xs">
-                        <Star size={10} fill="currentColor" /> {row.rating}
-                      </div>
-                      <div className="text-[10px] text-slate-500">({row.reviews})</div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <TypeBadge type={row.type} />
-                    </td>
-                    <td className="px-6 py-5">
-                      <p className="text-slate-400 text-xs leading-relaxed truncate max-w-[200px]" title={row.insight}>
-                        {row.insight}
-                      </p>
-                    </td>
-                    <td className="px-6 py-5">
-                      <p className="text-slate-400 text-xs leading-relaxed truncate max-w-[150px]" title={row.whatToSell}>
-                        {row.whatToSell}
-                      </p>
-                    </td>
-                    <td className="px-6 py-5">
-                      <p className="text-slate-500 text-[10px] leading-relaxed italic truncate max-w-[200px]" title={row.script}>
-                        "{row.script}"
-                      </p>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              <h3 className="text-lg font-black text-white mb-1 truncate">{row.name}</h3>
+              <div className="flex items-center gap-1 text-amber-500 font-bold text-xs mb-4">
+                <Star size={12} fill="currentColor" /> {row.rating} <span className="text-slate-500 font-medium">({row.reviews})</span>
+              </div>
+
+              <div className="space-y-4 flex-1">
+                <div className="p-3 bg-red-500/5 rounded-2xl border border-red-500/10">
+                  <div className="text-[9px] text-red-400 font-black uppercase tracking-widest mb-1 flex items-center gap-1">
+                    <Target size={10} /> The Gap
+                  </div>
+                  <p className="text-slate-300 text-[11px] leading-relaxed line-clamp-2">{row.insight}</p>
+                </div>
+
+                <div className="p-3 bg-teal-500/5 rounded-2xl border border-teal-500/10">
+                  <div className="text-[9px] text-teal-400 font-black uppercase tracking-widest mb-1 flex items-center gap-1">
+                    <ShoppingCart size={10} /> To Pitch
+                  </div>
+                  <p className="text-slate-300 text-[11px] font-bold leading-relaxed line-clamp-2">{row.whatToSell}</p>
+                </div>
+              </div>
+
+              <button className="mt-6 w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 group-hover:bg-white group-hover:text-black transition-all">
+                <MessageSquare size={14} /> View Script
+              </button>
+            </motion.div>
+          ))}
         </div>
 
         {/* Download Button */}
@@ -247,7 +161,7 @@ export default function SampleOutput() {
             className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white text-black font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:bg-teal-500 hover:text-white"
           >
             <Download size={18} className="transition-transform group-hover:-translate-y-1" />
-            Download Full Excel Report (.xlsx)
+            Download Full Pipeline (.xlsx)
           </motion.a>
         </div>
       </div>
