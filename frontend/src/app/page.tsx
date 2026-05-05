@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 import DownloadModal from "@/components/DownloadModal";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://saasquatch-leads-scraper.vercel.app/'),
   title: 'SaaSquatch Intelligence | AI-Powered Google Maps Lead Generation',
   description: 'The ultimate sales intelligence platform. Extract business leads from Google Maps, identify growth gaps, and generate personalized AI outreach scripts instantly.',
   keywords: ['lead generation', 'google maps scraper', 'sales intelligence', 'AI sales scripts', 'B2B leads', 'SaaSquatch Intelligence'],
