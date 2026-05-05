@@ -14,6 +14,8 @@ Developed as part of the **Caprae Capital AI Readiness Challenge**, this platfor
 
 - **Real-Time Extraction**: A custom Chrome Extension that scrapes live business data directly from Google Maps search results.
 - **AI Lead Classification**: Automatically categorizes leads into **Hot**, **Warm**, or **Cold** based on reviews, ratings, and digital presence.
+- **Elite SEO Architecture**: Optimized with **Next.js Server Components**, **JSON-LD Structured Data**, and automated **Sitemaps** for maximum search visibility.
+- **High-Performance UI**: Blazing fast load times using optimized images (`next/image`) and Framer Motion animations.
 - **Business Gap Insights**: Identifies specific weaknesses in a lead's digital footprint (e.g., missing booking systems, outdated websites).
 - **Personalized Cold Call Scripts**: Generates high-converting, data-driven outreach scripts tailored to each specific business.
 - **Premium UI/UX**: A sophisticated, dark-mode dashboard built with Next.js for seamless data visualization and management.
@@ -24,7 +26,9 @@ Developed as part of the **Caprae Capital AI Readiness Challenge**, this platfor
 ## 🛠 Tech Stack
 
 ### Frontend (Intelligence Dashboard)
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 15 (App Router - Full Server Component Architecture)
+- **SEO**: JSON-LD (SoftwareApplication), Automated Sitemap, Robots.txt
+- **Performance**: Next/Image (LCP Optimized), Turbopack
 - **UI/UX**: React 19, Tailwind CSS 4, Framer Motion
 - **Icons**: Lucide React
 - **Deployment**: Vercel (Serverless Architecture)
@@ -97,7 +101,10 @@ We don't just grab text. We normalize phone numbers, extract clean URLs, and par
 By analyzing the delta between a business's reputation (reviews/rating) and their digital infrastructure (website presence/booking flow), we identify high-intent sales opportunities.
 
 ### 3. SEO-Driven Growth
-The landing page is built using Next.js Server-Side Rendering (SSR) to ensure maximum crawlability, targeting organic keywords like "Google Maps Lead Scraper" and "AI Sales Intelligence".
+The landing page is built using **Next.js Server Components** and injected with **JSON-LD (Schema.org)** structured data to ensure elite search engine indexing. This allows for rich snippets in search results, showcasing ratings and software details directly on Google.
+
+### 4. Technical Performance
+We utilize **LCP (Largest Contentful Paint)** optimization for the hero section and automated caching for static assets, ensuring a near-perfect Lighthouse score and superior user experience.
 
 ---
 
