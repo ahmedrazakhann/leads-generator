@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Download, ArrowRight, MapPin, Zap, Star, Search, ShieldCheck, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -16,10 +17,12 @@ export default function Hero() {
     <section className="relative min-h-screen pt-20 pb-10 overflow-hidden flex items-center justify-center bg-[#020617]" id="hero">
       {/* Background Map Image */}
       <div className="absolute inset-0 z-0">
-        <img 
+        <Image 
           src="/images/hero_bg_map.png" 
-          alt="Background Map" 
-          className="w-full h-full object-cover opacity-[0.15] contrast-125 grayscale"
+          alt="SaaSquatch Lead Generation Map" 
+          fill
+          priority
+          className="object-cover opacity-[0.15] contrast-125 grayscale"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_100%)]" />

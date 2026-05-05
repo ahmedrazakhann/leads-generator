@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://saasquatch-leads-scraper.vercel.app/sitemap.xml
