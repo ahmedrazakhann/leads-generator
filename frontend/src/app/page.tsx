@@ -1,7 +1,7 @@
-'use client';
-
+import { Metadata } from 'next';
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import Integrations from "@/components/Integrations";
 import ProblemSolution from "@/components/ProblemSolution";
 import DemoSection from "@/components/DemoSection";
 import Features from "@/components/Features";
@@ -17,26 +17,16 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import DownloadModal from "@/components/DownloadModal";
 
-const INTEGRATIONS = ['Microsoft Excel', 'Google Sheets', 'HubSpot', 'Mailchimp', 'Salesforce', 'Zapier', 'Airtable'];
-
-function Integrations() {
-  return (
-    <div className="py-12 bg-[#020617] border-y border-slate-900/50 overflow-hidden">
-      <div className="container mx-auto px-6 text-center">
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-8">
-          Sync your closed deals with your favorite tools
-        </p>
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-40 grayscale">
-          {INTEGRATIONS.map(item => (
-            <span key={item} className="text-sm md:text-lg font-bold text-slate-400 cursor-default">
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+export const metadata: Metadata = {
+  title: 'SaaSquatch Intelligence | AI-Powered Google Maps Lead Generation',
+  description: 'The ultimate sales intelligence platform. Extract business leads from Google Maps, identify growth gaps, and generate personalized AI outreach scripts instantly.',
+  keywords: ['lead generation', 'google maps scraper', 'sales intelligence', 'AI sales scripts', 'B2B leads'],
+  openGraph: {
+    title: 'SaaSquatch Intelligence | AI-Powered Lead Gen',
+    description: 'Transform Google Maps data into actionable sales strategies with AI-driven insights.',
+    images: ['/images/hero_bg_map.png'],
+  },
+};
 
 export default function Home() {
   return (
