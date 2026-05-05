@@ -13,21 +13,65 @@
     betweenItems:   80,
     scrollWait:    700,
   };
-  const BASE_URL = 'https://saasquatch-leads-scraper.vercel.app';
-
+  const GROQ_API_KEY = '';
   async function getAIAnalysis(data) {
+    if (!GROQ_API_KEY) return { leadInsight: '', whatToSell: '', competitor: '', coldCallScript: '' };
+   const prompt = `You are an expert sales strategist who follows modern, human-first cold calling principles (non-pushy, conversational, value-driven).
+
+Analyze this business lead:
+Name: ${data.name}
+Category: ${data.category}
+Rating: ${data.rating}
+Reviews: ${data.reviews}
+Website: ${data.website || 'None'}
+Phone: ${data.phone || 'None'}
+
+Please provide:
+
+1. Lead Insight:
+A short, sharp observation about what they are missing or where they are weak.
+
+2. What to Sell:
+The most relevant service to help them improve (simple and clear).
+
+3. Competitor:
+Provide the name of a real, specific competitor in the same area. If you are not 100% sure of a specific name, return "Top-rated nearby competitors".
+
+4. Cold Call Script:
+Write a highly specific, data-driven cold call script (approx 150-180 words).
+
+Script MUST follow this data-driven structure:
+- Professional Opening (10s): Casual but business-ready.
+- Data Reference (15s): Mention their REAL stats (e.g., "I saw you have ${data.reviews} reviews with a ${data.rating} rating").
+- Specific Problem (15s): Connect their data to a gap (e.g., "With that many reviews, missing a ${data.website ? 'modern booking system' : 'website'} is likely costing you 20% in direct leads").
+- Opportunity & Solution (15s): Explain how your service turns that gap into profit.
+- Low-Pressure Close (5s): A simple question to start a chat.
+
+Tone rules:
+- No generic templates. Use the specific business category and location context.
+- Sound like a researcher who found a genuine opportunity for them.
+
+Return ONLY a JSON object with keys:
+leadInsight, whatToSell, competitor, coldCallScript.
+Do not include any extra text.`;
     try {
-      const response = await fetch(`${BASE_URL}/api/analyze`, {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: 600,
+          temperature: 0.6,
+          response_format: { type: "json_object" }
+        })
       });
-      
-      if (!response.ok) throw new Error('Backend error');
-      
-      const content = await response.json();
-      console.log('[LeadScraper] AI Analysis Complete for:', data.name);
-      
+      const json = await response.json();
+      const content = JSON.parse(json.choices?.[0]?.message?.content || '{}');
+      console.log('[LeadScraper] AI Analysis Complete for:', data.name, content);
       return {
         leadInsight: content.leadInsight || '',
         whatToSell: content.whatToSell || '',
