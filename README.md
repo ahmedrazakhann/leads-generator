@@ -82,7 +82,7 @@ To use the lead extraction tool, you must load the extension manually:
 5. The SaaSquatch icon will now appear in your browser toolbar.
 
 > [!TIP]
-> To enable AI-generated scripts, add your `GROQ_API_KEY` in `extension/content/scraper.js`.
+> To use the extension, ensure you have the frontend running or deployed as it handles AI analysis via a secure backend proxy.
 
 ---
 
