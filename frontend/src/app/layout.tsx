@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "SaaSquatch Pro - Scrape Leads from Google Maps in 2 Minutes",
   description: "The easiest and fastest way to build your sales list from Google Maps. Get names, phones, websites, and ratings with one click. Free Chrome Extension.",
   keywords: ["Google Maps Scraper", "Lead Generation", "Sales Tools", "B2B Leads", "SaaSquatch Pro"],
+  icons: {
+    icon: '/images/logo.png',
+  },
 };
 
 export const viewport = {
