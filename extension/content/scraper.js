@@ -13,10 +13,11 @@
     betweenItems:   80,
     scrollWait:    700,
   };
-  const GROQ_API_KEY = '';
+  let currentGroqKey = '';
+
   async function getAIAnalysis(data) {
-    if (!GROQ_API_KEY) return { leadInsight: '', whatToSell: '', competitor: '', coldCallScript: '' };
-   const prompt = `You are an expert sales strategist who follows modern, human-first cold calling principles (non-pushy, conversational, value-driven).
+    if (!currentGroqKey) return { leadInsight: '', whatToSell: '', competitor: '', coldCallScript: '' };
+    const prompt = `You are an expert sales strategist who follows modern, human-first cold calling principles (non-pushy, conversational, value-driven).
 
 Analyze this business lead:
 Name: ${data.name}
@@ -58,7 +59,7 @@ Do not include any extra text.`;
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${GROQ_API_KEY}`,
+          'Authorization': `Bearer ${currentGroqKey}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -71,7 +72,7 @@ Do not include any extra text.`;
       });
       const json = await response.json();
       const content = JSON.parse(json.choices?.[0]?.message?.content || '{}');
-      console.log('[LeadScraper] AI Analysis Complete for:', data.name, content);
+      console.log('[LeadScraper] AI Analysis Complete for:', data.name);
       return {
         leadInsight: content.leadInsight || '',
         whatToSell: content.whatToSell || '',
@@ -390,6 +391,7 @@ Do not include any extra text.`;
   }
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'START_SCRAPE') {
+      if (message.options?.groqKey) currentGroqKey = message.options.groqKey;
       if (!isRunning) startScraping(message.options);
       sendResponse({ ok: true });
       return true;

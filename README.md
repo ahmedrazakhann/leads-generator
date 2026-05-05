@@ -82,7 +82,7 @@ To use the lead extraction tool, you must load the extension manually:
 5. The SaaSquatch icon will now appear in your browser toolbar.
 
 > [!TIP]
-> To use the extension, ensure you have the frontend running or deployed as it handles AI analysis via a secure backend proxy.
+> To enable AI-generated scripts, add your **Groq API Key** directly in the extension popup and click the checkmark to save it.
 
 ---
 

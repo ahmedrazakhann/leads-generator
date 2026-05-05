@@ -47,7 +47,26 @@ const scriptModal = $('scriptModal');
 const scriptText  = $('scriptText');
 const btnCloseModal = $('btnCloseModal');
 const btnCopyScript = $('btnCopyScript');
+const groqKeyEl    = $('groqKey');
+const btnSaveKey     = $('btnSaveKey');
 let toastTimer;
+
+async function loadSettings() {
+  chrome.storage.local.get(['groqKey'], (res) => {
+    if (res.groqKey) {
+      groqKeyEl.value = res.groqKey;
+    }
+  });
+}
+
+btnSaveKey.addEventListener('click', () => {
+  const key = groqKeyEl.value.trim();
+  chrome.storage.local.set({ groqKey: key }, () => {
+    showToast(key ? '✓ API Key Saved' : '✓ API Key Cleared', 'success');
+    btnSaveKey.style.background = '#10b981';
+    setTimeout(() => btnSaveKey.style.background = '', 2000);
+  });
+});
 function showToast(msg, type = 'info') {
   toastEl.textContent = msg;
   toastEl.className = `toast show ${type}`;
@@ -408,6 +427,7 @@ async function startScraping() {
     options: {
       maxResults,
       fields: getActiveFields().map(f => f.key),
+      groqKey: groqKeyEl.value.trim()
     },
   }, (resp) => {
     if (chrome.runtime.lastError) {
@@ -577,6 +597,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 (async function init() {
   const tab = await getActiveTab();
   if (!tab) return;
+  await loadSettings();
   showInitialUI();
   const url = tab.url || '';
   if (url.includes('google.com/maps') || url.includes('maps.google.com')) {
