@@ -1,4 +1,4 @@
-# SaaSquatch Intelligence 🦖
+# SaaSquatch Intelligence 
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://saasquatch-leads-scraper.vercel.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,7 +10,7 @@ Developed as part of the **Caprae Capital AI Readiness Challenge**, this platfor
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 - **Real-Time Extraction**: A custom Chrome Extension that scrapes live business data directly from Google Maps search results.
 - **AI Lead Classification**: Automatically categorizes leads into **Hot**, **Warm**, or **Cold** based on reviews, ratings, and digital presence.
@@ -23,7 +23,7 @@ Developed as part of the **Caprae Capital AI Readiness Challenge**, this platfor
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend (Intelligence Dashboard)
 - **Framework**: Next.js 15 (App Router - Full Server Component Architecture)
@@ -45,7 +45,7 @@ Developed as part of the **Caprae Capital AI Readiness Challenge**, this platfor
 
 ---
 
-## 🏗 System Architecture
+##  System Architecture
 
 ```mermaid
 graph TD
@@ -60,7 +60,7 @@ graph TD
 
 ---
 
-## 🔧 Installation & Setup
+##  Installation & Setup
 
 ### 1. Intelligence Dashboard (Frontend)
 ```bash
@@ -90,7 +90,7 @@ To use the lead extraction tool, you must load the extension manually:
 
 ---
 
-## 💼 Business Value & Design Rationale
+##  Business Value & Design Rationale
 
 SaaSquatch was designed with a "Strategy-First" approach. Most lead generators provide a list of emails; SaaSquatch provides a **reason to call**.
 
@@ -108,13 +108,13 @@ We utilize **LCP (Largest Contentful Paint)** optimization for the hero section 
 
 ---
 
-## 📝 License
+##  License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## 👥 Contact
+##  Contact
 
 **Project Lead** - [@ahmedrazakhann](https://github.com/ahmedrazakhann)  
 **Challenge** - Caprae Capital AI Readiness Pre-Screening  
